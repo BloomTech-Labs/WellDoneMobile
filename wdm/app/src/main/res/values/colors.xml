@@ -5,6 +5,7 @@
     <color name="color_secondary">#35C6F4</color>
     <color name="color_secondary_variant">#AFE2F9</color>
 
+    <color name="color_dashboard_background">#1A1717</color>
     <color name="color_background">#082B84</color>
     <color name="color_surface">#ffffff</color>
     <color name="color_error">#b00020</color>
