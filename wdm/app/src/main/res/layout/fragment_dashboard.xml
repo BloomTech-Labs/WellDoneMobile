@@ -14,11 +14,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="72dp">
+
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.appcompat.widget.Toolbar
+                app:logo="@drawable/well_done_logo_small"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
         </com.google.android.material.appbar.AppBarLayout>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <fragment
         android:layout_marginTop="72dp"
