@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="com.versilistyson.welldone.ui.authentication.SplashScreenFragment"
+        android:name="com.versilistyson.welldone.ui.authentication.fragment.SplashScreenFragment"
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInScreen"
-        android:name="com.versilistyson.welldone.ui.authentication.SignInScreen"
+        android:name="com.versilistyson.welldone.ui.authentication.fragment.SignInScreen"
         android:label="fragment_sign_in_screen"
         tools:layout="@layout/fragment_sign_in_screen" />
 </navigation>

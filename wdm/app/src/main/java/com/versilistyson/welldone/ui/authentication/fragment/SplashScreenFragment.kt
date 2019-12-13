@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.ui.authentication
+package com.versilistyson.welldone.ui.authentication.fragment
 
 
 import android.os.Bundle
@@ -9,13 +9,12 @@ import androidx.fragment.app.Fragment
 
 import com.versilistyson.welldone.R
 
-class SignInScreen : Fragment() {
+class SplashScreenFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_in_screen, container, false)
+        return inflater.inflate(R.layout.fragment_splash_screen, container, false)
     }
-
-
+    
 }
