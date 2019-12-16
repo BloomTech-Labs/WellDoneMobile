@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -14,7 +15,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.versilistyson.welldone.R
+import com.versilistyson.welldone.data.remote.dto.PumpResponse
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class DashboardFragment : Fragment(), OnMapReadyCallback {
 
@@ -36,20 +40,31 @@ class DashboardFragment : Fragment(), OnMapReadyCallback {
 
         viewmodel = ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application)
             .create(DashboardViewmodel::class.java)
-
-        viewmodel.pumpLiveData.observe(viewLifecycleOwner, Observer{
-            if(it.isSuccessful){
-
-            }
-        })
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        viewmodel.pumpLiveData.observe(viewLifecycleOwner, Observer{
+            if(it.isSuccessful){
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
+                    val coord = addMarkers(it.body()!!)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(coord))
+                }
+            }
+        })
+    }
+
+    fun addMarkers(pumps: List<PumpResponse>): LatLng{
+        for(l in pumps){
+            val point = LatLng(l.latitude, l.longitude)
+
+            val marker = MarkerOptions()
+                    .position(point)
+                    .title("PUMP")
+
+            mMap.addMarker(marker)
+        }
+        return LatLng(pumps[0].latitude, pumps[0].longitude)
     }
 }
