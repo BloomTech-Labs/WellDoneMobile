@@ -4,9 +4,8 @@ import com.squareup.moshi.Json
 import com.versilistyson.welldone.data.remote.ResponseCode
 
 data class AuthenticationResponse(
-   val token: String,
-    @Json(name = "status") val responseCode: String,
-    @Json(name = "message") val responseMessage: String
+   @Json(name = "token") val authToken: String,
+   @Json(name = "id") val userId: Int
 )
 data class AuthenticationRequest(
     @Json(name = "email_address") val email: String,
