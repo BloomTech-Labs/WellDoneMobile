@@ -15,4 +15,8 @@
     <color name="color_on_background">#ffffff</color>
     <color name="color_on_surface">#000</color>
     <color name="color_on_error">#ffffff</color>
+
+    <color name="non_working_status">#FA0707</color>
+    <color name="working_status">#23D322</color>
+    <color name="no_data_status">#FFAD34</color>
 </resources>
