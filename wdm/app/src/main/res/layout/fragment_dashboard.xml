@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.dashboard.fragment.DashboardFragment">
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:background="@color/color_dashboard_background"
         app:layout_constraintBottom_toTopOf="@id/frag_map"
