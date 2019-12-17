@@ -3,7 +3,10 @@ package com.versilistyson.welldone.di.module
 import com.versilistyson.welldone.data.remote.WellDoneApi
 import dagger.Module
 import dagger.Provides
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -19,20 +22,23 @@ object RetrofitModule {
     @Singleton
     @JvmStatic
     @Provides
-    fun createLogger(): HttpLoggingInterceptor {
-        val logger = HttpLoggingInterceptor()
-        logger.level = HttpLoggingInterceptor.Level.BASIC
-        logger.level = HttpLoggingInterceptor.Level.BODY
-
-        return logger
+    fun createLogger(): Interceptor {
+        return object: Interceptor{
+            override fun intercept(chain: Interceptor.Chain): Response {
+                val newRequest: Request = chain.request().newBuilder()
+                    .addHeader("Authorization", "")
+                    .build()
+                return chain.proceed(newRequest)
+            }
+        }
     }
 
     @Singleton
     @JvmStatic
     @Provides
-    fun createOkHttpClient(logger: HttpLoggingInterceptor){
+    fun createOkHttpClient(logger: Interceptor){
         OkHttpClient.Builder()
-            .addInterceptor(com.versilistyson.welldone.util.createLogger())
+            .addInterceptor(logger)
             .retryOnConnectionFailure(false)
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
