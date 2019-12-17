@@ -15,7 +15,8 @@
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="#FA0707"
+            android:id="@+id/layout_status"
+            android:background="@color/non_working_status"
             android:layout_width="match_parent"
             android:layout_height="60dp">
 
@@ -52,7 +53,7 @@
             android:layout_height="100dp">
 
             <TextView
-                android:id="@+id/tv_locationTitle"
+                android:id="@+id/tv_villageTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -65,18 +66,19 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tv_communeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Khun Ream"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@id/tv_locationTitle"
-                app:layout_constraintTop_toBottomOf="@id/tv_locationTitle" />
+                app:layout_constraintStart_toStartOf="@id/tv_villageTitle"
+                app:layout_constraintTop_toBottomOf="@id/tv_villageTitle" />
 
             <ImageView
+                android:id="@+id/img_statusIcon"
                 android:layout_marginEnd="24dp"
-                android:src="@drawable/red_x"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_locationTitle"
+                app:layout_constraintTop_toTopOf="@id/tv_villageTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

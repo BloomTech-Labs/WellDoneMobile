@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -36,7 +37,7 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
     private lateinit var mMap: GoogleMap
     private lateinit var mMapView: MapView
     private lateinit var sensorStatusListAdapter: SensorStatusListAdapter
-    private lateinit var sensorSatusRecyclerView: RecyclerView
+    private lateinit var sensorStatusRecyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -53,6 +54,8 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
                 sensorStatusListAdapter = SensorStatusListAdapter(emptyList())
             }
         }
+
+        initRecyclerView()
 
         mMapView = map_view
 
@@ -73,6 +76,13 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         viewmodel.sensorStatusLiveData.observe(viewLifecycleOwner, Observer {
             sensorStatusListAdapter.notifyDataSetChanged()
         })
+    }
+
+    private fun initRecyclerView() {
+        sensorStatusRecyclerView = RecyclerView(activity!!.applicationContext).apply{
+            adapter = sensorStatusListAdapter
+            layoutManager = LinearLayoutManager(activity!!.applicationContext, LinearLayoutManager.VERTICAL, false)
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
