@@ -18,6 +18,14 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/*
+    Dashboard map for WellDone operator where they can view the pumps on a map.
+    Landscape and portrait mode. In landscape mode, map is bigger and pump status
+    displays in a little box on the map when you click on a marker on the map. In
+    portrait mode it displays in a little recycler view underneath, shows previous marker
+    clicks as well.
+ */
+
 class DashboardFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var viewmodel: DashboardViewmodel
