@@ -1,6 +1,5 @@
 package com.versilistyson.welldone.util
 
-import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
