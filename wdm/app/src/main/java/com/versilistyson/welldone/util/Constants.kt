@@ -5,7 +5,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 
-const val BASE_URL = "virtserver.swaggerhub.com/Jessiehongtran/well-done/1.0.0"
+const val BASE_URL = "https://well-done-staging.herokuapp.com/"
 
 fun createLogger(): HttpLoggingInterceptor {
     val logger = HttpLoggingInterceptor()

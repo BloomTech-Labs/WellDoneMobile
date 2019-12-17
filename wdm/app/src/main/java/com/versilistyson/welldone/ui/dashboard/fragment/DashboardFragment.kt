@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.data.remote.dto.PumpResponse
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -33,10 +34,7 @@ class DashboardFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mapFragment = activity!!.supportFragmentManager
-            .findFragmentById(R.id.frag_map) as SupportMapFragment
 
-        mapFragment.getMapAsync(this)
 
         viewmodel = ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application)
             .create(DashboardViewmodel::class.java)
