@@ -28,6 +28,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
     <fragment
         android:layout_marginTop="72dp"
         android:id="@+id/frag_map"
@@ -36,7 +37,7 @@
         app:layout_constraintRight_toRightOf="parent"
         class="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="223dp"/>
+        android:layout_height="350dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

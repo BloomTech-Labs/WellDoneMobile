@@ -9,4 +9,5 @@
         android:name="com.versilistyson.welldone.ui.authentication.fragment.SignInScreen"
         android:label="fragment_sign_in_screen"
         tools:layout="@layout/fragment_sign_in_screen" />
+
 </navigation>
