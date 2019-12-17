@@ -6,15 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.data.remote.dto.PumpResponse
+import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 
-class PumpStatusListAdapter(val pumps: List<PumpResponse>): RecyclerView.Adapter<PumpStatusListAdapter.ViewHolder>() {
+class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>): RecyclerView.Adapter<SensorStatusListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
 
     }
 
     override fun getItemCount(): Int {
-        return pumps.size
+        return sensors.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
