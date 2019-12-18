@@ -9,18 +9,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.versilistyson.welldone.R
-import com.versilistyson.welldone.data.remote.dto.PumpResponse
+import com.versilistyson.welldone.adapter.SensorStatusListAdapter
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
+import com.versilistyson.welldone.ui.authentication.AuthSharedViewModel
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Response
 
 /*
     Dashboard map for WellDone operator where they can view the pumps on a map.
@@ -29,12 +32,13 @@ import retrofit2.Response
     portrait mode it displays in a little recycler view underneath, shows previous marker
     clicks as well.
  */
-
-class DashboardFragment : Fragment(), OnMapReadyCallback {
+class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var viewmodel: DashboardViewmodel
     private lateinit var mMap: GoogleMap
     private lateinit var mMapView: MapView
+    private lateinit var sensorStatusListAdapter: SensorStatusListAdapter
+    private lateinit var sensorStatusRecyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -43,6 +47,24 @@ class DashboardFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewmodel = activity.let {
+            val appContext = activity?.applicationContext as Application
+            ViewModelProvider
+                .AndroidViewModelFactory
+                .getInstance(appContext)
+                .create(DashboardViewmodel::class.java)
+        }
+
+        viewmodel.sensorLiveData.value?.body().let {
+            if(it != null) {
+                sensorStatusListAdapter = SensorStatusListAdapter(it)
+            } else {
+                sensorStatusListAdapter = SensorStatusListAdapter(emptyList())
+            }
+        }
+
+        initRecyclerView()
 
         mMapView = map_view
 
@@ -58,6 +80,17 @@ class DashboardFragment : Fragment(), OnMapReadyCallback {
                 .AndroidViewModelFactory
                 .getInstance(appContext)
                 .create(DashboardViewmodel::class.java)
+        }
+
+        viewmodel.sensorStatusLiveData.observe(viewLifecycleOwner, Observer {
+            sensorStatusListAdapter.notifyDataSetChanged()
+        })
+    }
+
+    private fun initRecyclerView() {
+        sensorStatusRecyclerView = RecyclerView(activity!!.applicationContext).apply{
+            adapter = sensorStatusListAdapter
+            layoutManager = LinearLayoutManager(activity!!.applicationContext, LinearLayoutManager.VERTICAL, false)
         }
     }
 
@@ -75,27 +108,35 @@ class DashboardFragment : Fragment(), OnMapReadyCallback {
         })
     }
 
-    fun addMarkers(pumps: List<SensorRecentResponse>): LatLng{
+    fun addMarkers(sensors: List<SensorRecentResponse>): LatLng{
 
         var totalLat = 0.0
         var totalLng = 0.0
 
-        for(l in pumps){
-            val point = LatLng(l.latitude, l.longitude)
+        for(sensor in sensors){
+            val point = LatLng(sensor.latitude, sensor.longitude)
             totalLat += point.latitude
             totalLng += point.longitude
 
             val marker = MarkerOptions()
-                    .position(point)
+                .position(point)
 
-            when(l.status){
+            when(sensor.status){
                 null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.no_data_marker))
                 1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.non_working_marker))
                 2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.working_marker))
             }
 
-            mMap.addMarker(marker)
+            mMap.addMarker(marker).tag = sensor
         }
-        return LatLng(totalLat/pumps.size, totalLng/pumps.size)
+        return LatLng(totalLat/sensors.size, totalLng/sensors.size)
+    }
+
+    override fun onMarkerClick(marker: Marker?): Boolean {
+        marker?.let{
+            viewmodel.addSensorStatus(marker.tag as SensorRecentResponse)
+            return true
+        }
+        return false
     }
 }

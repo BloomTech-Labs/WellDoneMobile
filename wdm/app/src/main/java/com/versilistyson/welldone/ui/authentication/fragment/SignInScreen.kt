@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.ui.authentication.AuthSharedViewModel
@@ -44,7 +45,9 @@ class SignInScreen : Fragment() {
                 val email = signInFragment_et_email.text.toString()
                 val password = signInFragment_et_password.text.toString()
                 authViewModel.authenticateUser(email, password).invokeOnCompletion {
-                   Toast.makeText(this.context,"token: ${authViewModel.authToken.value} id: ${authViewModel.uid.value}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this.context,"token: ${authViewModel.authToken.value} id: ${authViewModel.uid.value}", Toast.LENGTH_LONG).show()
+                    val action = SignInScreenDirections.actionSignInScreenToDashboardNavGraph()
+                    this.findNavController().navigate(action)
                 }
             }
         }
