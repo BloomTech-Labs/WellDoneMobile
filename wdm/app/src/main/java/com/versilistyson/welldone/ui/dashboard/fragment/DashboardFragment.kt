@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.adapter.SensorStatusListAdapter
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
+import com.versilistyson.welldone.ui.authentication.AuthSharedViewModel
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.coroutines.Dispatchers
@@ -46,6 +47,14 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewmodel = activity.let {
+            val appContext = activity?.applicationContext as Application
+            ViewModelProvider
+                .AndroidViewModelFactory
+                .getInstance(appContext)
+                .create(DashboardViewmodel::class.java)
+        }
 
         viewmodel.sensorLiveData.value?.body().let {
             if(it != null) {

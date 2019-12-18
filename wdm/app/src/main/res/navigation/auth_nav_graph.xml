@@ -9,6 +9,11 @@
         android:id="@+id/signInScreen"
         android:name="com.versilistyson.welldone.ui.authentication.fragment.SignInScreen"
         android:label="fragment_sign_in_screen"
-        tools:layout="@layout/fragment_sign_in_screen" />
+        tools:layout="@layout/fragment_sign_in_screen" >
+        <action
+            android:id="@+id/action_signInScreen_to_dashboard_nav_graph"
+            app:destination="@id/dashboard_nav_graph" />
+    </fragment>
+    <include app:graph="@navigation/dashboard_nav_graph" />
 
 </navigation>
