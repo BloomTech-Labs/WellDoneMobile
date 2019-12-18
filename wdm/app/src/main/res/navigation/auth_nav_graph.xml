@@ -7,13 +7,17 @@
 
     <fragment
         android:id="@+id/signInScreen"
-        android:name="com.versilistyson.welldone.ui.authentication.fragment.SignInScreen"
+        android:name="com.versilistyson.welldone.ui.authentication.fragment.SignInFragment"
         android:label="fragment_sign_in_screen"
         tools:layout="@layout/fragment_sign_in_screen" >
         <action
-            android:id="@+id/action_signInScreen_to_dashboard_nav_graph"
-            app:destination="@id/dashboard_nav_graph" />
+            android:id="@+id/action_signInScreen_to_dashboardActivity"
+            app:destination="@id/dashboardActivity" />
     </fragment>
-    <include app:graph="@navigation/dashboard_nav_graph" />
+    <activity
+        android:id="@+id/dashboardActivity"
+        android:name="com.versilistyson.welldone.ui.dashboard.DashboardActivity"
+        android:label="activity_dashboard"
+        tools:layout="@layout/activity_dashboard" />
 
 </navigation>

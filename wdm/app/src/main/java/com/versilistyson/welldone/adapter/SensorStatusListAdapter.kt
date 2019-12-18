@@ -21,6 +21,7 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>): Recycler
         val communeTitle = view.tv_communeTitle
         val imgIcon = view.img_statusIcon
         val layout = view.layout_status
+        val moreDetails = view.tv_more_details
     }
 
     override fun getItemCount(): Int {
@@ -50,6 +51,10 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>): Recycler
                 holder.layout.setBackgroundColor(ContextCompat.getColor(context, R.color.working_status))
                 holder.imgIcon.setImageDrawable(getDrawable(context, R.drawable.green_check))
             }
+        }
+
+        holder.moreDetails.setOnClickListener {
+
         }
     }
 }
