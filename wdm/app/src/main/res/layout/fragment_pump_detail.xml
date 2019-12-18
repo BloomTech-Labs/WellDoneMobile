@@ -57,69 +57,46 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/btn_view_padcounts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="36dp"
+            android:text="@string/view_pad_information"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_pump" />
+
         <TextView
             android:id="@+id/tv_location"
             style="@style/TextOnDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="168dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="228dp"
             android:text="@string/location"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/map_view"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="212dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
         <TextView
-            android:id="@+id/tv_data"
-            style="@style/TextOnDark"
+            android:id="@+id/tv_district_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="424dp"
-            android:text="@string/data"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_constructed_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="28dp"
             android:layout_marginTop="24dp"
-            android:text="@string/constructed"
+            android:text="@string/district"
             android:textColor="#C5A2A2"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_data" />
-
-        <TextView
-            android:id="@+id/tv_constructed_info"
-            style="@style/TextOnDark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
-            android:text="@string/october_13_2019"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_constructed_title" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_constructed_info" />
 
         <TextView
             android:id="@+id/tv_well_depth_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="68dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="76dp"
             android:text="@string/well_depth"
             android:textColor="#C5A2A2"
             android:textSize="16sp"
@@ -127,23 +104,55 @@
             app:layout_constraintTop_toBottomOf="@id/map_view" />
 
         <TextView
-            android:id="@+id/tv_well_depth_data"
+            android:id="@+id/tv_district_data"
             style="@style/TextOnDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="12dp"
-            android:text="34 feet"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="4dp"
+            android:text="Banteay Srei"
             android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/tv_constructed_info"
-            app:layout_constraintTop_toBottomOf="@id/tv_well_depth_title" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_district_title" />
+
+        <TextView
+            android:id="@+id/tv_constructed_info"
+            style="@style/TextOnDark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/october_13_2019"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_constructed_title" />
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="272dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_constructed_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/constructed"
+            android:textColor="#C5A2A2"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_data" />
 
         <TextView
             android:id="@+id/tv_commune_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="272dp"
-            android:layout_marginTop="68dp"
+            android:layout_marginStart="276dp"
+            android:layout_marginTop="76dp"
             android:text="@string/commune"
             android:textColor="#C5A2A2"
             android:textSize="16sp"
@@ -151,64 +160,65 @@
             app:layout_constraintTop_toBottomOf="@id/map_view" />
 
         <TextView
+            android:id="@+id/tv_province_data"
+            style="@style/TextOnDark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="4dp"
+            android:text="Siem Reap"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/tv_district_data"
+            app:layout_constraintTop_toBottomOf="@id/tv_province" />
+
+        <TextView
+            android:id="@+id/tv_data"
+            style="@style/TextOnDark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="484dp"
+            android:text="@string/data"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/tv_commune_data"
             style="@style/TextOnDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="272dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="276dp"
+            android:layout_marginTop="4dp"
             android:text="Khun Ream"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_commune_title" />
 
         <TextView
-            android:id="@+id/tv_district_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/district"
-            android:textColor="#C5A2A2"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_constructed_info"/>
-
-        <TextView
-            android:id="@+id/tv_district_data"
+            android:id="@+id/tv_well_depth_data"
             style="@style/TextOnDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
-            android:text="Banteay Srei"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:text="34 feet"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_district_title" />
+            app:layout_constraintStart_toEndOf="@+id/tv_constructed_info"
+            app:layout_constraintTop_toBottomOf="@id/tv_well_depth_title" />
 
         <TextView
             android:id="@+id/tv_province"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="172dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:text="@string/province"
             android:textColor="#C5A2A2"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_well_depth_data" />
 
-        <TextView
-            android:id="@+id/tv_province_data"
-            style="@style/TextOnDark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="56dp"
-            android:layout_marginTop="12dp"
-            android:text="Siem Reap"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/tv_district_data"
-            app:layout_constraintTop_toBottomOf="@id/tv_province" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

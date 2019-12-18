@@ -20,4 +20,5 @@
     <string name="well_depth">Well depth</string>
     <string name="district">District</string>
     <string name="province">Province</string>
+    <string name="view_pad_information">View pad information</string>
 </resources>
