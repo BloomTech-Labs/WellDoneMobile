@@ -1,14 +1,11 @@
 package com.versilistyson.welldone.data.remote
 
-
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.versilistyson.welldone.data.remote.dto.AuthenticationRequest
 import com.versilistyson.welldone.data.remote.dto.AuthenticationResponse
 import com.versilistyson.welldone.util.BASE_URL
 import com.versilistyson.welldone.util.okHttpClient
-import kotlinx.coroutines.Deferred
-import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
