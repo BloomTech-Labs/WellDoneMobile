@@ -76,11 +76,23 @@
 
             <ImageView
                 android:id="@+id/img_statusIcon"
-                android:layout_marginEnd="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_villageTitle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="68dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_villageTitle" />
+
+            <TextView
+                android:id="@+id/tv_more_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="248dp"
+                android:layout_marginTop="64dp"
+                android:text="@string/more_details"
+                android:textColor="#0022FF"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
