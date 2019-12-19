@@ -16,11 +16,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.versilistyson.MyApplication
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.adapter.SensorStatusListAdapter
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
-import com.versilistyson.welldone.ui.authentication.AuthSharedViewModel
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.coroutines.Dispatchers
@@ -37,17 +35,17 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
 
     private lateinit var viewmodel: DashboardViewmodel
     private lateinit var mMap: GoogleMap
-    private lateinit var mMapView: MapView
     private lateinit var sensorStatusListAdapter: SensorStatusListAdapter
     private lateinit var sensorStatusRecyclerView: RecyclerView
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false)
-    }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        if(map_view != null) {
+            map_view.onCreate(null)
+            map_view.onResume()
+            map_view.getMapAsync(this)
+        }
 
         viewmodel = activity.let {
             val appContext = activity?.applicationContext as Application
@@ -67,14 +65,6 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
 
         initRecyclerView()
 
-        mMapView = map_view
-
-        if(map_view != null){
-            mMapView.onCreate(null)
-            mMapView.onResume()
-            mMapView.getMapAsync(this)
-        }
-
         viewmodel = activity.let {
             val appContext = activity?.applicationContext as Application
             ViewModelProvider
@@ -88,6 +78,11 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         })
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_dashboard, container, false)
+    }
+
     private fun initRecyclerView() {
         sensorStatusRecyclerView = RecyclerView(activity!!.applicationContext).apply{
             adapter = sensorStatusListAdapter
@@ -98,6 +93,7 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
     override fun onMapReady(googleMap: GoogleMap) {
         MapsInitializer.initialize(context)
         mMap = googleMap
+        mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
 
         viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer{
             if(it.isSuccessful){
