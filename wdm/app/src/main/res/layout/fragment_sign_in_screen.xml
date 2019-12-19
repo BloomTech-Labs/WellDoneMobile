@@ -26,32 +26,36 @@
             android:hint="Email"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="320dp"
-            android:layout_height="50dp">
+            android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
+                android:textSize="18sp"
                 android:textColor="@android:color/black"
                 android:id="@+id/signInFragment_et_email"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:text="weird@gmail.com"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:hint="Password"
             android:layout_marginTop="24dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="320dp"
-            android:layout_height="50dp">
+            android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
+                android:textSize="18sp"
                 android:textColor="@android:color/black"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:id="@+id/signInFragment_et_password"
                 android:text="123"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
+        app:layout_constraintBottom_toTopOf="@id/iv_authBackgroundPattern"
+        android:layout_marginBottom="32dp"
         android:id="@+id/bttn_signIn"
         android:gravity="center"
         android:textSize="18sp"
@@ -65,11 +69,12 @@
         android:layout_width="300dp"
         android:layout_height="48dp"/>
 
-    <ImageView
+    <ImageView android:id="@+id/iv_authBackgroundPattern"
 
         android:src="@drawable/wave_shape"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="130dp"/>

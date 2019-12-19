@@ -29,6 +29,7 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+
     <com.google.android.gms.maps.MapView
         android:layout_marginTop="72dp"
         android:id="@+id/map_view"
@@ -38,35 +39,33 @@
         android:layout_height="350dp"/>
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout android:id="@+id/ll_forMapFABs"
+        android:gravity="center_vertical"
+        android:weightSum="3"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="@id/map_view"
+        app:layout_constraintStart_toStartOf="@id/map_view"
+        app:layout_constraintBottom_toBottomOf="@id/map_view"
+        app:layout_constraintTop_toTopOf="@id/map_view">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            app:backgroundTint="@color/working_status"
             android:id="@+id/fab_working_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="124dp"
-            android:src="@drawable/working_marker" />
+            android:src="@drawable/working_marker"
+            style="@style/map_markers" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            app:backgroundTint="@color/non_working_status"
+            android:src="@drawable/non_working_marker"
             android:id="@+id/fab_non_working_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="344dp"
-            android:layout_marginTop="28dp"
-            android:src="@drawable/non_working_marker" />
+            style="@style/map_markers" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            app:backgroundTint="@color/no_data_status"
+            style="@style/map_markers"
             android:id="@+id/fab_no_data_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="344dp"
-            android:layout_marginTop="28dp"
             android:src="@drawable/no_data_marker" />
     </LinearLayout>
 

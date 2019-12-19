@@ -3,6 +3,7 @@ package com.versilistyson.welldone.ui.authentication
 import android.app.Application
 import androidx.lifecycle.*
 import com.versilistyson.MyApplication
+import com.versilistyson.welldone.data.local.SharedPreference
 import com.versilistyson.welldone.data.remote.dto.AuthenticationRequest
 import com.versilistyson.welldone.repository.AuthenticationRepository
 import kotlinx.coroutines.Dispatchers
@@ -12,6 +13,10 @@ import kotlinx.coroutines.launch
 class AuthSharedViewModel(application: Application) : AndroidViewModel(application) {
 
     private val authenticationRepository = AuthenticationRepository()
+
+    private val _authenticationState: MutableLiveData<AuthenticationState> = MutableLiveData(AuthenticationState.WAITING)
+    val authenticationState: LiveData<AuthenticationState>
+    get() = _authenticationState
 
     private val _uid: MutableLiveData<Int> by lazy {
         MutableLiveData<Int>()
@@ -40,6 +45,7 @@ class AuthSharedViewModel(application: Application) : AndroidViewModel(applicati
             _authToken.postValue(resultBody.authToken)
             //save the token in shared preferences
             getApplication<MyApplication>().saveToken(resultBody.authToken)
+            _authenticationState.postValue(AuthenticationState.SUCCESFUL)
         }
     }
 }
