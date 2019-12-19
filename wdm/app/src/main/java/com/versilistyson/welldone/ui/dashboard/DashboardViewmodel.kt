@@ -1,15 +1,14 @@
 package com.versilistyson.welldone.ui.dashboard
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import android.app.Application
+import androidx.lifecycle.*
+import com.versilistyson.MyApplication
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 import com.versilistyson.welldone.repository.DashboardRepository
 
-class DashboardViewmodel: ViewModel() {
+class DashboardViewmodel(application: Application): AndroidViewModel(application) {
 
-    private val dashboardRepository = DashboardRepository()
+    private val dashboardRepository = DashboardRepository(application)
 
     val sensorLiveData = liveData {
         emit(dashboardRepository.fetchAllSensors())

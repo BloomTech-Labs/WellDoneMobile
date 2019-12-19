@@ -24,7 +24,7 @@ class SharedPreference(val application: Application) {
         return sharedPref.getString(KEY_NAME.keyName, "none")
     }
 
-    fun retreiveInt(KEY_NAME: Keys): Int {
+    fun retrieveInt(KEY_NAME: Keys): Int {
         return sharedPref.getInt(KEY_NAME.keyName, 0)
     }
 }

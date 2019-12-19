@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.ui.authentication.AuthSharedViewModel
@@ -46,11 +48,15 @@ class SignInFragment : Fragment() {
 
                 val email = signInFragment_et_email.text.toString()
                 val password = signInFragment_et_password.text.toString()
-                GlobalScope.launch(Dispatchers.Main) {
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                     val authJob = authViewModel.authenticateUser(email, password)
                     authJob.join()
                     Toast.makeText(this@SignInFragment.context, "id: ${authViewModel.uid.value} token: ${authViewModel.authToken.value}", Toast.LENGTH_LONG).show()
                     //TODO: Deleted action. Should go here
+                    if(authViewModel.authToken.value != null) {
+                        action = SignInFragmentDirections.actionSignInScreenToDashboardActivity()
+                        findNavController().navigate(action)
+                    }
                 }
             }
 

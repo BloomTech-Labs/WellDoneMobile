@@ -2,6 +2,7 @@ package com.versilistyson.welldone.ui.authentication
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.versilistyson.MyApplication
 import com.versilistyson.welldone.data.remote.dto.AuthenticationRequest
 import com.versilistyson.welldone.repository.AuthenticationRepository
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +38,8 @@ class AuthSharedViewModel(application: Application) : AndroidViewModel(applicati
             val resultBody = result.body()
             _uid.postValue(resultBody!!.userId)
             _authToken.postValue(resultBody.authToken)
+            //save the token in shared preferences
+            getApplication<MyApplication>().saveToken(resultBody.authToken)
         }
     }
 }

@@ -31,6 +31,7 @@
                 android:textColor="@android:color/black"
                 android:id="@+id/signInFragment_et_email"
                 android:textAlignment="center"
+                android:text="weird@gmail.com"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -44,6 +45,7 @@
                 android:textColor="@android:color/black"
                 android:textAlignment="center"
                 android:id="@+id/signInFragment_et_password"
+                android:text="123"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </com.google.android.material.textfield.TextInputLayout>

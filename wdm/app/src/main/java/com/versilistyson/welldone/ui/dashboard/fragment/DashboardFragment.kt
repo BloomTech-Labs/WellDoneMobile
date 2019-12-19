@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.versilistyson.MyApplication
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.adapter.SensorStatusListAdapter
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
@@ -100,7 +101,7 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
 
         viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer{
             if(it.isSuccessful){
-                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                     val averageLatLng = addMarkers(it.body()!!)
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(averageLatLng))
                 }
