@@ -1,6 +1,6 @@
 package com.versilistyson.welldone.ui.dashboard.fragment
 
-
+/*
 import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,9 +13,9 @@ import com.versilistyson.welldone.R
 import com.versilistyson.welldone.databinding.FragmentPumpDetailBinding
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
 
-/**
+*//**
  * A simple [Fragment] subclass.
- */
+ *//*
 class PumpDetailFragment : Fragment() {
 
     private lateinit var viewmodel: DashboardViewmodel
@@ -37,4 +37,4 @@ class PumpDetailFragment : Fragment() {
         }
         return binding.root
     }
-}
+}*/
