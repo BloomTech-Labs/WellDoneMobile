@@ -51,19 +51,19 @@
         app:layout_constraintTop_toTopOf="@id/map_view">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            app:backgroundTint="@color/color_map_marker_green"
+            app:backgroundTint="@color/working_status"
             android:id="@+id/fab_working_filter"
             android:src="@drawable/working_marker"
             style="@style/map_markers" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            app:backgroundTint="@color/color_map_marker_red"
+            app:backgroundTint="@color/non_working_status"
             android:src="@drawable/non_working_marker"
             android:id="@+id/fab_non_working_filter"
             style="@style/map_markers" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            app:backgroundTint="@color/color_map_marker_yellow"
+            app:backgroundTint="@color/no_data_status"
             style="@style/map_markers"
             android:id="@+id/fab_no_data_filter"
             android:src="@drawable/no_data_marker" />

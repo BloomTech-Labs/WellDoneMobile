@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="color_primary">#082B84</color>
-    <color name="color_map_marker_red">#FA0707</color>
-    <color name="color_map_marker_green">#01C000</color>
-    <color name="color_map_marker_yellow">#FFAD34</color>
     <color name="color_secondary">#35C6F4</color>
     <color name="color_secondary_variant">#AFE2F9</color>
 
@@ -19,6 +16,6 @@
     <color name="color_on_error">#ffffff</color>
 
     <color name="non_working_status">#FA0707</color>
-    <color name="working_status">#23D322</color>
+    <color name="working_status">#01C000</color>
     <color name="no_data_status">#FFAD34</color>
 </resources>
