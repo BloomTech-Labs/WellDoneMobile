@@ -21,4 +21,7 @@
     <string name="district">District</string>
     <string name="province">Province</string>
     <string name="view_pad_information">View pad information</string>
+    <string name="last_data_fetch">Last data fetch</string>
+    <string name="pump_num">Pump # %s</string>
+    <string name="well_depth_data">%s feet</string>
 </resources>

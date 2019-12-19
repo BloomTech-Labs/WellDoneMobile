@@ -2,6 +2,7 @@ package com.versilistyson.welldone.ui.dashboard
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.google.android.gms.maps.model.Marker
 import com.versilistyson.MyApplication
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 import com.versilistyson.welldone.repository.DashboardRepository
@@ -18,6 +19,8 @@ class DashboardViewmodel(application: Application): AndroidViewModel(application
         MutableLiveData<MutableList<SensorRecentResponse>>()
     }
 
+    var selectedMarkerSensor: SensorRecentResponse? = null
+
     val sensorStatusLiveData : LiveData<MutableList<SensorRecentResponse>>
     get() = _sensorStatusLiveData
 
@@ -25,5 +28,9 @@ class DashboardViewmodel(application: Application): AndroidViewModel(application
         sensorStatusLiveData.value?.let{
             it.add(sensorRecentResponse)
         }
+    }
+
+    fun clickedOnPumpMarker(marker: Marker){
+        selectedMarkerSensor = marker.tag as SensorRecentResponse
     }
 }
