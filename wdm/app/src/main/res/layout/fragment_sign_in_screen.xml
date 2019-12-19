@@ -102,11 +102,11 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
+                android:inputType="textEmailAddress"
                 android:textSize="18sp"
                 android:textColor="@android:color/black"
                 android:id="@+id/signInFragment_et_email"
                 android:textAlignment="textStart"
-                android:text="weird@gmail.com"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -117,11 +117,11 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
+                android:inputType="textPassword"
                 android:textSize="18sp"
                 android:textColor="@android:color/black"
                 android:textAlignment="textStart"
                 android:id="@+id/signInFragment_et_password"
-                android:text="123"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
