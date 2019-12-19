@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
@@ -15,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.ui.authentication.AuthSharedViewModel
+import com.versilistyson.welldone.ui.authentication.AuthenticationState
 import kotlinx.android.synthetic.main.fragment_sign_in_screen.*
 import kotlinx.coroutines.*
 
@@ -43,23 +45,32 @@ class SignInFragment : Fragment() {
                 .create(AuthSharedViewModel::class.java)
         }
 
-        bttn_signIn.setOnClickListener {
-            if (!signInFragment_et_email.text.isNullOrBlank() && !signInFragment_et_password.text.isNullOrBlank()) {
-
-                val email = signInFragment_et_email.text.toString()
-                val password = signInFragment_et_password.text.toString()
-                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                    val authJob = authViewModel.authenticateUser(email, password)
-                    authJob.join()
-                    Toast.makeText(this@SignInFragment.context, "id: ${authViewModel.uid.value} token: ${authViewModel.authToken.value}", Toast.LENGTH_LONG).show()
-                    //TODO: Deleted action. Should go here
-                    if(authViewModel.authToken.value != null) {
+        authViewModel.authenticationState.observe(
+            this,
+            Observer { newAuthenticationState ->
+                when (newAuthenticationState) {
+                    AuthenticationState.SUCCESFUL -> {
                         action = SignInFragmentDirections.actionSignInScreenToDashboardActivity()
                         findNavController().navigate(action)
                     }
+                    AuthenticationState.FAILED -> {
+                    }
+                    AuthenticationState.ERROR -> {
+                    }
+                    AuthenticationState.PROCESSING -> {
+                    }
+                    AuthenticationState.WAITING -> {
+                    }
                 }
             }
+        )
 
+        bttn_signIn.setOnClickListener {
+            if (!signInFragment_et_email.text.isNullOrBlank() && !signInFragment_et_password.text.isNullOrBlank()) {
+                val email = signInFragment_et_email.text.toString()
+                val password = signInFragment_et_password.text.toString()
+                authViewModel.authenticateUser(email, password)
+            }
         }
     }
 }
