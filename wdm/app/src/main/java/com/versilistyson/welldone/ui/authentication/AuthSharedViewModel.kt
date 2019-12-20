@@ -1,18 +1,30 @@
 package com.versilistyson.welldone.ui.authentication
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.squareup.moshi.Moshi
 import com.versilistyson.MyApplication
-import com.versilistyson.welldone.data.local.SharedPreference
 import com.versilistyson.welldone.data.remote.dto.AuthenticationRequest
 import com.versilistyson.welldone.repository.AuthenticationRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import java.io.IOException
 
 class AuthSharedViewModel(application: Application) : AndroidViewModel(application) {
 
     private val authenticationRepository = AuthenticationRepository()
+
+    private val _errorMessage: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+    val errorMessage: LiveData<String>
+    get() = _errorMessage
 
     private val _authenticationState: MutableLiveData<AuthenticationState> = MutableLiveData(AuthenticationState.WAITING)
     val authenticationState: LiveData<AuthenticationState>
@@ -31,14 +43,15 @@ class AuthSharedViewModel(application: Application) : AndroidViewModel(applicati
         get() = _authToken
 
     fun authenticateUser(email: String, password: String) = viewModelScope.launch {
-        val result = async {
+        _authenticationState.postValue(AuthenticationState.PROCESSING)
+        val result = withContext(Dispatchers.Default) {
             authenticationRepository.signIn(
                 AuthenticationRequest(
                     email,
                     password
                 )
             )
-        }.await()
+        }
         if (result.isSuccessful && result.body() != null) {
             val resultBody = result.body()
             _uid.postValue(resultBody!!.userId)
@@ -46,6 +59,18 @@ class AuthSharedViewModel(application: Application) : AndroidViewModel(applicati
             //save the token in shared preferences
             getApplication<MyApplication>().saveToken(resultBody.authToken)
             _authenticationState.postValue(AuthenticationState.SUCCESFUL)
+        } else {
+            try {
+                _authenticationState.postValue(AuthenticationState.FAILED)
+                val errorMessage = result.message()
+                _errorMessage.postValue(errorMessage)
+            } catch (e: IOException) {
+
+            }
         }
+    }
+
+    fun resetAuthenticationState() {
+        _authenticationState.postValue(AuthenticationState.WAITING)
     }
 }

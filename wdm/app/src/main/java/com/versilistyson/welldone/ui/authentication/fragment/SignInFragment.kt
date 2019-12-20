@@ -45,21 +45,43 @@ class SignInFragment : Fragment() {
                 .create(AuthSharedViewModel::class.java)
         }
 
+        authViewModel.errorMessage.observe(
+            this,
+            Observer {
+                newErrorMessage ->
+                Toast.makeText(this.context, newErrorMessage, Toast.LENGTH_SHORT).show()
+            }
+        )
         authViewModel.authenticationState.observe(
             this,
             Observer { newAuthenticationState ->
                 when (newAuthenticationState) {
                     AuthenticationState.SUCCESFUL -> {
+                        authViewModel.resetAuthenticationState()
                         action = SignInFragmentDirections.actionSignInScreenToDashboardActivity()
                         findNavController().navigate(action)
                     }
                     AuthenticationState.FAILED -> {
+                        bttn_signIn.isEnabled = true
+                        signInFragment_cv_authFailed.visibility = View.VISIBLE
+                        cv_forSignInStatus.visibility = View.INVISIBLE
+                        signIn_progressBar.animate().cancel()
                     }
                     AuthenticationState.ERROR -> {
+                        bttn_signIn.isEnabled = true
+                        authViewModel.resetAuthenticationState()
                     }
                     AuthenticationState.PROCESSING -> {
+                        bttn_signIn.isEnabled = false
+                        cv_forSignInStatus.visibility = View.VISIBLE
+                        signInFragment_cv_authFailed.visibility = View.INVISIBLE
+                        signIn_progressBar.animate().start()
                     }
                     AuthenticationState.WAITING -> {
+                        bttn_signIn.isEnabled = true
+                        cv_forSignInStatus.visibility = View.INVISIBLE
+                        signInFragment_cv_authFailed.visibility = View.INVISIBLE
+                        signIn_progressBar.animate().cancel()
                     }
                 }
             }
