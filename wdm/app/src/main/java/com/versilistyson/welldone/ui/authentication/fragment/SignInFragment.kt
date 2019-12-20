@@ -45,6 +45,13 @@ class SignInFragment : Fragment() {
                 .create(AuthSharedViewModel::class.java)
         }
 
+        authViewModel.errorMessage.observe(
+            this,
+            Observer {
+                newErrorMessage ->
+                Toast.makeText(this.context, newErrorMessage, Toast.LENGTH_SHORT).show()
+            }
+        )
         authViewModel.authenticationState.observe(
             this,
             Observer { newAuthenticationState ->
