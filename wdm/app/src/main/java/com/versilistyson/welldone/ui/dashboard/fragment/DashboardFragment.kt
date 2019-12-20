@@ -12,16 +12,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.adapter.SensorStatusListAdapter
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 /*
@@ -94,40 +92,40 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         MapsInitializer.initialize(context)
         mMap = googleMap
         mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-
-        viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer{
-            if(it.isSuccessful){
-                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                    val averageLatLng = addMarkers(it.body()!!)
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(averageLatLng))
-                }
-            }
-        })
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(15.0, 30.4)))
+//        viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer{ result->
+//            if(result.isSuccessful){
+//                viewmodel.getAverageLatitudeLongitude(result.body()!!, mMap)
+//            }
+//        })
+//        viewmodel.averageLatitudeLongitudeLiveData.observe(viewLifecycleOwner, Observer{
+//            mMap.moveCamera(CameraUpdateFactory.newLatLng(it))
+//        })
     }
 
-    fun addMarkers(sensors: List<SensorRecentResponse>): LatLng{
-
-        var totalLat = 0.0
-        var totalLng = 0.0
-
-        for(sensor in sensors){
-            val point = LatLng(sensor.latitude, sensor.longitude)
-            totalLat += point.latitude
-            totalLng += point.longitude
-
-            val marker = MarkerOptions()
-                .position(point)
-
-            when(sensor.status){
-                null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.no_data_marker))
-                1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.non_working_marker))
-                2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.working_marker))
-            }
-
-            mMap.addMarker(marker).tag = sensor
-        }
-        return LatLng(totalLat/sensors.size, totalLng/sensors.size)
-    }
+//    fun addMarkers(sensors: List<SensorRecentResponse>): LatLng{
+//
+//        var totalLat = 0.0
+//        var totalLng = 0.0
+//
+//        for(sensor in sensors){
+//            val point = LatLng(sensor.latitude, sensor.longitude)
+//            totalLat += point.latitude
+//            totalLng += point.longitude
+//
+//            val marker = MarkerOptions()
+//                .position(point)
+//
+//            when(sensor.status){
+//                null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.no_data_marker))
+//                1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.non_working_marker))
+//                2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.working_marker))
+//            }
+//
+//            mMap.addMarker(marker).tag = sensor
+//        }
+//        return LatLng(totalLat/sensors.size, totalLng/sensors.size)
+//    }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
         marker?.let{
