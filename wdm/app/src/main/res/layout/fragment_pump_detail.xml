@@ -109,7 +109,7 @@
                 android:textColor="#C5A2A2"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/map_fragment" />
+                app:layout_constraintTop_toBottomOf="@id/map" />
 
             <TextView
                 android:id="@+id/tv_commune_title"
@@ -121,7 +121,7 @@
                 android:textColor="#C5A2A2"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/map_fragment" />
+                app:layout_constraintTop_toBottomOf="@id/map" />
 
             <TextView
                 android:id="@+id/tv_province_data"
@@ -196,7 +196,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_last_data_fetch_title" />
 
             <com.google.android.gms.maps.MapView
-                android:id="@+id/map_fragment"
+                android:id="@+id/map"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="272dp"

@@ -11,7 +11,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="wrap_content"
         android:background="@color/color_dashboard_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
@@ -30,20 +30,13 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <FrameLayout
-        android:id="@+id/frame_layout"
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/coordinator"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="72dp">
-
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/map_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </FrameLayout>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <LinearLayout
         android:id="@+id/ll_forMapFABs"
@@ -52,10 +45,10 @@
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="@id/frame_layout"
-        app:layout_constraintBottom_toBottomOf="@id/frame_layout"
-        app:layout_constraintStart_toStartOf="@id/frame_layout"
-        app:layout_constraintEnd_toEndOf="@id/frame_layout">
+        app:layout_constraintTop_toTopOf="@id/map_view"
+        app:layout_constraintBottom_toBottomOf="@id/map_view"
+        app:layout_constraintStart_toStartOf="@id/map_view"
+        app:layout_constraintEnd_toEndOf="@id/map_view">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             app:backgroundTint="@color/working_status"
@@ -64,10 +57,10 @@
             style="@style/map_markers" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            app:backgroundTint="@color/non_working_status"
-            android:src="@drawable/non_working_marker"
             android:id="@+id/fab_non_working_filter"
-            style="@style/map_markers" />
+            style="@style/map_markers"
+            android:src="@drawable/non_working_marker"
+            app:backgroundTint="@color/non_working_status" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             app:backgroundTint="@color/no_data_status"
@@ -81,7 +74,7 @@
         android:id="@+id/rv_pump_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/frame_layout"
+        app:layout_constraintTop_toBottomOf="@id/map_view"
         app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

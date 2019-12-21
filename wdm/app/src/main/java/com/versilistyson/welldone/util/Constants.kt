@@ -1,9 +1,6 @@
 package com.versilistyson.welldone.util
 
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import java.util.concurrent.TimeUnit
 
 const val BASE_URL = "https://well-done-staging.herokuapp.com/"
@@ -21,3 +18,5 @@ val okHttpClient = OkHttpClient.Builder()
     .readTimeout(30, TimeUnit.SECONDS)
     .connectTimeout(30, TimeUnit.SECONDS)
     .build()
+
+const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
