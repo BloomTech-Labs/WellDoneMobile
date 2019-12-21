@@ -25,4 +25,8 @@
     <string name="pump_num">Pump # %s</string>
     <string name="well_depth_data">%s feet</string>
     <string name="auth_login_failed">Login Failed!</string>
+    <string name="authenticating">Authenticating...</string>
+    <string name="authentication_failed">Authentication Failed</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>
