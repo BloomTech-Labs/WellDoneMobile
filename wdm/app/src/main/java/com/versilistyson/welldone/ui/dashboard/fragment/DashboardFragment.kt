@@ -100,6 +100,11 @@ class DashboardFragment : Fragment(), OnMapReadyCallback {
 //        return false
 //    }
 
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
     override fun onResume() {
         super.onResume()
         mapView.onResume()
