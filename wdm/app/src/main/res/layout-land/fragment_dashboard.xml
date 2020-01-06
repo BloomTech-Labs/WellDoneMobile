@@ -29,7 +29,7 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <com.mapbox.mapboxsdk.maps.MapView
+    <com.google.android.gms.maps.MapView
         android:layout_marginTop="72dp"
         android:id="@+id/map_view"
         app:layout_constraintTop_toTopOf="parent"
