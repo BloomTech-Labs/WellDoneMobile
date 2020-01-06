@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mapbox.mapboxsdk.Mapbox
@@ -21,6 +24,7 @@ import com.versilistyson.welldone.R
 import com.versilistyson.welldone.adapter.SensorStatusListAdapter
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
 import com.versilistyson.welldone.util.MAPVIEW_BUNDLE_KEY
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 
 /*
@@ -73,8 +77,15 @@ class DashboardFragment : Fragment(), OnMapReadyCallback {
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
-
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mapExpandButton.setOnClickListener {
+            val action = DashboardFragmentDirections.actionDashboardFragmentToFullScreenMapFragment()
+            findNavController().navigate(action)
+        }
     }
 
     override fun onMapReady(mapboxMap: MapboxMap) {

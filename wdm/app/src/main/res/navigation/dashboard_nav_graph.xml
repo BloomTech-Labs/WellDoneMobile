@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_dashboardFragment_to_pumpDetailFragment"
             app:destination="@+id/pumpDetailFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_fullScreenMapFragment"
+            app:destination="@id/fullScreenMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/pumpDetailFragment"
         android:name="com.versilistyson.welldone.ui.dashboard.fragment.PumpDetailFragment"
         android:label="PumpDetailFragment" />
+    <fragment
+        android:id="@+id/fullScreenMapFragment"
+        android:name="com.versilistyson.welldone.ui.dashboard.fragment.FullScreenMapFragment"
+        android:label="full_screen_map_fragment"
+        tools:layout="@layout/full_screen_map_fragment" />
 
 </navigation>
