@@ -8,6 +8,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.dashboard.fragment.DashboardFragment">
 
+    <androidx.appcompat.widget.AppCompatImageButton
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/mapExpandButton"
+        android:src="@drawable/ic_fullscreen_white_40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:background="@color/color_dashboard_background"
         app:layout_constraintBottom_toTopOf="@id/map_view"

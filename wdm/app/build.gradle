@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'androidx.navigation.safeargs'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 apply plugin: 'kotlin-kapt'
 
@@ -57,9 +57,9 @@ dependencies {
     // Google Play Services (Maps)
 //    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     // KotlinX Navigation fragment
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc03'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc04'
     // KotlinX Navigation UI
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-rc03'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-rc04'
     // KotlinX Lifecycle Live Data
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc03'
     // KotlinX Lifecycle Runtime
@@ -84,7 +84,7 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     // Material
-    implementation 'com.google.android.material:material:1.2.0-alpha02'
+    implementation 'com.google.android.material:material:1.2.0-alpha03'
     //Dagger
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"

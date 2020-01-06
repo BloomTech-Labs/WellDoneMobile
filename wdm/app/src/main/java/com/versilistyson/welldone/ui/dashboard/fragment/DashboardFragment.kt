@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -28,13 +29,6 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-/*
-    Dashboard map for WellDone operator where they can view the pumps on a map.
-    Landscape and portrait mode. In landscape mode, map is bigger and pump status
-    displays in a little box on the map when you click on a marker on the map. In
-    portrait mode it displays in a little recycler view underneath, shows previous marker
-    clicks as well.
- */
 class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var viewmodel: DashboardViewmodel
@@ -74,6 +68,14 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         mapView = view.findViewById(R.id.map_view)
         initGoogleMap(savedInstanceState)
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mapExpandButton.setOnClickListener {
+            val action = DashboardFragmentDirections.actionDashboardFragmentToFullScreenMapFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun initGoogleMap(savedInstanceState: Bundle?) {
