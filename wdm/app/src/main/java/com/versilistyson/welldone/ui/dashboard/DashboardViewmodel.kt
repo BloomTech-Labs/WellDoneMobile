@@ -13,12 +13,11 @@ class DashboardViewmodel(application: Application): AndroidViewModel(application
 
     private val dashboardRepository = DashboardRepository(application)
 
-    val sensorLiveData = liveData {
-        emit(dashboardRepository.fetchAllSensors())
-    }
-
     private val _sensorStatusLiveData: MutableLiveData<MutableList<SensorRecentResponse>> by lazy{
         MutableLiveData<MutableList<SensorRecentResponse>>()
+    }
+    val sensorLiveData = liveData {
+        emit(dashboardRepository.fetchAllSensors())
     }
 
     var selectedMarkerSensor: SensorRecentResponse? = null
@@ -29,7 +28,6 @@ class DashboardViewmodel(application: Application): AndroidViewModel(application
     private val _averageLatitudeLongitudeLiveData: MutableLiveData<LatLng> by lazy{
         MutableLiveData<LatLng>()
     }
-
     val averageLatitudeLongitudeLiveData: LiveData<LatLng>
     get() = _averageLatitudeLongitudeLiveData
 

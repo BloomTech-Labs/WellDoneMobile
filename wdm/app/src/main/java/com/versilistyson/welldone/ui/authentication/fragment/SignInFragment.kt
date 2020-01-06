@@ -1,6 +1,5 @@
 package com.versilistyson.welldone.ui.authentication.fragment
 
-
 import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,15 +9,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.ui.authentication.AuthSharedViewModel
 import com.versilistyson.welldone.ui.authentication.AuthenticationState
 import kotlinx.android.synthetic.main.fragment_sign_in_screen.*
-import kotlinx.coroutines.*
 
 class SignInFragment : Fragment() {
 
@@ -46,14 +42,14 @@ class SignInFragment : Fragment() {
         }
 
         authViewModel.errorMessage.observe(
-            this,
+            viewLifecycleOwner,
             Observer {
                 newErrorMessage ->
                 Toast.makeText(this.context, newErrorMessage, Toast.LENGTH_SHORT).show()
             }
         )
         authViewModel.authenticationState.observe(
-            this,
+            viewLifecycleOwner,
             Observer { newAuthenticationState ->
                 when (newAuthenticationState) {
                     AuthenticationState.SUCCESFUL -> {

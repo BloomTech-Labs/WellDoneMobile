@@ -9,18 +9,11 @@
         android:id="@+id/dashboardFragment"
         android:name="com.versilistyson.welldone.ui.dashboard.fragment.DashboardFragment"
         android:label="fragment_dashboard"
-        tools:layout="@layout/fragment_dashboard" >
-        <action
-            android:id="@+id/action_dashboardFragment_to_pumpDetailFragment"
-            app:destination="@+id/pumpDetailFragment" />
+        tools:layout="@layout/fragment_dashboard">
         <action
             android:id="@+id/action_dashboardFragment_to_fullScreenMapFragment"
             app:destination="@id/fullScreenMapFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/pumpDetailFragment"
-        android:name="com.versilistyson.welldone.ui.dashboard.fragment.PumpDetailFragment"
-        android:label="PumpDetailFragment" />
     <fragment
         android:id="@+id/fullScreenMapFragment"
         android:name="com.versilistyson.welldone.ui.dashboard.fragment.FullScreenMapFragment"
