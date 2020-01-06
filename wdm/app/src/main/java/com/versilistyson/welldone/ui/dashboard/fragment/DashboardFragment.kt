@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -23,6 +25,8 @@ import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
 import com.versilistyson.welldone.util.MAPVIEW_BUNDLE_KEY
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /*
     Dashboard map for WellDone operator where they can view the pumps on a map.
@@ -83,9 +87,15 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        val sydney = LatLng(-34.0, -151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+        viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer{
+            if(it.isSuccessful){
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                    val averageLatLng = addMarkers(it.body()!!)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(averageLatLng))
+                }
+            }
+        })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -112,6 +122,30 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
             return true
         }
         return false
+    }
+
+    fun addMarkers(sensors: List<SensorRecentResponse>): LatLng{
+
+        var totalLat = 0.0
+        var totalLng = 0.0
+
+        for(sensor in sensors){
+            val point = LatLng(sensor.latitude, sensor.longitude)
+            totalLat += point.latitude
+            totalLng += point.longitude
+
+            val marker = MarkerOptions()
+                .position(point)
+
+            when(sensor.status){
+                null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.no_data_marker))
+                1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.non_working_marker))
+                2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.working_marker))
+            }
+
+            mMap.addMarker(marker).tag = sensor
+        }
+        return LatLng(totalLat/sensors.size, totalLng/sensors.size)
     }
 
     override fun onStart() {
