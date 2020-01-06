@@ -9,19 +9,19 @@
             name="pump"
             type="com.versilistyson.welldone.data.remote.dto.SensorRecentResponse"/>
     </data>
-    
+
     <ScrollView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginBottom="25dp">
-    
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
-    
+
             tools:context=".ui.dashboard.fragment.PumpDetailFragment">
-    
+
             <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:background="@color/color_dashboard_background"
                 app:layout_constraintStart_toStartOf="parent"
@@ -29,20 +29,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="72dp">
-    
+
                 <com.google.android.material.appbar.AppBarLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-    
+
                     <androidx.appcompat.widget.Toolbar
                         app:logo="@drawable/well_done_logo_small"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
-    
+
                 </com.google.android.material.appbar.AppBarLayout>
-    
+
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    
+
             <ImageView
                 android:id="@+id/img_back"
                 android:layout_width="36dp"
@@ -52,7 +52,7 @@
                 android:src="@drawable/ic_keyboard_backspace_white_24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-    
+
             <TextView
                 android:id="@+id/tv_pump"
                 style="@style/TextOnDark"
@@ -64,7 +64,7 @@
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-    
+
             <Button
                 android:id="@+id/btn_view_padcounts"
                 android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
                 android:text="@string/view_pad_information"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_pump" />
-    
+
             <TextView
                 android:id="@+id/tv_location"
                 style="@style/TextOnDark"
@@ -86,7 +86,7 @@
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-    
+
             <TextView
                 android:id="@+id/tv_district_title"
                 android:layout_width="wrap_content"
@@ -195,14 +195,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_last_data_fetch_title" />
 
-            <com.google.android.gms.maps.MapView
+            <com.mapbox.mapboxsdk.maps.MapView
                 android:id="@+id/map"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="272dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-    
+
             <TextView
                 android:id="@+id/tv_last_data_fetch_title"
                 android:layout_width="wrap_content"
@@ -214,7 +214,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_data" />
-    
+
             <TextView
                 android:id="@+id/tv_data"
                 style="@style/TextOnDark"
@@ -226,8 +226,8 @@
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-    
-    
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
