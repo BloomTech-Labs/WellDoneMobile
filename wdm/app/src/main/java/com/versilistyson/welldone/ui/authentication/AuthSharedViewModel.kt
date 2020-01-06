@@ -30,9 +30,7 @@ class AuthSharedViewModel(application: Application) : AndroidViewModel(applicati
     val authenticationState: LiveData<AuthenticationState>
     get() = _authenticationState
 
-    private val _uid: MutableLiveData<Int> by lazy {
-        MutableLiveData<Int>()
-    }
+    private val _uid: MutableLiveData<Int> by lazy { MutableLiveData<Int>() }
     val uid: LiveData<Int>
         get() = _uid
 
@@ -44,7 +42,7 @@ class AuthSharedViewModel(application: Application) : AndroidViewModel(applicati
 
     fun authenticateUser(email: String, password: String) = viewModelScope.launch {
         _authenticationState.postValue(AuthenticationState.PROCESSING)
-        val result = withContext(Dispatchers.Default) {
+        val result = withContext(Dispatchers.IO) {
             authenticationRepository.signIn(
                 AuthenticationRequest(
                     email,
