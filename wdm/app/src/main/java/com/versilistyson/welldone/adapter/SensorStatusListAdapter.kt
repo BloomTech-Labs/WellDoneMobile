@@ -4,9 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 import kotlinx.android.synthetic.main.card_pumpstatus.view.*
@@ -16,12 +21,12 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>): Recycler
     lateinit var context: Context
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
-        val pumpId = view.tv_PumpID
-        val villageTitle = view.tv_villageTitle
-        val communeTitle = view.tv_communeTitle
-        val imgIcon = view.img_statusIcon
-        val layout = view.layout_status
-        val moreDetails = view.tv_more_details
+        val pumpId = view.tv_PumpID as TextView
+        val villageTitle = view.tv_villageTitle as TextView
+        val communeTitle = view.tv_communeTitle as TextView
+        val imgIcon = view.img_statusIcon as ImageView
+        val layout = view.layout_status as ConstraintLayout
+        val moreDetails = view.expand_image_button as ImageButton
     }
 
     override fun getItemCount(): Int {
