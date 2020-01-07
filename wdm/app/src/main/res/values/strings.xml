@@ -31,4 +31,9 @@
     <string name="password">Password</string>
 
     <string name="mapbox_access_token">pk.eyJ1IjoiZ2Nnc2F1Y2UiLCJhIjoiY2s0ZmFmY2FtMDYwNDNvbnhmanc1dmt3diJ9.rGntj-5g7_2qb__5XYAmhQ</string>
+    <string name="view_details">View details</string>
+    <string name="directions">Directions</string>
+    <string name="view_logs">View logs</string>
+    <string name="logs">Logs</string>
+    <string name="add_a_log_entry">Add a log entry</string>
 </resources>

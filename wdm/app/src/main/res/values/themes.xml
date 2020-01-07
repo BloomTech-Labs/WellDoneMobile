@@ -18,9 +18,18 @@
         <item name="colorOnBackground">@color/color_on_background</item>
         <item name="colorOnSurface">@color/color_on_surface</item>
         <item name="colorOnError">@color/color_on_error</item>
+        <item name="android:textViewStyle">@style/TextOnDark</item>
     </style>
 
     <style name = "TextOnDark" parent="Widget.MaterialComponents.TextView">
         <item name="android:textColor">#fff</item>
     </style>
+
+    <style name="FullScreenDialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="actionMenuTextColor">@color/color_on_primary</item>
+    </style>
+
 </resources>

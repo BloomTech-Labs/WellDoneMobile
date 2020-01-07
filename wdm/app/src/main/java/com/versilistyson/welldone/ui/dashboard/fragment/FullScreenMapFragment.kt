@@ -19,9 +19,7 @@ class FullScreenMapFragment : Fragment() {
     private lateinit var mapView: MapView
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.full_screen_map_fragment, container, false)
     }
 
@@ -34,7 +32,6 @@ class FullScreenMapFragment : Fragment() {
                 .getInstance(appContext)
                 .create(DashboardViewmodel::class.java)
         }
-        // TODO: Use the ViewModel
     }
 
 }

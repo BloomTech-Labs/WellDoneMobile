@@ -40,7 +40,7 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>): Recycler
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val sensor = sensors[position]
-        holder.pumpId.setText(sensor.pump_index)
+        holder.pumpId.text = "${sensor.pump_index}"
         holder.villageTitle.text = sensor.village_name
         holder.communeTitle.text = sensor.commune_name
 
