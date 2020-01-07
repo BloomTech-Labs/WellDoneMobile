@@ -5,9 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -29,10 +26,9 @@ import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
 import com.versilistyson.welldone.util.MAPVIEW_BUNDLE_KEY
 import kotlinx.android.synthetic.main.fragment_dashboard.*
-import kotlinx.android.synthetic.main.marker_info_window_layout.*
-import kotlinx.android.synthetic.main.marker_info_window_layout.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -41,35 +37,31 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
     private lateinit var mapView: MapView
     private lateinit var sensorStatusListAdapter: SensorStatusListAdapter
     private lateinit var sensorStatusRecyclerView: RecyclerView
+    private val listOfMarkersToAdd: MutableList<MarkerOptions> by lazy {
+        mutableListOf<MarkerOptions>()
+    }
+    private lateinit var averageLatLng: LatLng
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        viewmodel = activity.let {
-            val appContext = activity?.applicationContext as Application
-            ViewModelProvider
-                .AndroidViewModelFactory
-                .getInstance(appContext)
-                .create(DashboardViewmodel::class.java)
-        }
-
-        viewmodel.sensorLiveData.value?.body().let {
-            sensorStatusListAdapter = if(it != null) {
-                SensorStatusListAdapter(it)
-            } else {
-                SensorStatusListAdapter(emptyList())
-            }
-            initRecyclerView()
-        }
-
-        viewmodel.sensorStatusLiveData.observe(viewLifecycleOwner, Observer {
-            sensorStatusListAdapter.notifyDataSetChanged()
-        })
+//        viewmodel.sensorLiveData.value?.body().let {
+//            sensorStatusListAdapter = if(it != null) {
+//                SensorStatusListAdapter(it)
+//            } else {
+//                SensorStatusListAdapter(emptyList())
+//            }
+//            initRecyclerView()
+//        }
+//
+//        viewmodel.sensorStatusLiveData.observe(viewLifecycleOwner, Observer {
+//            sensorStatusListAdapter.notifyDataSetChanged()
+//        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        initViewModel()
         mapView = view.findViewById(R.id.map_view)
         initGoogleMap(savedInstanceState)
         return view
@@ -89,22 +81,26 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         } else {
             mapView.onCreate(savedInstanceState)
         }
-        mapView.getMapAsync(this)
+
+        viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer {
+            if(it.isSuccessful){
+                viewLifecycleOwner.lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        averageLatLng = getAvgLatLngSensors(it.body()!!)
+                    }
+                    mapView.getMapAsync(this@DashboardFragment)
+                }
+            }
+        })
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(averageLatLng))
 
-        mMap.setInfoWindowAdapter(createInfoWindow())
-
-        viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer{
-            if(it.isSuccessful){
-                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                    val averageLatLng = addMarkers(it.body()!!)
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(averageLatLng))
-                }
-            }
-        })
+        for(marker in listOfMarkersToAdd) {
+            mMap.addMarker(marker)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -133,7 +129,7 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         return false
     }
 
-    private fun addMarkers(sensors: List<SensorRecentResponse>): LatLng{
+    private fun getAvgLatLngSensors(sensors: List<SensorRecentResponse>): LatLng{
 
         var totalLat = 0.0
         var totalLng = 0.0
@@ -151,32 +147,18 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
                 1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_no_data))
                 2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning))
             }
-
-            mMap.addMarker(marker).tag = sensor
+            listOfMarkersToAdd.add(marker)
         }
         return LatLng(totalLat/sensors.size, totalLng/sensors.size)
     }
 
-    private fun createInfoWindow(): GoogleMap.InfoWindowAdapter{
-        return object: GoogleMap.InfoWindowAdapter{
-            override fun getInfoWindow(marker: Marker?): View {
-                val view = LayoutInflater.from(context!!).inflate(R.layout.marker_info_window_layout, null)
-                view.view_details_layout.setOnClickListener {
-                    //move to details layout screen
-                    Toast.makeText(context!!, "HIIII", Toast.LENGTH_SHORT).show()
-                }
-                view.view_directions_layout.setOnClickListener {
-
-                }
-                view.view_logs_layout.setOnClickListener {
-
-                }
-                return view
-            }
-
-            override fun getInfoContents(p0: Marker?): View {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+    private fun initViewModel(){
+        viewmodel = activity.let {
+            val appContext = activity?.applicationContext as Application
+            ViewModelProvider
+                .AndroidViewModelFactory
+                .getInstance(appContext)
+                .create(DashboardViewmodel::class.java)
         }
     }
 
