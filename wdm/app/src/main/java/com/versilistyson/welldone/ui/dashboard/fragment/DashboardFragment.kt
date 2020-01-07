@@ -140,9 +140,9 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
                 .position(point)
 
             when(sensor.status){
-                null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.no_data_marker))
-                1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.non_working_marker))
-                2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.working_marker))
+                null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_functioning))
+                1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_no_data))
+                2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning))
             }
 
             mMap.addMarker(marker).tag = sensor
