@@ -48,37 +48,6 @@
         android:src="@drawable/ic_fullscreen_white_40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-    <LinearLayout
-        android:id="@+id/ll_forMapFABs"
-        android:gravity="center_vertical"
-        android:weightSum="3"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="@id/map_view"
-        app:layout_constraintBottom_toBottomOf="@id/map_view"
-        app:layout_constraintStart_toStartOf="@id/map_view"
-        app:layout_constraintEnd_toEndOf="@id/map_view">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            app:backgroundTint="@color/working_status"
-            android:id="@+id/fab_working_filter"
-            android:src="@drawable/working_marker"
-            style="@style/map_markers" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_non_working_filter"
-            style="@style/map_markers"
-            android:src="@drawable/non_working_marker"
-            app:backgroundTint="@color/non_working_status" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            app:backgroundTint="@color/no_data_status"
-            style="@style/map_markers"
-            android:id="@+id/fab_no_data_filter"
-            android:src="@drawable/no_data_marker" />
-
-    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_pump_status"
@@ -89,3 +58,36 @@
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/ll_forMapFABs"-->
+    <!--            android:gravity="center_vertical"-->
+    <!--            android:weightSum="3"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="350dp"-->
+    <!--            android:orientation="vertical"-->
+    <!--            app:layout_constraintTop_toTopOf="@id/map_view"-->
+    <!--            app:layout_constraintBottom_toBottomOf="@id/map_view"-->
+    <!--            app:layout_constraintStart_toStartOf="@id/map_view"-->
+    <!--            app:layout_constraintEnd_toEndOf="@id/map_view">-->
+
+    <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--                app:backgroundTint="@color/working_status"-->
+    <!--                android:id="@+id/fab_working_filter"-->
+    <!--                android:src="@drawable/working_marker"-->
+    <!--                style="@style/map_markers" />-->
+
+    <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--                android:id="@+id/fab_non_working_filter"-->
+    <!--                style="@style/map_markers"-->
+    <!--                android:src="@drawable/non_working_marker"-->
+    <!--                app:backgroundTint="@color/non_working_status" />-->
+
+    <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--                app:backgroundTint="@color/no_data_status"-->
+    <!--                style="@style/map_markers"-->
+    <!--                android:id="@+id/fab_no_data_filter"-->
+    <!--                android:src="@drawable/no_data_marker" />-->
+
+    <!--    </LinearLayout>-->

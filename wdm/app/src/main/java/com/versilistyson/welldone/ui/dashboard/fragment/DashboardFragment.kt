@@ -42,22 +42,6 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
     }
     private lateinit var averageLatLng: LatLng
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-//        viewmodel.sensorLiveData.value?.body().let {
-//            sensorStatusListAdapter = if(it != null) {
-//                SensorStatusListAdapter(it)
-//            } else {
-//                SensorStatusListAdapter(emptyList())
-//            }
-//            initRecyclerView()
-//        }
-//
-//        viewmodel.sensorStatusLiveData.observe(viewLifecycleOwner, Observer {
-//            sensorStatusListAdapter.notifyDataSetChanged()
-//        })
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
@@ -65,14 +49,6 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         mapView = view.findViewById(R.id.map_view)
         initGoogleMap(savedInstanceState)
         return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mapExpandButton.setOnClickListener {
-            val action = DashboardFragmentDirections.actionDashboardFragmentToFullScreenMapFragment()
-            findNavController().navigate(action)
-        }
     }
 
     private fun initGoogleMap(savedInstanceState: Bundle?) {
@@ -84,6 +60,10 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
 
         viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer {
             if(it.isSuccessful){
+                it.body()?.let { body->
+                    sensorStatusListAdapter = SensorStatusListAdapter(body)
+                    initRecyclerView()
+                }
                 viewLifecycleOwner.lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
                         averageLatLng = getAvgLatLngSensors(it.body()!!)
@@ -96,10 +76,19 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(averageLatLng))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 6.0f))
 
         for(marker in listOfMarkersToAdd) {
             mMap.addMarker(marker)
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mapExpandButton.setOnClickListener {
+            val action = DashboardFragmentDirections.actionDashboardFragmentToFullScreenMapFragment()
+            findNavController().navigate(action)
         }
     }
 
@@ -115,7 +104,7 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
     }
 
     private fun initRecyclerView() {
-        sensorStatusRecyclerView = RecyclerView(activity!!.applicationContext).apply{
+        sensorStatusRecyclerView = rv_pump_status.apply{
             adapter = sensorStatusListAdapter
             layoutManager = LinearLayoutManager(activity!!.applicationContext, LinearLayoutManager.VERTICAL, false)
         }
