@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,6 +29,8 @@ import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
 import com.versilistyson.welldone.util.MAPVIEW_BUNDLE_KEY
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.android.synthetic.main.marker_info_window_layout.*
+import kotlinx.android.synthetic.main.marker_info_window_layout.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -90,6 +95,8 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
+        mMap.setInfoWindowAdapter(createInfoWindow())
+
         viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer{
             if(it.isSuccessful){
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
@@ -120,13 +127,13 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
 
     override fun onMarkerClick(marker: Marker?): Boolean {
         marker?.let{
-            viewmodel.addSensorStatus(marker.tag as SensorRecentResponse)
+
             return true
         }
         return false
     }
 
-    fun addMarkers(sensors: List<SensorRecentResponse>): LatLng{
+    private fun addMarkers(sensors: List<SensorRecentResponse>): LatLng{
 
         var totalLat = 0.0
         var totalLng = 0.0
@@ -148,6 +155,29 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
             mMap.addMarker(marker).tag = sensor
         }
         return LatLng(totalLat/sensors.size, totalLng/sensors.size)
+    }
+
+    private fun createInfoWindow(): GoogleMap.InfoWindowAdapter{
+        return object: GoogleMap.InfoWindowAdapter{
+            override fun getInfoWindow(marker: Marker?): View {
+                val view = LayoutInflater.from(context!!).inflate(R.layout.marker_info_window_layout, null)
+                view.view_details_layout.setOnClickListener {
+                    //move to details layout screen
+                    Toast.makeText(context!!, "HIIII", Toast.LENGTH_SHORT).show()
+                }
+                view.view_directions_layout.setOnClickListener {
+
+                }
+                view.view_logs_layout.setOnClickListener {
+
+                }
+                return view
+            }
+
+            override fun getInfoContents(p0: Marker?): View {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        }
     }
 
     override fun onStart() {

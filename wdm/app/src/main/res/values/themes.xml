@@ -18,6 +18,7 @@
         <item name="colorOnBackground">@color/color_on_background</item>
         <item name="colorOnSurface">@color/color_on_surface</item>
         <item name="colorOnError">@color/color_on_error</item>
+        <item name="android:textViewStyle">@style/TextOnDark</item>
     </style>
 
     <style name = "TextOnDark" parent="Widget.MaterialComponents.TextView">
