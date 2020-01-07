@@ -84,25 +84,138 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_villageTitle" />
 
-            <TextView
-                android:id="@+id/tv_more_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="248dp"
+            <ImageButton
+                android:src="@drawable/ic_expand_less_black_24dp"
+                android:id="@+id/expand_image_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="64dp"
-                android:text="@string/more_details"
-                android:textColor="#0022FF"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginEnd="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:background="@color/background_gray"
             android:layout_width="match_parent"
             android:layout_height="200dp">
+            <TableLayout
+                android:padding="8dp"
+                android:weightSum="7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TableRow
+                    android:layout_weight="2"
+                    android:elevation="20dp"
+                    style="@style/TableRowForCard">
+                    <TextView
+                        android:textSize="14sp"
+                        android:text="Date"
+                        style="@style/DateTextColumn" />
+                    <TextView
+                        style="@style/StatusTextColumn"
+                        android:textSize="14sp"
+                        android:text="Status"
+                        />
+                    <TextView
+                        android:textSize="14sp"
+                        android:text="Comments"
+                        style="@style/CommentStyle" />
+                </TableRow>
+                <TableRow
+                    android:layout_weight="1"
+                    style="@style/TableRowForCard">
+                    <TextView
+                        android:textSize="14sp"
+                        android:text="11/20/19"
+                        style="@style/DateTextColumn"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:text="SUCCESSFUL"
+                        style="@style/StatusTextColumn"/>
+                    <TextView
+                        android:textSize="12sp"
+                        android:text="Something something something..."
+                        style="@style/CommentStyle"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                </TableRow>
+                <TableRow
+                    android:layout_weight="1"
+                    style="@style/TableRowForCard">
+                    <TextView
+                        android:textSize="14sp"
+                        android:text="11/20/19"
+                        style="@style/DateTextColumn"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:text="SUCCESSFUL"
+                        style="@style/StatusTextColumn"/>
+                    <TextView
+                        android:textSize="12sp"
+                        android:text="Something something something..."
+                        style="@style/CommentStyle"/>
+
+                </TableRow>
+                <TableRow
+                    android:layout_weight="1"
+                    style="@style/TableRowForCard">
+                    <TextView
+                        android:textSize="14sp"
+                        android:text="11/20/19"
+                        style="@style/DateTextColumn"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:text="SUCCESSFUL"
+                        style="@style/StatusTextColumn"/>
+                    <TextView
+                        android:textSize="12sp"
+                        android:text="Something something something..."
+                        style="@style/CommentStyle"/>
+
+                </TableRow>
+                <TableRow
+                    android:layout_weight="1"
+                    style="@style/TableRowForCard">
+                    <TextView
+                        android:textSize="14sp"
+                        android:text="11/20/19"
+                        style="@style/DateTextColumn"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:text="SUCCESSFUL"
+                        style="@style/StatusTextColumn"/>
+                    <TextView
+                        android:textSize="12sp"
+                        android:text="Something something something..."
+                        style="@style/CommentStyle"/>
+
+                </TableRow>
+                <TableRow
+                    android:layout_weight="1"
+                    style="@style/TableRowForCard">
+                    <TextView
+                        android:textSize="14sp"
+                        android:text="11/20/19"
+                        style="@style/DateTextColumn"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:text="SUCCESSFUL"
+                        style="@style/StatusTextColumn"/>
+                    <TextView
+                        android:textSize="12sp"
+                        android:text="Something something something..."
+                        style="@style/CommentStyle"/>
+
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
