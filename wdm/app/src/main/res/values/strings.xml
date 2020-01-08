@@ -37,7 +37,7 @@
     <string name="well">Well</string>
     <string name="district">District</string>
     <string name="last_edited">Last\nedited</string>
-    <string name="date_filed">Date filed</string>
+    <string name="date_filed">Date\nfiled</string>
     <string name="status">Status</string>
     <string name="comment">Comment</string>
 </resources>
