@@ -36,4 +36,8 @@
     <string name="october_13_2019">October 13, 2019</string>
     <string name="well">Well</string>
     <string name="district">District</string>
+    <string name="last_edited">Last\nedited</string>
+    <string name="date_filed">Date filed</string>
+    <string name="status">Status</string>
+    <string name="comment">Comment</string>
 </resources>
