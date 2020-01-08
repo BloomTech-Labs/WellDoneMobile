@@ -1,5 +1,7 @@
 package com.versilistyson.welldone.data.remote.dto
 
+import java.io.Serializable
+
 data class SensorRecentResponse(
     val bluetooth: Int?,
     val cellular: Int?,
@@ -41,4 +43,4 @@ data class SensorRecentResponse(
     val type: String?,
     val village_name: String,
     val yield: Double?
-)
+): Serializable
