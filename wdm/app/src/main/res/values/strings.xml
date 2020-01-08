@@ -8,17 +8,13 @@
     <string name="more_details">More details</string>
     <string name="location">Location</string>
     <string name="data">Data</string>
-    <string name="last_upload">Last upload</string>
-    <string name="october_13_2019">October 13, 2019</string>
     <string name="total_upload">Total uploads</string>
     <string name="total_liters">Total liters</string>
-    <string name="well">Well</string>
     <string name="constructed">Constructed</string>
     <string name="depth">Depth</string>
     <string name="commune">Commune</string>
     <string name="khun_ream">Khun Ream</string>
     <string name="well_depth">Well depth</string>
-    <string name="district">District</string>
     <string name="province">Province</string>
     <string name="view_pad_information">View pad information</string>
     <string name="last_data_fetch">Last data fetch</string>
@@ -36,4 +32,8 @@
     <string name="view_logs">View logs</string>
     <string name="logs">Logs</string>
     <string name="add_a_log_entry">Add a log entry</string>
+    <string name="last_upload">Last upload</string>
+    <string name="october_13_2019">October 13, 2019</string>
+    <string name="well">Well</string>
+    <string name="district">District</string>
 </resources>

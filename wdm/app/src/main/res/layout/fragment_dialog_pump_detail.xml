@@ -12,6 +12,7 @@
         android:layout_marginBottom="25dp">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/pump_detail_toolbar"
             android:background="@color/color_dashboard_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -26,196 +27,154 @@
                 <androidx.appcompat.widget.Toolbar
                     app:logo="@drawable/well_done_logo_small"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    app:navigationIcon="@drawable/ic_arrow_back_white_24dp" />
 
             </com.google.android.material.appbar.AppBarLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <ImageView
-            android:id="@+id/img_back"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="92dp"
-            android:src="@drawable/ic_keyboard_backspace_white_24dp"
+        <TextView
+            android:id="@+id/tv_pump_id"
+            style="@style/HeaderTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="8dp"
+            android:text="Pump # 4575"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/pump_detail_toolbar" />
 
         <TextView
-            android:id="@+id/tv_pump"
-            style="@style/TextOnDark"
+            android:id="@+id/tv_last_upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="132dp"
-            android:layout_marginTop="92dp"
-            android:text="@{@string/pump_num(pump.physical_id)}"
-            android:textSize="24sp"
+            android:layout_marginTop="8dp"
+            android:text="@string/last_upload"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.851"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/pump_detail_toolbar" />
 
-        <Button
-            android:id="@+id/btn_view_padcounts"
+        <TextView
+            android:id="@+id/tv_last_upload_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="112dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/october_13_2019"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_last_upload" />
+
+        <TextView
+            android:id="@+id/tv_well_title"
+            style="@style/HeaderTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
             android:layout_marginTop="36dp"
-            android:text="@string/view_pad_information"
+            android:text="@string/well"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_pump" />
+            app:layout_constraintTop_toBottomOf="@id/tv_pump_id" />
 
-        <TextView
-            android:id="@+id/tv_location"
-            style="@style/TextOnDark"
+        <LinearLayout
+            android:id="@+id/title_layouts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tv_well_title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="28dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/well_depth"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/province"
+                android:layout_marginStart="55dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/district"
+                android:layout_marginStart="70dp"/>
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/commune"-->
+<!--                android:layout_marginStart="40dp"/>-->
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/value_layouts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="228dp"
-            android:text="@string/location"
-            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@id/title_layouts"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="10dp">
 
-        <TextView
-            android:id="@+id/tv_district_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/district"
-            android:textColor="#C5A2A2"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_last_data_fetch_data" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="33 feet"
+                android:textStyle="bold"
+                android:layout_marginStart="28dp"/>
 
-        <TextView
-            android:id="@+id/tv_well_depth_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="168dp"
-            android:layout_marginTop="80dp"
-            android:text="@string/well_depth"
-            android:textColor="#C5A2A2"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/map" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="75dp"
+                android:text="Siem Reap"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Banteay Srei"
+                android:layout_marginStart="60dp"
+                android:textStyle="bold"/>
+
+
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_commune_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="276dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="16dp"
             android:text="@string/commune"
-            android:textColor="#C5A2A2"
-            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/map" />
+            app:layout_constraintTop_toBottomOf="@id/value_layouts" />
 
         <TextView
-            android:id="@+id/tv_province_data"
-            style="@style/TextOnDark"
+            android:id="@+id/tv_commune_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="8dp"
-            android:text="@{pump.province_name}"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/tv_district_data"
-            app:layout_constraintTop_toBottomOf="@id/tv_province" />
+            android:text="Khun Ream"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tv_commune_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_commune_title"
+            android:layout_marginTop="10dp"/>
 
         <TextView
-            android:id="@+id/tv_commune_data"
-            style="@style/TextOnDark"
+            android:id="@+id/tv_logs_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="276dp"
-            android:layout_marginTop="8dp"
-            android:text="@{pump.commune_name}"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_commune_title" />
-
-        <TextView
-            android:id="@+id/tv_well_depth_data"
-            style="@style/TextOnDark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="8dp"
-            android:text="@{@string/well_depth_data(Integer.toString(pump.depth))}"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/tv_last_data_fetch_data"
-            app:layout_constraintTop_toBottomOf="@id/tv_well_depth_title" />
-
-        <TextView
-            android:id="@+id/tv_province"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="168dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/province"
-            android:textColor="#C5A2A2"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_well_depth_data" />
-
-        <TextView
-            android:id="@+id/tv_district_data"
-            style="@style/TextOnDark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="8dp"
-            android:text="@{pump.district_name}"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_district_title" />
-
-        <TextView
-            android:id="@+id/tv_last_data_fetch_data"
-            style="@style/TextOnDark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="8dp"
-            android:text="@{pump.data_finished}"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_last_data_fetch_title" />
-
-        <com.mapbox.mapboxsdk.maps.MapView
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="272dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_last_data_fetch_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="32dp"
-            android:text="@string/last_data_fetch"
-            android:textColor="#C5A2A2"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_data" />
-
-        <TextView
-            android:id="@+id/tv_data"
-            style="@style/TextOnDark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="488dp"
-            android:text="@string/data"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            style="@style/HeaderTextStyle"
+            android:text="@string/logs"
+            app:layout_constraintTop_toBottomOf="@id/tv_commune_value"
+            app:layout_constraintStart_toStartOf="@id/tv_commune_value"
+            android:layout_marginTop="20dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
