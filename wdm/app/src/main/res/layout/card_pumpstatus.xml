@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    >
+
+
+<com.google.android.material.card.MaterialCardView
     android:elevation="8dp"
+    android:layout_gravity="fill"
     android:layout_marginTop="32dp"
-    android:layout_gravity="center_horizontal"
     android:layout_width="372dp"
     android:layout_height="wrap_content"
     app:cardCornerRadius="10dp">
@@ -15,7 +23,7 @@
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:elevation="20dp"
+            android:elevation="18dp"
             android:id="@+id/layout_status"
             android:background="@color/non_working_status"
             android:layout_width="match_parent"
@@ -71,32 +79,26 @@
                 android:id="@+id/tv_communeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
                 android:text="Khun Ream"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@id/tv_villageTitle"
                 app:layout_constraintTop_toBottomOf="@id/tv_villageTitle" />
-
-            <ImageView
-                android:id="@+id/img_statusIcon"
+            <ImageButton
+                android:background="?android:selectableItemBackground"
+                android:src="@drawable/ic_expand_more_black_24dp"
+                android:id="@+id/expandAndClose_imageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="68dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_villageTitle" />
-
-            <ImageButton
-                android:src="@drawable/ic_expand_less_black_24dp"
-                android:id="@+id/expand_image_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
                 android:layout_marginTop="64dp"
-                android:layout_marginEnd="2dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <LinearLayout android:id="@+id/ll_for_cvDetails"
+            android:visibility="gone"
             android:orientation="vertical"
             android:background="@color/background_gray"
             android:layout_width="match_parent"
@@ -221,3 +223,4 @@
 
 
 </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

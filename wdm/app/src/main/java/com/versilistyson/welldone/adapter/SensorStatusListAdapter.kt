@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -24,9 +25,27 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>): Recycler
         val pumpId = view.tv_PumpID as TextView
         val villageTitle = view.tv_villageTitle as TextView
         val communeTitle = view.tv_communeTitle as TextView
-        val imgIcon = view.img_statusIcon as ImageView
         val layout = view.layout_status as ConstraintLayout
-        val moreDetails = view.expand_image_button as ImageButton
+        val moreDetailsBttn = view.expandAndClose_imageButton as ImageButton
+        val llForDetails = view.ll_for_cvDetails as LinearLayout
+        fun moreDetailsBttnOnClick() {
+            moreDetailsBttn.setOnClickListener {
+                when(llForDetails.visibility) {
+                    View.VISIBLE -> {
+                        llForDetails.visibility = View.GONE
+                        moreDetailsBttn.setImageResource(R.drawable.ic_expand_more_black_24dp)
+
+                    }
+
+                    View.GONE -> {
+                        llForDetails.visibility = View.VISIBLE
+                        moreDetailsBttn.setImageResource(R.drawable.ic_expand_less_black_24dp)
+                    }
+                }
+
+            }
+
+        }
     }
 
     override fun getItemCount(): Int {
@@ -47,19 +66,14 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>): Recycler
         when(sensor.status){
             null -> {
                 holder.layout.setBackgroundColor(ContextCompat.getColor(context, R.color.non_working_status))
-                holder.imgIcon.setImageDrawable(getDrawable(context, R.drawable.red_x))
             }
             1    -> {
                 holder.layout.setBackgroundColor(ContextCompat.getColor(context, R.color.no_data_status))
             }
             2    -> {
                 holder.layout.setBackgroundColor(ContextCompat.getColor(context, R.color.working_status))
-                holder.imgIcon.setImageDrawable(getDrawable(context, R.drawable.green_check))
             }
         }
-
-        holder.moreDetails.setOnClickListener {
-
-        }
+        holder.moreDetailsBttnOnClick()
     }
 }
