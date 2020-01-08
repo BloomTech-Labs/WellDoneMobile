@@ -25,11 +25,11 @@ class PumpDialogDetailFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         sensor = arguments!!.getSerializable("sensor") as SensorRecentResponse
-
         bindSensor()
-
+        toolbar_pump_details.setNavigationOnClickListener{
+            dismiss()
+        }
         //just mock for now
         logAdapter = OperatorLogAdapter(mutableListOf(
             OperatorLog("13/5/2018", "13/6/2019", ContextCompat.getDrawable(context!!, R.drawable.pump_non_functioning)!!, "HIMAN")))
