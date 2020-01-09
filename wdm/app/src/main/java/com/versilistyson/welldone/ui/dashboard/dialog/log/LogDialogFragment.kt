@@ -25,6 +25,14 @@ class LogDialogFragment: DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         currentLog = arguments!!.getSerializable("log") as OperatorLog
         bindView()
+
+        img_pic_adder.setOnClickListener {
+            //launches intent to start camera
+        }
+
+        img_close_dialog.setOnClickListener {
+            dismiss()
+        }
     }
 
     private fun bindView() {
