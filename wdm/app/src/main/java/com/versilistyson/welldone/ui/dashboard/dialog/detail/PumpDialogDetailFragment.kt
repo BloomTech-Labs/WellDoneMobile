@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.ui.dashboard.dialog
+package com.versilistyson.welldone.ui.dashboard.dialog.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,9 +12,10 @@ import com.versilistyson.welldone.R
 import com.versilistyson.welldone.adapter.OperatorLogAdapter
 import com.versilistyson.welldone.data.local.model.OperatorLog
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
+import com.versilistyson.welldone.ui.dashboard.dialog.log.LogDialogFragment
 import kotlinx.android.synthetic.main.fragment_dialog_pump_detail.*
 
-class PumpDialogDetailFragment : DialogFragment() {
+class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickReceived {
 
     private lateinit var viewModel: PumpDialogViewModel
     private lateinit var sensor: SensorRecentResponse
@@ -43,12 +44,27 @@ class PumpDialogDetailFragment : DialogFragment() {
         initRecyclerView()
     }
 
+    override fun onLogClicked(log: OperatorLog) {
+        //start alert dialog for log that shows when a log on the list is clicked
+        val logDialogFragment = LogDialogFragment()
+        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+        val prev = activity!!.supportFragmentManager.findFragmentByTag("dialog2")
+        if(prev != null){
+            fragmentTransaction.remove(prev)
+        }
+        fragmentTransaction.addToBackStack(null)
+        val bundle = Bundle()
+        bundle.putSerializable("log", log)
+        logDialogFragment.arguments = bundle
+        logDialogFragment.show(fragmentTransaction, "dialog2")
+    }
+
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(PumpDialogViewModel::class.java)
     }
 
     private fun initRecyclerView() {
-        logAdapter = OperatorLogAdapter(viewModel.listOfLogs)
+        logAdapter = OperatorLogAdapter(viewModel.listOfLogs, this)
         rv_logs.apply{
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = logAdapter
