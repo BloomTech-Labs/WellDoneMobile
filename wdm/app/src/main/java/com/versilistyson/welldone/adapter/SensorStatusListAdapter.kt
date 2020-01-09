@@ -4,10 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -28,6 +25,10 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>): Recycler
         val layout = view.layout_status as ConstraintLayout
         val moreDetailsBttn = view.expandAndClose_imageButton as ImageButton
         val llForDetails = view.ll_for_cvDetails as LinearLayout
+        val dialogButton = view.dialog_button as Button
+        fun dialogButtonOnClick() {
+
+        }
         fun moreDetailsBttnOnClick() {
             moreDetailsBttn.setOnClickListener {
                 when(llForDetails.visibility) {
@@ -75,5 +76,6 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>): Recycler
             }
         }
         holder.moreDetailsBttnOnClick()
+        holder.dialogButtonOnClick()
     }
 }
