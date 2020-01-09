@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.data.remote.dto
+package com.versilistyson.welldone.data.local.model
 
 import android.graphics.drawable.Drawable
 

@@ -2,6 +2,7 @@
 
 <com.google.android.material.card.MaterialCardView android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:minHeight="50dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:strokeWidth="0.5dp"
     app:strokeColor="@android:color/black"
@@ -19,7 +20,9 @@
             android:layout_height="wrap_content"
             android:text="13/09/2019"
             android:textColor="@android:color/black"
-            android:textSize="12sp"/>
+            android:textSize="12sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="8dp"/>
 
         <TextView
             android:id="@+id/tv_last_modified"
@@ -28,25 +31,30 @@
             android:text="13/10/2019"
             android:textColor="@android:color/black"
             android:textSize="12sp"
-            android:layout_marginStart="20dp"/>
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"/>
 
         <ImageView
             android:id="@+id/img_status"
             android:layout_width="16dp"
             android:layout_height="16dp"
+            android:layout_marginStart="30dp"
             android:src="@drawable/pump_no_data"
-            android:layout_marginStart="25dp"/>
+            android:layout_marginTop="15dp"/>
 
         <TextView
             android:id="@+id/tv_comments"
-            android:layout_width="120dp"
+            android:layout_width="87dp"
             android:layout_height="wrap_content"
             android:text="The pump was not working and it needed repairs"
             android:maxLines="2"
             android:ellipsize="end"
             android:textColor="@android:color/black"
             android:textSize="12sp"
-            android:layout_marginStart="20dp"/>
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginEnd="8dp"/>
 
     </LinearLayout>
 
