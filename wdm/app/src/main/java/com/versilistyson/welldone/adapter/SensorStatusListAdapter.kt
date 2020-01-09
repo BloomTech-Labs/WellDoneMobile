@@ -1,6 +1,7 @@
 package com.versilistyson.welldone.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
+import com.versilistyson.welldone.ui.dashboard.dialog.PumpDialogDetailFragment
 import kotlinx.android.synthetic.main.card_pumpstatus.view.*
 
-class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>): RecyclerView.Adapter<SensorStatusListAdapter.ViewHolder>() {
+class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>, val listener: DashboardToDetailsDialog? = null): RecyclerView.Adapter<SensorStatusListAdapter.ViewHolder>() {
 
     lateinit var context: Context
 
@@ -26,9 +28,13 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>): Recycler
         val moreDetailsBttn = view.expandAndClose_imageButton as ImageButton
         val llForDetails = view.ll_for_cvDetails as LinearLayout
         val dialogButton = view.dialog_button as Button
-        fun dialogButtonOnClick() {
 
+        fun dialogButtonOnClick(sensor: SensorRecentResponse, listener: DashboardToDetailsDialog){
+            dialogButton.setOnClickListener {
+                listener.moveToDialog(sensor)
+            }
         }
+
         fun moreDetailsBttnOnClick() {
             moreDetailsBttn.setOnClickListener {
                 when(llForDetails.visibility) {
@@ -45,7 +51,6 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>): Recycler
                 }
 
             }
-
         }
     }
 
@@ -76,6 +81,10 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>): Recycler
             }
         }
         holder.moreDetailsBttnOnClick()
-        holder.dialogButtonOnClick()
+        listener?.let { holder.dialogButtonOnClick(sensor, it) }
+    }
+
+    interface DashboardToDetailsDialog {
+        fun moveToDialog(sensor: SensorRecentResponse)
     }
 }

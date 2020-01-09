@@ -1,11 +1,14 @@
 package com.versilistyson.welldone.ui.dashboard.fragment
 
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.add
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -24,13 +27,14 @@ import com.versilistyson.welldone.R
 import com.versilistyson.welldone.adapter.SensorStatusListAdapter
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
+import com.versilistyson.welldone.ui.dashboard.dialog.PumpDialogDetailFragment
 import com.versilistyson.welldone.util.MAPVIEW_BUNDLE_KEY
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SensorStatusListAdapter.DashboardToDetailsDialog {
 
     private lateinit var viewmodel: DashboardViewmodel
     private lateinit var mMap: GoogleMap
@@ -61,7 +65,7 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer {
             if(it.isSuccessful){
                 it.body()?.let { body->
-                    sensorStatusListAdapter = SensorStatusListAdapter(body)
+                    sensorStatusListAdapter = SensorStatusListAdapter(body, this)
                     initRecyclerView()
                 }
                 viewLifecycleOwner.lifecycleScope.launch {
@@ -149,6 +153,20 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
                 .getInstance(appContext)
                 .create(DashboardViewmodel::class.java)
         }
+    }
+
+    override fun moveToDialog(sensor: SensorRecentResponse) {
+        val pumpDialogDetailFragment = PumpDialogDetailFragment()
+        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+        val prev = activity!!.supportFragmentManager.findFragmentByTag("dialog")
+        if(prev != null){
+            fragmentTransaction.remove(prev)
+        }
+        fragmentTransaction.addToBackStack(null)
+        val bundle = Bundle()
+        bundle.putSerializable("sensor", sensor)
+        pumpDialogDetailFragment.arguments = bundle
+        pumpDialogDetailFragment.show(fragmentTransaction, "dialog")
     }
 
     override fun onStart() {

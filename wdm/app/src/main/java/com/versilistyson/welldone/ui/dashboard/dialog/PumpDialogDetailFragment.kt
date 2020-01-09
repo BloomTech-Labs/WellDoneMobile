@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.adapter.OperatorLogAdapter
-import com.versilistyson.welldone.data.remote.dto.OperatorLog
+import com.versilistyson.welldone.data.local.model.OperatorLog
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 import kotlinx.android.synthetic.main.fragment_dialog_pump_detail.*
 
@@ -25,18 +25,21 @@ class PumpDialogDetailFragment : DialogFragment() {
         return inflater.inflate(R.layout.fragment_dialog_pump_detail, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initViewModel()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         sensor = arguments!!.getSerializable("sensor") as SensorRecentResponse
-        bindSensor()
+        initViewModel()
         toolbar_pump_details.setNavigationOnClickListener{
             dismiss()
         }
-        //just mock for now
-        viewModel.listOfLogs.add(OperatorLog("13/5/2018", "13/6/2019",
-            ContextCompat.getDrawable(context!!, R.drawable.pump_non_functioning)!!, "HIMAN"))
-
+        bindSensor()
+        viewModel.listOfLogs.add(
+                OperatorLog(
+                    "13/05/2018", "13/06/2019",
+                    ContextCompat.getDrawable(context!!, R.drawable.pump_non_functioning)!!, "HIMAN"))
+        viewModel.listOfLogs.add(
+                OperatorLog("14/05/2020", "15/06/2020",
+                    ContextCompat.getDrawable(context!!, R.drawable.pump_no_data)!!, "The pump was not working and it needed repairs"))
         initRecyclerView()
     }
 

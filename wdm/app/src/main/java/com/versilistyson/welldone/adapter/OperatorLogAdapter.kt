@@ -5,12 +5,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.versilistyson.welldone.R
-import com.versilistyson.welldone.data.remote.dto.OperatorLog
+import com.versilistyson.welldone.data.local.model.OperatorLog
 import kotlinx.android.synthetic.main.log_entry_layout.view.*
 
 class OperatorLogAdapter(val logs: MutableList<OperatorLog>): RecyclerView.Adapter<OperatorLogAdapter.LogViewHolder>() {
 
+    interface LogClickReceived {
+        fun onLogClicked()
+    }
+
     class LogViewHolder(view: View): RecyclerView.ViewHolder(view){
+
+        init{
+            view.setOnClickListener {
+                //open alert dialog that displays log in more detail
+
+            }
+        }
+
         val tvDateCreated = view.tv_date_created
         val tvLastEdited = view.tv_last_modified
         val imgStatus = view.img_status
