@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.adapter.OperatorLogAdapter
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_dialog_pump_detail.*
 
 class PumpDialogDetailFragment : DialogFragment() {
 
+    private lateinit var viewModel: PumpDialogViewModel
     private lateinit var sensor: SensorRecentResponse
     private lateinit var logAdapter: OperatorLogAdapter
 
@@ -25,19 +27,25 @@ class PumpDialogDetailFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initViewModel()
         sensor = arguments!!.getSerializable("sensor") as SensorRecentResponse
         bindSensor()
         toolbar_pump_details.setNavigationOnClickListener{
             dismiss()
         }
         //just mock for now
-        logAdapter = OperatorLogAdapter(mutableListOf(
-            OperatorLog("13/5/2018", "13/6/2019", ContextCompat.getDrawable(context!!, R.drawable.pump_non_functioning)!!, "HIMAN")))
+        viewModel.listOfLogs.add(OperatorLog("13/5/2018", "13/6/2019",
+            ContextCompat.getDrawable(context!!, R.drawable.pump_non_functioning)!!, "HIMAN"))
 
         initRecyclerView()
     }
 
+    private fun initViewModel() {
+        viewModel = ViewModelProviders.of(this).get(PumpDialogViewModel::class.java)
+    }
+
     private fun initRecyclerView() {
+        logAdapter = OperatorLogAdapter(viewModel.listOfLogs)
         rv_logs.apply{
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = logAdapter
@@ -57,11 +65,3 @@ class PumpDialogDetailFragment : DialogFragment() {
         return R.style.FullScreenDialog
     }
 }
-
-//        viewmodel = activity.let {
-//            val appContext = activity?.applicationContext as Application
-//            ViewModelProvider
-//                .AndroidViewModelFactory
-//                .getInstance(appContext)
-//                .create(DashboardViewmodel::class.java)
-//        }
