@@ -1,5 +1,8 @@
+
 package com.versilistyson.welldone.ui.dashboard.dialog.log
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +26,7 @@ class LogDialogFragment: DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        activity!!.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         currentLog = arguments!!.getSerializable("log") as OperatorLog
         bindView()
 
