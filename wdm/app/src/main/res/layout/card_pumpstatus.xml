@@ -63,9 +63,9 @@
 
             <Button
                 android:id="@+id/dialog_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Shitty Button Change Later"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="Details"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
