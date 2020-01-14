@@ -1,8 +1,8 @@
-package com.versilistyson.welldone.di.module
+package com.versilistyson.welldone.di.auth
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.versilistyson.welldone.data.remote.WellDoneApi
+import com.versilistyson.welldone.data.remote.AuthenticationService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-object NetworkModule {
+object AuthNetworkModule {
 
     val BASE_URL = "https://well-done-staging.herokuapp.com/"
 
@@ -46,6 +46,6 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofitService(retrofit: Retrofit): WellDoneApi =
-        retrofit.create(WellDoneApi::class.java)
+    fun provideRetrofitService(retrofit: Retrofit): AuthenticationService =
+        retrofit.create(AuthenticationService::class.java)
 }

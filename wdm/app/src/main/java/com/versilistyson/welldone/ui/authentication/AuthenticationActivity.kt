@@ -7,7 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.versilistyson.MyApplication
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.ViewModelProviderFactory
-import com.versilistyson.welldone.di.component.AuthComponent
+import com.versilistyson.welldone.di.auth.AuthComponent
 import javax.inject.Inject
 
 class AuthenticationActivity : AppCompatActivity() {
@@ -23,6 +23,7 @@ class AuthenticationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication)
+
         authComponent = (applicationContext as MyApplication).appComponent.authComponent()
         authComponent.inject(this)
 

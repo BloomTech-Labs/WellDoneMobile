@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.di.scopes
+package com.versilistyson.welldone.di.auth
 
 import javax.inject.Scope
 

@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.di.module
+package com.versilistyson.welldone.di
 
 import androidx.lifecycle.ViewModelProvider
 import com.versilistyson.welldone.ViewModelProviderFactory

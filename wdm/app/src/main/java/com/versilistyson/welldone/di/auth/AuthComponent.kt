@@ -1,19 +1,17 @@
-package com.versilistyson.welldone.di.component
+package com.versilistyson.welldone.di.auth
 
-import com.versilistyson.welldone.di.module.AuthViewModelModule
-import com.versilistyson.welldone.di.scopes.AuthActivityScope
 import com.versilistyson.welldone.ui.authentication.AuthenticationActivity
 import com.versilistyson.welldone.ui.authentication.fragment.SignInFragment
 import com.versilistyson.welldone.ui.authentication.fragment.SplashScreenFragment
 import dagger.Subcomponent
 
 @AuthActivityScope
-@Subcomponent(modules = [AuthViewModelModule::class])
+@Subcomponent(modules = [AuthViewModelModule::class, AuthNetworkModule::class])
 interface AuthComponent {
 
     @Subcomponent.Factory
     interface Factory {
-        fun create(): AuthComponent
+        fun create(authViewModelModule: AuthViewModelModule, authNetworkModule: AuthNetworkModule): AuthComponent
     }
 
     fun inject(activity: AuthenticationActivity)

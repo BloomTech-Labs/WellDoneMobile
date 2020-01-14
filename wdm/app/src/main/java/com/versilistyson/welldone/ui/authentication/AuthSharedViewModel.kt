@@ -1,9 +1,9 @@
 package com.versilistyson.welldone.ui.authentication
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.versilistyson.MyApplication
 import com.versilistyson.welldone.data.remote.dto.AuthenticationRequest
@@ -14,10 +14,10 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
-//with a matching scope in the component, this will determine that the component is  
-class AuthSharedViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
+//with a matching scope in the component, this will determine that the component does not exist outside the lifetime of the component
 
-    @Inject lateinit var authRepository: AuthenticationRepository
+class AuthSharedViewModel @Inject constructor(private val application: Application,
+                                              private val authRepository: AuthenticationRepository): ViewModel() {
 
     private val _errorMessage: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
@@ -54,7 +54,7 @@ class AuthSharedViewModel @Inject constructor(application: Application) : Androi
             _uid.postValue(resultBody!!.userId)
             _authToken.postValue(resultBody.authToken)
             //save the token in shared preferences
-            getApplication<MyApplication>().saveToken(resultBody.authToken)
+            (application as MyApplication).saveToken(resultBody.authToken)
             _authenticationState.postValue(AuthenticationState.SUCCESSFUL)
         } else {
             try {

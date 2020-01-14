@@ -10,21 +10,3 @@ interface AuthenticationService {
     @POST("/api/auth/login")
     suspend fun signIn(@Body authenticationRequest: AuthenticationRequest): Response<AuthenticationResponse>
 }
-
-
-//companion object Factory {
-//    fun create() : AuthenticationService {
-//
-//        val moshi = Moshi.Builder()
-//            .add(KotlinJsonAdapterFactory())
-//            .build()
-//
-//        val retrofit = Retrofit.Builder()
-//            .client(okHttpClient)
-//            .addConverterFactory(MoshiConverterFactory.create(moshi))
-//            .baseUrl(BASE_URL)
-//            .build()
-//
-//        return retrofit.create(AuthenticationService::class.java)
-//    }
-//}

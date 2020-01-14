@@ -8,13 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import com.versilistyson.MyApplication
 import com.versilistyson.welldone.R
-import com.versilistyson.welldone.ViewModelProviderFactory
-import com.versilistyson.welldone.di.component.AuthComponent
 import com.versilistyson.welldone.ui.authentication.AuthSharedViewModel
 import com.versilistyson.welldone.ui.authentication.AuthenticationActivity
 import com.versilistyson.welldone.ui.authentication.AuthenticationState
