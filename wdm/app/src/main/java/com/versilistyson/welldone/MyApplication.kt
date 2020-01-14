@@ -1,14 +1,17 @@
-package com.versilistyson
+package com.versilistyson.welldone
 
 import android.app.Application
 import com.versilistyson.welldone.data.local.SharedPreference
+import com.versilistyson.welldone.di.DaggerAppComponent
 
 class MyApplication: Application() {
 
-    val appComponent =
+    val appComponent by lazy {
         DaggerAppComponent
-            .factory()
-            .create(this)
+            .builder()
+            .application(this)
+            .build()
+    }
 
     private lateinit var sharedPreferences: SharedPreference
 

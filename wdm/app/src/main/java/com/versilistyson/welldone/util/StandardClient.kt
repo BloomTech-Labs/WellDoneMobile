@@ -2,8 +2,7 @@ package com.versilistyson.welldone.util
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.versilistyson.MyApplication
-import com.versilistyson.welldone.data.local.SharedPreference
+import com.versilistyson.welldone.MyApplication
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
-import com.versilistyson.MyApplication
+import com.versilistyson.welldone.MyApplication
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.ViewModelProviderFactory
 import com.versilistyson.welldone.di.auth.AuthComponent

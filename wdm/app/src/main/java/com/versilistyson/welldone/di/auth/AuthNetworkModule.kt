@@ -16,7 +16,7 @@ object AuthNetworkModule {
 
     val BASE_URL = "https://well-done-staging.herokuapp.com/"
 
-    @Singleton
+    @AuthActivityScope
     @JvmStatic
     @Provides
     fun moshi(): Moshi =
@@ -24,7 +24,7 @@ object AuthNetworkModule {
             .add(KotlinJsonAdapterFactory())
             .build()
 
-    @Singleton
+    @AuthActivityScope
     @JvmStatic
     @Provides
     fun provideOkHttpClient(): OkHttpClient =
@@ -34,7 +34,7 @@ object AuthNetworkModule {
             .connectTimeout(30, TimeUnit.SECONDS)
             .build()
 
-    @Singleton
+    @AuthActivityScope
     @JvmStatic
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit =
@@ -44,7 +44,8 @@ object AuthNetworkModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
 
-    @Singleton
+    @AuthActivityScope
+    @JvmStatic
     @Provides
     fun provideRetrofitService(retrofit: Retrofit): AuthenticationService =
         retrofit.create(AuthenticationService::class.java)

@@ -1,9 +1,8 @@
 package com.versilistyson.welldone.repository
 
 import android.app.Application
-import com.versilistyson.MyApplication
+import com.versilistyson.welldone.MyApplication
 import com.versilistyson.welldone.data.remote.WellDoneApi
-import com.versilistyson.welldone.data.remote.dto.PumpResponse
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 import com.versilistyson.welldone.util.BASE_URL
 import com.versilistyson.welldone.util.StandardClient

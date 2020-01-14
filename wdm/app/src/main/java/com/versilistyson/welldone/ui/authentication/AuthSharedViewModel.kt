@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.versilistyson.MyApplication
+import com.versilistyson.welldone.MyApplication
 import com.versilistyson.welldone.data.remote.dto.AuthenticationRequest
 import com.versilistyson.welldone.repository.AuthenticationRepository
 import kotlinx.coroutines.Dispatchers
