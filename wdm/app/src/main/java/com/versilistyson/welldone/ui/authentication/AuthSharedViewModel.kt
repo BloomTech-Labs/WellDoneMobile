@@ -14,8 +14,10 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
-class AuthSharedViewModel @Inject constructor(private val authRepository: AuthenticationRepository,
-                                              application: Application) : AndroidViewModel(application) {
+//with a matching scope in the component, this will determine that the component is  
+class AuthSharedViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
+
+    @Inject lateinit var authRepository: AuthenticationRepository
 
     private val _errorMessage: MutableLiveData<String> by lazy {
         MutableLiveData<String>()

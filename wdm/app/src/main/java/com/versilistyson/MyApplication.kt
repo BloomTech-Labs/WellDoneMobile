@@ -13,7 +13,6 @@ class MyApplication: Application() {
         sharedPreferences = SharedPreference(this)
     }
 
-
     fun saveToken(token: String){
         sharedPreferences.save(SharedPreference.Keys.USER_TOKEN, token)
     }
