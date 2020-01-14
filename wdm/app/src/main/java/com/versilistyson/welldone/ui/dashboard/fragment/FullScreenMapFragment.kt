@@ -15,23 +15,28 @@ import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
 
 class FullScreenMapFragment : Fragment() {
 
-    private lateinit var sharedViewModel: DashboardViewmodel
-    private lateinit var mapView: MapView
+    private lateinit var viewModel: DashboardViewmodel
+    private lateinit var fullScreenMap: GoogleMap
+    private lateinit var fullScreenMapView: MapView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.full_screen_map_fragment, container, false)
+
+        val view inflater.inflate(R.layout.full_screen_map_fragment, container, false)
+        fullScreenMapView = view.findViewByID(R.id.)
+        viewmodel = activity.let {
+                val appContext = activity?.applicationContext as Application
+                ViewModelProvider
+                    .AndroidViewModelFactory
+                    .getInstance(appContext)
+                    .create(DashboardViewmodel::class.java)
+        }
+
+
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        sharedViewModel = activity.let {
-            val appContext = activity?.applicationContext as Application
-            ViewModelProvider
-                .AndroidViewModelFactory
-                .getInstance(appContext)
-                .create(DashboardViewmodel::class.java)
-        }
     }
-
 }
