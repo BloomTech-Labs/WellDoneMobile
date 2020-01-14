@@ -1,14 +1,11 @@
 package com.versilistyson.welldone.ui.dashboard.fragment
 
 import android.app.Application
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.add
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -27,7 +24,7 @@ import com.versilistyson.welldone.R
 import com.versilistyson.welldone.adapter.SensorStatusListAdapter
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
-import com.versilistyson.welldone.ui.dashboard.dialog.PumpDialogDetailFragment
+import com.versilistyson.welldone.ui.dashboard.dialog.detail.PumpDialogDetailFragment
 import com.versilistyson.welldone.util.MAPVIEW_BUNDLE_KEY
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.coroutines.Dispatchers
@@ -189,8 +186,8 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         map_view.onPause()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         map_view.onDestroy()
     }
 
