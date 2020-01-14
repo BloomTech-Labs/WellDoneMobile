@@ -30,15 +30,4 @@ class DashboardViewmodel(application: Application): AndroidViewModel(application
     }
     val averageLatitudeLongitudeLiveData: LiveData<LatLng>
     get() = _averageLatitudeLongitudeLiveData
-
-//    fun addSensorStatus(sensorRecentResponse: SensorRecentResponse){
-//        sensorStatusLiveData.value?.let{
-//            it.add(sensorRecentResponse)
-//        }
-//    }
-
-//    fun clickedOnPumpMarker(marker: Marker){
-//        selectedMarkerSensor = marker.tag as SensorRecentResponse
-//    }
-//
 }

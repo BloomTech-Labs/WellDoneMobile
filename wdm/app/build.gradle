@@ -9,6 +9,7 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'kotlin-kapt'
 
 android {
+
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     dataBinding.enabled = true
@@ -20,6 +21,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
     }
     buildTypes {
         release {
@@ -35,12 +39,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kapt {
+        generateStubs = true
+    }
+
 }
 
 def okhttpVersion = '4.2.2'
 def glideVersion = '4.10.0'
 def retrofitVersion = '2.7.0'
 def daggerVersion = '2.24'
+def roomVersion = '2.0.0'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

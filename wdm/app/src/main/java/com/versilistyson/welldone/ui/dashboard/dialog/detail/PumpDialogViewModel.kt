@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.ui.dashboard.dialog
+package com.versilistyson.welldone.ui.dashboard.dialog.detail
 
 import androidx.lifecycle.ViewModel
 import com.versilistyson.welldone.data.local.model.OperatorLog

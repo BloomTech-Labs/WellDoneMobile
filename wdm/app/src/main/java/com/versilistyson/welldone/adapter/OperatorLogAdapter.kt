@@ -8,18 +8,17 @@ import com.versilistyson.welldone.R
 import com.versilistyson.welldone.data.local.model.OperatorLog
 import kotlinx.android.synthetic.main.log_entry_layout.view.*
 
-class OperatorLogAdapter(val logs: MutableList<OperatorLog>): RecyclerView.Adapter<OperatorLogAdapter.LogViewHolder>() {
+class OperatorLogAdapter(private val logs: MutableList<OperatorLog>, val listener: LogClickReceived? = null): RecyclerView.Adapter<OperatorLogAdapter.LogViewHolder>() {
 
     interface LogClickReceived {
-        fun onLogClicked()
+        fun onLogClicked(log: OperatorLog)
     }
 
-    class LogViewHolder(view: View): RecyclerView.ViewHolder(view){
+    inner class LogViewHolder(val view: View): RecyclerView.ViewHolder(view){
 
-        init{
+        fun viewClickListener(log: OperatorLog){
             view.setOnClickListener {
-                //open alert dialog that displays log in more detail
-
+                listener?.onLogClicked(log)
             }
         }
 
@@ -37,6 +36,7 @@ class OperatorLogAdapter(val logs: MutableList<OperatorLog>): RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
         val log = logs[position]
+        holder.viewClickListener(log)
         holder.tvDateCreated.text = log.date_filed
         holder.tvLastEdited.text = log.last_modified
         holder.imgStatus.setImageDrawable(log.status)
