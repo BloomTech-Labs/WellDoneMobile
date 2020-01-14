@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.versilistyson.welldone.ViewModelFactory
 import com.versilistyson.welldone.ViewModelKey
 import com.versilistyson.welldone.ui.authentication.AuthSharedViewModel
+import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -18,6 +19,10 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(AuthSharedViewModel::class)
-    internal abstract fun postListViewModel(viewModel: AuthSharedViewModel): ViewModel
+    internal abstract fun authSharedViewModel(viewModel: AuthSharedViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(DashboardViewmodel::class)
+    internal abstract fun dashboardViewModel(viewModel: DashboardViewmodel): ViewModel
 }

@@ -5,10 +5,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.versilistyson.welldone.data.remote.WellDoneApi
 import dagger.Module
 import dagger.Provides
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
@@ -23,7 +20,7 @@ object NetworkModule {
     @Singleton
     @JvmStatic
     @Provides
-    fun provideMoshi(): Moshi =
+    fun moshi(): Moshi =
         Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
@@ -31,22 +28,8 @@ object NetworkModule {
     @Singleton
     @JvmStatic
     @Provides
-    fun provideLogger(): Interceptor =
-        object: Interceptor{
-            override fun intercept(chain: Interceptor.Chain): Response {
-                val newRequest: Request = chain.request().newBuilder()
-                    .addHeader("Authorization", "")
-                    .build()
-                return chain.proceed(newRequest)
-            }
-        }
-
-    @Singleton
-    @JvmStatic
-    @Provides
-    fun provideOkHttpClient(logger: Interceptor): OkHttpClient =
+    fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
-            .addInterceptor(logger)
             .retryOnConnectionFailure(false)
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)

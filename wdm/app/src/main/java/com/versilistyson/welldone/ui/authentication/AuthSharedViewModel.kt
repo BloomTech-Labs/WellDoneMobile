@@ -5,20 +5,17 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.squareup.moshi.Moshi
 import com.versilistyson.MyApplication
 import com.versilistyson.welldone.data.remote.dto.AuthenticationRequest
 import com.versilistyson.welldone.repository.AuthenticationRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.IOException
+import javax.inject.Inject
 
-class AuthSharedViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val authenticationRepository = AuthenticationRepository()
+class AuthSharedViewModel @Inject constructor(private val authRepository: AuthenticationRepository,
+                                              application: Application) : AndroidViewModel(application) {
 
     private val _errorMessage: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
@@ -43,7 +40,7 @@ class AuthSharedViewModel(application: Application) : AndroidViewModel(applicati
     fun authenticateUser(email: String, password: String) = viewModelScope.launch {
         _authenticationState.postValue(AuthenticationState.PROCESSING)
         val result = withContext(Dispatchers.IO) {
-            authenticationRepository.signIn(
+            authRepository.signIn(
                 AuthenticationRequest(
                     email,
                     password
@@ -56,7 +53,7 @@ class AuthSharedViewModel(application: Application) : AndroidViewModel(applicati
             _authToken.postValue(resultBody.authToken)
             //save the token in shared preferences
             getApplication<MyApplication>().saveToken(resultBody.authToken)
-            _authenticationState.postValue(AuthenticationState.SUCCESFUL)
+            _authenticationState.postValue(AuthenticationState.SUCCESSFUL)
         } else {
             try {
                 _authenticationState.postValue(AuthenticationState.FAILED)

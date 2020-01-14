@@ -5,6 +5,7 @@ import com.versilistyson.welldone.data.local.SharedPreference
 
 class MyApplication: Application() {
 
+    val appComponent = DaggerApplicationComponent.create()
     private lateinit var sharedPreferences: SharedPreference
 
     override fun onCreate() {
