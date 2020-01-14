@@ -22,6 +22,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -47,6 +50,7 @@ def okhttpVersion = '4.2.2'
 def glideVersion = '4.10.0'
 def retrofitVersion = '2.7.0'
 def daggerVersion = '2.24'
+def roomVersion = '2.0.0'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
