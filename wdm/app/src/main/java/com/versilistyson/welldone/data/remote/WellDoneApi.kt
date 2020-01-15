@@ -7,9 +7,6 @@ import retrofit2.http.GET
 
 interface WellDoneApi {
 
-    @GET("api/pumps")
-    suspend fun getPumps(): Response<List<PumpResponse>>
-
     @GET("api/sensors/recent")
     suspend fun getSensors(): Response<List<SensorRecentResponse>>
 
