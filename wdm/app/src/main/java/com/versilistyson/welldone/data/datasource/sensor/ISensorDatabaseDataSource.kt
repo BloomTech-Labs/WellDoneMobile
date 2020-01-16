@@ -1,3 +1,0 @@
-package com.versilistyson.welldone.data.datasource.sensor
-
-interface ISensorDatabaseDataSource

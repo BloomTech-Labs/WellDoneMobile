@@ -5,7 +5,7 @@ import com.versilistyson.welldone.data.api.SensorApi
 import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.domain.common.Result
 
-interface ISensorApiDataSource {
+interface ISensorDataSource {
    suspend fun fetchSensorsByNetwork() : Result<List<SensorApi.Dto.SensorRecentResponse>>
     suspend fun fetchSensorsByDatabase() : LiveData<Result<List<SensorData.Sensor>>>
     suspend fun saveSensorsLocally()
