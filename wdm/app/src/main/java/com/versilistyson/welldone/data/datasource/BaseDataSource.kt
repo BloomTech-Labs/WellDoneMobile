@@ -20,9 +20,9 @@ abstract class BaseDataSource {
         }
     }
 
-    abstract fun <T> getResultByDatabase(call: suspend() -> LiveData<T>): LiveData<Result<T>>
+    abstract fun <T> getResultByDatabase(): LiveData<Result<T>>
 
-    abstract fun <T> saveResultToDatabase(call: suspend(T) -> Result<T>)
+    abstract fun <T> saveResultToDatabase() : Result<T>
 
 
 }

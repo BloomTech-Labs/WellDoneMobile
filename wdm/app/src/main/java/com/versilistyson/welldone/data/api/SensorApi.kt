@@ -1,13 +1,12 @@
 package com.versilistyson.welldone.data.api
 
 import com.squareup.moshi.Json
-import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 import retrofit2.Response
 import retrofit2.http.GET
 
 interface SensorApi {
     @GET("api/sensors/recent")
-    suspend fun getSensors(): Response<List<SensorRecentResponse>>
+    suspend fun getSensors(): Response<List<Dto.SensorRecentResponse>>
 
     sealed class Dto {
         data class SensorRecentResponse(
