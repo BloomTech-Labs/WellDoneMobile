@@ -1,10 +1,9 @@
-package com.versilistyson.welldone.domain.repository.user
+package com.versilistyson.welldone.domain
 
 import com.versilistyson.welldone.domain.common.Result
 import com.versilistyson.welldone.domain.entity.Entity
-import com.versilistyson.welldone.domain.repository.IBaseRepository
 
-interface IUserAuthenticationRepository : IBaseRepository {
+interface IUserAuthenticationRepository {
     fun signInUser(): Result<Entity.AuthenticatedUser>
     fun signOutUser(): Result<Int>
 }

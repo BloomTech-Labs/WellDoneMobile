@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.presentation.di
+package com.versilistyson.welldone.presentation.di.app
 
 import android.app.Application
 import com.versilistyson.welldone.presentation.di.auth.AuthComponent

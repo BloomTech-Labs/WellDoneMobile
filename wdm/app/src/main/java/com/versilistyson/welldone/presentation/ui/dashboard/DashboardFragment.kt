@@ -24,7 +24,7 @@ import com.versilistyson.welldone.R
 import com.versilistyson.welldone.presentation.adapter.SensorStatusListAdapter
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
 import com.versilistyson.welldone.presentation.viewmodel.DashboardViewmodel
-import com.versilistyson.welldone.presentation.ui.dashboard.dialog.detail.PumpDialogDetailFragment
+import com.versilistyson.welldone.presentation.ui.dashboard.detail.PumpDialogDetailFragment
 import com.versilistyson.welldone.presentation.ui.dashboard.fragment.DashboardFragmentDirections
 import com.versilistyson.welldone.util.MAPVIEW_BUNDLE_KEY
 import kotlinx.android.synthetic.main.fragment_dashboard.*
@@ -155,7 +155,8 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
     }
 
     override fun moveToDialog(sensor: SensorRecentResponse) {
-        val pumpDialogDetailFragment = PumpDialogDetailFragment()
+        val pumpDialogDetailFragment =
+            PumpDialogDetailFragment()
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         val prev = activity!!.supportFragmentManager.findFragmentByTag("dialog")
         if(prev != null){

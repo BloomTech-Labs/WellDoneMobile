@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.presentation.di
+package com.versilistyson.welldone.presentation.di.app
 
 import androidx.lifecycle.ViewModelProvider
 import com.versilistyson.welldone.presentation.viewmodel.ViewModelProviderFactory

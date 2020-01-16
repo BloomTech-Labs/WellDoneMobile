@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.presentation.ui.dashboard.dialog.log
+package com.versilistyson.welldone.presentation.ui.dashboard.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater

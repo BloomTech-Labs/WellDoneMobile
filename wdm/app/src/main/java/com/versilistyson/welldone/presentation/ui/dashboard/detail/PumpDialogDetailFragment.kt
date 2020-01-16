@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.presentation.ui.dashboard.dialog.detail
+package com.versilistyson.welldone.presentation.ui.dashboard.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,6 @@ import com.versilistyson.welldone.R
 import com.versilistyson.welldone.presentation.adapter.OperatorLogAdapter
 import com.versilistyson.welldone.data.local.model.OperatorLog
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
-import com.versilistyson.welldone.presentation.ui.dashboard.dialog.log.LogDialogFragment
 import com.versilistyson.welldone.presentation.viewmodel.PumpDialogViewModel
 import kotlinx.android.synthetic.main.fragment_dialog_pump_detail.*
 
@@ -47,7 +46,8 @@ class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickRe
 
     override fun onLogClicked(log: OperatorLog) {
         //start alert dialog for log that shows when a log on the list is clicked
-        val logDialogFragment = LogDialogFragment()
+        val logDialogFragment =
+            LogDialogFragment()
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         val prev = activity!!.supportFragmentManager.findFragmentByTag("dialog2")
         if(prev != null){
