@@ -2,7 +2,6 @@ package com.versilistyson.welldone.presentation
 
 import android.app.Application
 import com.versilistyson.welldone.data.local.SharedPreference
-import com.versilistyson.welldone.presentation.di.DaggerAppComponent
 
 class MyApplication: Application() {
 
