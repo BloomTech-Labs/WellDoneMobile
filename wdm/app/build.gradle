@@ -35,11 +35,6 @@ android {
             resValue 'string', "api_key", MyMapKey
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     kapt {
         generateStubs = true
     }
