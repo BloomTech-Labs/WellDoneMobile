@@ -22,7 +22,7 @@ abstract class BaseDataSource {
 
     abstract fun <T> getResultByDatabase(): LiveData<Result<T>>
 
-    abstract fun <T> saveResultToDatabase(): Result<T>
+    abstract fun <T> saveResultToDatabase() : Result<T>
 
 
 }
