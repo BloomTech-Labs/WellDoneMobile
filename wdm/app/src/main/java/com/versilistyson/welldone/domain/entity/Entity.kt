@@ -8,7 +8,7 @@ sealed class Entity {
         val token: String,
         val userId: Int
     ) : Entity()
-    data class SensorRecentResponse(
+    data class Sensor(
         val bluetooth: Int?,
         val cellular: Int?,
         val commune_name: String,
