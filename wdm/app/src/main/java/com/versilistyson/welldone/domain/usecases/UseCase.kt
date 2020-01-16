@@ -13,5 +13,4 @@ abstract class UseCase {
     private val backgroundDispatcher = Dispatchers.Default
 
 
-
 }
