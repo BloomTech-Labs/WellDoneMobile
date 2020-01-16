@@ -105,6 +105,10 @@ dependencies {
     //mapbox
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:8.5.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'androidx.room:room-ktx:2.2.3'
+    implementation 'androidx.room:room-compiler:2.2.3'
+    implementation 'androidx.room:room-coroutines:2.1.0-alpha04'
+    implementation 'androidx.room:room-common:2.2.3'
 }
 
 apply plugin: 'com.google.gms.google-services'
