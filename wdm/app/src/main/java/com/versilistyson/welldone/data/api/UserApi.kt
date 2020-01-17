@@ -1,8 +1,6 @@
 package com.versilistyson.welldone.data.api
 
 import com.squareup.moshi.Json
-import com.versilistyson.welldone.data.remote.dto.AuthenticationRequest
-import com.versilistyson.welldone.data.remote.dto.AuthenticationResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -13,7 +11,7 @@ interface UserApi {
         @Body
         @Json(name = "email_address") email: String,
         @Json(name = "password") password: String
-    ): Response<AuthenticationResponse>
+    ): Response<Dto.AuthenticationResponse>
 
     sealed class Dto {
         data class AuthenticationResponse(

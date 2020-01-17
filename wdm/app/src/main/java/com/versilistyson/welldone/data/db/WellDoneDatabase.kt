@@ -1,21 +1,18 @@
 package com.versilistyson.welldone.data.db
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
-import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
+import com.versilistyson.welldone.data.db.log.LogDao
 import com.versilistyson.welldone.data.db.sensor.SensorDao
 import com.versilistyson.welldone.data.db.sensor.SensorData
-import com.versilistyson.welldone.data.db.user.UserDao
-import com.versilistyson.welldone.data.db.user.UserData
 
-@Database(entities = [SensorData::class, UserData::class], version = 1, exportSchema = false)
+@Database(entities = [SensorData::class], version = 1, exportSchema = false)
 abstract class WellDoneDatabase : RoomDatabase() {
 
     abstract fun sensorDao(): SensorDao
-    abstract fun userDao(): UserDao
+    abstract fun logDao(): LogDao
 
     companion object {
         @Volatile
@@ -31,19 +28,5 @@ abstract class WellDoneDatabase : RoomDatabase() {
             }
             return database
         }
-        /*fun getInstance(context: Context): WellDoneDatabase {
-            synchronized(this) {
-                var instance = INSTANCE
-
-                if(instance == null) {
-                    instance = databaseBuilder(
-                        context.applicationContext,
-                        WellDoneDatabase::class.java,
-                        "well_done_database"
-                    )
-                }
-            }
-
-        }*/
     }
 }

@@ -10,15 +10,14 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.presentation.adapter.OperatorLogAdapter
-import com.versilistyson.welldone.data.local.model.OperatorLog
-import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
+import com.versilistyson.welldone.domain.entity.Entity
 import com.versilistyson.welldone.presentation.viewmodel.PumpDialogViewModel
 import kotlinx.android.synthetic.main.fragment_dialog_pump_detail.*
 
 class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickReceived {
 
     private lateinit var viewModel: PumpDialogViewModel
-    private lateinit var sensor: SensorRecentResponse
+    private lateinit var sensor: Entity.Sensor
     private lateinit var logAdapter: OperatorLogAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -28,23 +27,30 @@ class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickRe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sensor = arguments!!.getSerializable("sensor") as SensorRecentResponse
+        sensor = arguments!!.getSerializable("sensor") as Entity.Sensor
         initViewModel()
         toolbar_pump_details.setNavigationOnClickListener{
             dismiss()
         }
         bindSensor()
         viewModel.listOfLogs.add(
-                OperatorLog(
-                    "13/05/2018", "13/06/2019",
-                    ContextCompat.getDrawable(context!!, R.drawable.pump_non_functioning)!!, "HIMAN"))
+            Entity.Log(
+                "13/05/2018", "13/06/2019",
+                ContextCompat.getDrawable(context!!, R.drawable.pump_non_functioning)!!, "HIMAN"
+            )
+        )
         viewModel.listOfLogs.add(
-                OperatorLog("14/05/2020", "15/06/2020",
-                    ContextCompat.getDrawable(context!!, R.drawable.pump_no_data)!!, "The pump was not working and it needed repairs"))
+            Entity.Log(
+                "14/05/2020",
+                "15/06/2020",
+                ContextCompat.getDrawable(context!!, R.drawable.pump_no_data)!!,
+                "The pump was not working and it needed repairs"
+            )
+        )
         initRecyclerView()
     }
 
-    override fun onLogClicked(log: OperatorLog) {
+    override fun onLogClicked(log: Entity.Log) {
         //start alert dialog for log that shows when a log on the list is clicked
         val logDialogFragment =
             LogDialogFragment()
@@ -73,12 +79,12 @@ class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickRe
     }
 
     private fun bindSensor() {
-        tv_pump_id.text = "Pump #${sensor.pump_index}"
-        tv_last_upload_date.text = sensor.data_finished
-        tv_well_depth.text = "${sensor.depth} feet"
-        tv_province.text = sensor.province_name
-        tv_district.text = sensor.district_name
-        tv_commune_value.text = sensor.commune_name
+        tv_pump_id.text = "Pump #${sensor.sensorId}"
+        tv_last_upload_date.text = sensor.lastUploadDate
+        tv_well_depth.text = "${sensor.wellDepth} feet"
+        tv_province.text = sensor.province
+        tv_district.text = sensor.districtName
+        tv_commune_value.text = sensor.commune
     }
 
     override fun getTheme(): Int {

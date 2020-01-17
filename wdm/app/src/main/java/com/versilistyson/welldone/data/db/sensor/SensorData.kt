@@ -13,7 +13,7 @@ sealed class SensorData {
         indices = [Index(value = ["sensor_id"], unique = true)]
     )
     data class Sensor(
-        @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = false) val id: Int,
+        @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = false) val id: Long,
         @ColumnInfo(name = "sensor_id")  val  sensorId: Int,
         @ColumnInfo(name = "last_network_update") val lastNetworkUpdate: Date,
         @ColumnInfo(name = "status") val sensorStatus: Int?,
@@ -33,5 +33,5 @@ sealed class SensorData {
         @ColumnInfo(name = "pad_seconds_1") val padSeconds1: Double?,
         @ColumnInfo(name = "pad_seconds_2") val padSeconds2: Double?,
         @ColumnInfo(name = "pad_seconds_3") val padSeconds3: Double?
-    )
+    ): SensorData()
 }

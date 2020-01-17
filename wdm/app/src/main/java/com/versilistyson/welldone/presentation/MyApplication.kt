@@ -1,7 +1,7 @@
 package com.versilistyson.welldone.presentation
 
 import android.app.Application
-import com.versilistyson.welldone.data.local.SharedPreference
+import com.versilistyson.welldone.presentation.util.SharedPreference
 
 class MyApplication: Application() {
 
@@ -16,7 +16,8 @@ class MyApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        sharedPreferences = SharedPreference(this)
+        sharedPreferences =
+            SharedPreference(this)
     }
 
     fun saveToken(token: String){

@@ -1,6 +1,7 @@
 package com.versilistyson.welldone.domain.entity
 
 import android.graphics.drawable.Drawable
+import java.io.Serializable
 
 sealed class Entity {
 
@@ -30,10 +31,10 @@ sealed class Entity {
         val padSeconds3: Double?
     ): Entity()
 
-    data class OperatorLog(
+    data class Log(
         val dateFiled: String,
         val lastModified: String,
         val status: Drawable,
         val comment: String
-    ) : Entity()
+    ) : Entity(), Serializable
 }

@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.data.local
+package com.versilistyson.welldone.presentation.util
 
 import android.app.Application
 

@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.versilistyson.welldone.R
-import com.versilistyson.welldone.data.local.model.OperatorLog
+import com.versilistyson.welldone.domain.entity.Entity
 import kotlinx.android.synthetic.main.full_log_layout.*
 
 class LogDialogFragment: DialogFragment() {
 
-    private lateinit var currentLog: OperatorLog
+    private lateinit var currentLog: Entity.Log
 
     override fun getTheme(): Int {
         return R.style.AlertScreenDialog
@@ -24,7 +24,7 @@ class LogDialogFragment: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        currentLog = arguments!!.getSerializable("log") as OperatorLog
+        currentLog = arguments!!.getSerializable("log") as Entity.Log
         bindView()
 
         img_pic_adder.setOnClickListener {
@@ -37,7 +37,7 @@ class LogDialogFragment: DialogFragment() {
     }
 
     private fun bindView() {
-        tv_last_modified.text = "Last modified ${currentLog.last_modified}"
+        tv_last_modified.text = "Last modified ${currentLog.lastModified}"
         et_comment.setText(currentLog.comment)
     }
 }
