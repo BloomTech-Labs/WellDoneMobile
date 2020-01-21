@@ -19,7 +19,7 @@ sealed class Entity {
         val commune: String,
         val province: String,
         val village: String,
-        val wellDepth: Int,
+        val wellDepth: Double,
         val location: LatLng,
         val padCounts: PadCounts,
         val padSeconds: PadSeconds

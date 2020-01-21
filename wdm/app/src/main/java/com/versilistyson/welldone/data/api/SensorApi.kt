@@ -19,7 +19,7 @@ interface SensorApi {
             @Json(name = "village_name") val village: String,
             @Json(name = "latitude") val latitude: Double,
             @Json(name = "longitude") val longitude: Double,
-            @Json(name = "depth") val wellDepth: Int,
+            @Json(name = "depth") val wellDepth: Double,
             @Json(name = "pad_count_0") val padCount0: Double?,
             @Json(name = "pad_count_1") val padCount1: Double?,
             @Json(name = "pad_count_2") val padCount2: Double?,
