@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.domain.entity
+package com.versilistyson.welldone.domain.framework.entity
 
 import android.graphics.drawable.Drawable
 import com.google.android.gms.maps.model.LatLng

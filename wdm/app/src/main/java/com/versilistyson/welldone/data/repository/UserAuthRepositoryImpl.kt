@@ -1,9 +1,9 @@
 package com.versilistyson.welldone.data.repository
 
-import com.versilistyson.welldone.domain.datasource.user.UserRemoteDataSource
+import com.versilistyson.welldone.domain.framework.datasource.user.UserRemoteDataSource
 import com.versilistyson.welldone.domain.common.Result
-import com.versilistyson.welldone.domain.entity.Entity
-import com.versilistyson.welldone.domain.repository.UserAuthRepository
+import com.versilistyson.welldone.domain.framework.entity.Entity
+import com.versilistyson.welldone.domain.framework.repository.UserAuthRepository
 
 class UserAuthRepositoryImpl (private val remoteDataSource: UserRemoteDataSource) : UserAuthRepository {
 

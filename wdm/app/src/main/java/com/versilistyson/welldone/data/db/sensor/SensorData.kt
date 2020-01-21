@@ -10,11 +10,11 @@ import java.util.*
 sealed class SensorData {
     @Entity(
         tableName = "sensor_table",
-        indices = [Index(value = ["sensor_id"], unique = true)]
+        indices = [Index(value = ["remote_id"], unique = true)]
     )
     data class Sensor(
-        @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = false) val id: Long,
-        @ColumnInfo(name = "sensor_id")  val  sensorId: Int,
+        @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Long,
+        @ColumnInfo(name = "remote_id") val remoteId: Long,
         @ColumnInfo(name = "last_network_update") val lastNetworkUpdate: Date,
         @ColumnInfo(name = "status") val sensorStatus: Int?,
         @ColumnInfo(name = "last_upload_date") val lastUploadDate: Int?,
