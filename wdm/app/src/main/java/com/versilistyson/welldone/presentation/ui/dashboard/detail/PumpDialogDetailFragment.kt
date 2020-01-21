@@ -79,9 +79,9 @@ class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickRe
     }
 
     private fun bindSensor() {
-        tv_pump_id.text = "Pump #${sensor.sensorId}"
+        tv_pump_id.text = resources.getString(R.string.pump_id_dialog, sensor.sensorId)
         tv_last_upload_date.text = sensor.lastUploadDate
-        tv_well_depth.text = "${sensor.wellDepth} feet"
+        tv_well_depth.text = resources.getString(R.string.well_depth_dialog, sensor.wellDepth)
         tv_province.text = sensor.province
         tv_district.text = sensor.districtName
         tv_commune_value.text = sensor.commune
