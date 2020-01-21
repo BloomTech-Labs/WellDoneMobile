@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp">
 
-                <TextView android:id="@+id/tv_PumpID"
+                <TextView android:id="@+id/tv_SensorID"
                     android:textStyle="bold"
                     android:textColor="@android:color/white"
                     android:textAlignment="center"
@@ -51,7 +51,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.914"
-                app:layout_constraintStart_toStartOf="@id/tv_PumpID"
+                app:layout_constraintStart_toStartOf="@id/tv_SensorID"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

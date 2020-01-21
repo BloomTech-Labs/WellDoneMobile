@@ -23,7 +23,7 @@ sealed class Entity {
         val location: LatLng,
         val padCounts: PadCounts,
         val padSeconds: PadSeconds
-    ): Entity() {
+    ): Entity(), Serializable {
 
         data class PadCounts (
             val padCount0: Double?,

@@ -8,10 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -21,16 +19,12 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.versilistyson.welldone.R
+import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.presentation.adapter.SensorStatusListAdapter
-import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
-import com.versilistyson.welldone.presentation.viewmodel.DashboardViewmodel
 import com.versilistyson.welldone.presentation.ui.dashboard.detail.PumpDialogDetailFragment
-import com.versilistyson.welldone.presentation.ui.dashboard.fragment.DashboardFragmentDirections
-import com.versilistyson.welldone.util.MAPVIEW_BUNDLE_KEY
+import com.versilistyson.welldone.presentation.util.MAPVIEW_BUNDLE_KEY
+import com.versilistyson.welldone.presentation.viewmodel.DashboardViewmodel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SensorStatusListAdapter.DashboardToDetailsDialog {
 
@@ -38,10 +32,8 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
     private lateinit var mMap: GoogleMap
     private lateinit var mapView: MapView
     private lateinit var sensorStatusListAdapter: SensorStatusListAdapter
-    private lateinit var sensorStatusRecyclerView: RecyclerView
-    private val listOfMarkersToAdd: MutableList<MarkerOptions> by lazy {
-        mutableListOf<MarkerOptions>()
-    }
+    private val allSensors: List<Entity.Sensor>
+        get() = sensorStatusListAdapter.sensors
     private lateinit var averageLatLng: LatLng
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -61,27 +53,22 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         }
 
         viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer {
-            if(it.isSuccessful){
-                it.body()?.let { body->
-                    sensorStatusListAdapter = SensorStatusListAdapter(body, this)
-                    initRecyclerView()
-                }
-                viewLifecycleOwner.lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        averageLatLng = getAvgLatLngSensors(it.body()!!)
-                    }
-                    mapView.getMapAsync(this@DashboardFragment)
-                }
-            }
+
+            sensorStatusListAdapter = SensorStatusListAdapter(it.allSensors, this)
+            initRecyclerView()
+            averageLatLng = it.avgLatLng
+            mapView.getMapAsync(this)
         })
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 6.0f))
 
-        for(marker in listOfMarkersToAdd) {
-            mMap.addMarker(marker)
+        for(s in allSensors){
+            //add a marker to the map
+            mMap.addMarker(generateMarker(s))
         }
     }
 
@@ -107,7 +94,7 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
     }
 
     private fun initRecyclerView() {
-        sensorStatusRecyclerView = rv_pump_status.apply{
+        rv_pump_status.apply{
             adapter = sensorStatusListAdapter
             layoutManager = LinearLayoutManager(activity!!.applicationContext, LinearLayoutManager.VERTICAL, false)
         }
@@ -121,27 +108,17 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         return false
     }
 
-    private fun getAvgLatLngSensors(sensors: List<SensorRecentResponse>): LatLng{
+    private fun generateMarker(sensor: Entity.Sensor): MarkerOptions {
+        val marker = MarkerOptions()
+            .position(sensor.location)
 
-        var totalLat = 0.0
-        var totalLng = 0.0
-
-        for(sensor in sensors){
-            val point = LatLng(sensor.latitude, sensor.longitude)
-            totalLat += point.latitude
-            totalLng += point.longitude
-
-            val marker = MarkerOptions()
-                .position(point)
-
-            when(sensor.status){
-                null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_functioning))
-                1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_no_data))
-                2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning))
-            }
-            listOfMarkersToAdd.add(marker)
+        when(sensor.sensorStatus){
+            null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_functioning))
+            1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_no_data))
+            2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning))
         }
-        return LatLng(totalLat/sensors.size, totalLng/sensors.size)
+
+        return marker
     }
 
     private fun initViewModel(){
@@ -154,7 +131,7 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         }
     }
 
-    override fun moveToDialog(sensor: SensorRecentResponse) {
+    override fun moveToDialog(sensor: Entity.Sensor) {
         val pumpDialogDetailFragment =
             PumpDialogDetailFragment()
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
