@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.versilistyson.welldone.R
-import com.versilistyson.welldone.domain.entity.Entity
+import com.versilistyson.welldone.domain.framework.entity.Entity
 import kotlinx.android.synthetic.main.full_log_layout.*
 
 class LogDialogFragment: DialogFragment() {

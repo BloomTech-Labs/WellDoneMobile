@@ -1,10 +1,10 @@
 package com.versilistyson.welldone.data.repository
 
-import com.versilistyson.welldone.domain.datasource.sensor.SensorLocalDataSource
-import com.versilistyson.welldone.domain.datasource.sensor.SensorRemoteDataSource
+import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorLocalDataSource
+import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorRemoteDataSource
 import com.versilistyson.welldone.domain.common.Result
-import com.versilistyson.welldone.domain.entity.Entity
-import com.versilistyson.welldone.domain.repository.SensorRepository
+import com.versilistyson.welldone.domain.framework.entity.Entity
+import com.versilistyson.welldone.domain.framework.repository.SensorRepository
 
 class SensorRepositoryImpl(private val remoteDataSource: SensorRemoteDataSource,
                            private val localDataSource: SensorLocalDataSource) : SensorRepository {

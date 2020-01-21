@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.domain.datasource
+package com.versilistyson.welldone.domain.framework.datasource
 
 //abstract class BaseDataSource {
 //

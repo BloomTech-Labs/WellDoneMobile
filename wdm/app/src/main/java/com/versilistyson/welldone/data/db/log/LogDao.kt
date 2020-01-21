@@ -1,5 +1,6 @@
 package com.versilistyson.welldone.data.db.log
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.OnConflictStrategy
@@ -12,9 +13,9 @@ interface LogDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveAll(logs: List<LogData>)
 
-    @Query("SELECT * FROM sensor_table")
-    fun getAll() : LiveData<List<SensorData>>
+    @Query("SELECT * FROM log_table WHERE sensor_id = :sensorId")
+    fun getAllLogsBySensorId(sensorId: Int) : LiveData<List<LogData.OperatorLog>>
 
-    @Query("SELECT * FROM sensor_table WHERE id = :localId")
-    fun get(localId: Int) : LiveData<SensorData>
+    @Query("SELECT * FROM log_table WHERE id = :localId")
+    fun getLogById(localId: Int) : LiveData<LogData.OperatorLog>
 }

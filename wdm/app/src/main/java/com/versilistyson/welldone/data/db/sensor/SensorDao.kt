@@ -10,12 +10,12 @@ import androidx.room.Update
 interface SensorDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveAll(sensors: List<SensorData>)
+    suspend fun saveAll(sensors: List<SensorData.Sensor>)
 
     @Query("SELECT * FROM sensor_table")
-    fun getAll() : LiveData<List<SensorData>>
+    fun getAll() : LiveData<List<SensorData.Sensor>>
 
     @Query("SELECT * FROM sensor_table WHERE id = :localId")
-    fun get(localId: Int) : LiveData<SensorData>
+    fun get(localId: Int) : LiveData<SensorData.Sensor>
 
 }
