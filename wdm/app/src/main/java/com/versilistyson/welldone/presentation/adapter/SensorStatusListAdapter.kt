@@ -9,15 +9,15 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.versilistyson.welldone.R
-import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
+import com.versilistyson.welldone.domain.framework.entity.Entity
 import kotlinx.android.synthetic.main.card_pumpstatus.view.*
 
-class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>, val listener: DashboardToDetailsDialog? = null): RecyclerView.Adapter<SensorStatusListAdapter.ViewHolder>() {
+class SensorStatusListAdapter(val sensors: List<Entity.Sensor>, val listener: DashboardToDetailsDialog? = null): RecyclerView.Adapter<SensorStatusListAdapter.ViewHolder>() {
 
     lateinit var context: Context
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
-        val pumpId = view.tv_PumpID as TextView
+        val sensorId = view.tv_SensorID as TextView
         val villageTitle = view.tv_villageTitle as TextView
         val communeTitle = view.tv_communeTitle as TextView
         val layout = view.layout_status as ConstraintLayout
@@ -25,7 +25,7 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>, val liste
         val llForDetails = view.ll_for_cvDetails as LinearLayout
         val dialogButton = view.dialog_button as Button
 
-        fun dialogButtonOnClick(sensor: SensorRecentResponse, listener: DashboardToDetailsDialog){
+        fun dialogButtonOnClick(sensor: Entity.Sensor, listener: DashboardToDetailsDialog){
             dialogButton.setOnClickListener {
                 listener.moveToDialog(sensor)
             }
@@ -61,11 +61,11 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>, val liste
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val sensor = sensors[position]
-        holder.pumpId.text = "${sensor.pump_index}"
-        holder.villageTitle.text = sensor.village_name
-        holder.communeTitle.text = sensor.commune_name
+        holder.sensorId.text = "${sensor.sensorId}"
+        holder.villageTitle.text = sensor.village
+        holder.communeTitle.text = sensor.commune
 
-        when(sensor.status){
+        when(sensor.sensorStatus){
             null -> {
                 holder.layout.setBackgroundColor(ContextCompat.getColor(context, R.color.non_working_status))
             }
@@ -81,6 +81,6 @@ class SensorStatusListAdapter(val sensors: List<SensorRecentResponse>, val liste
     }
 
     interface DashboardToDetailsDialog {
-        fun moveToDialog(sensor: SensorRecentResponse)
+        fun moveToDialog(sensor: Entity.Sensor)
     }
 }

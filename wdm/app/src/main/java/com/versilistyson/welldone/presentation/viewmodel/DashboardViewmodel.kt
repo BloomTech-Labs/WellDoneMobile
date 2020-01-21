@@ -1,33 +1,28 @@
 package com.versilistyson.welldone.presentation.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
-import com.google.android.gms.maps.model.LatLng
-import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
-import com.versilistyson.welldone.repository.DashboardRepository
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.versilistyson.welldone.domain.framework.entity.Entity
+import com.versilistyson.welldone.domain.framework.usecases.GetSensorUseCase
+import com.versilistyson.welldone.domain.framework.usecases.UseCase
 
-class DashboardViewmodel(application: Application): AndroidViewModel(application) {
+class DashboardViewmodel(private val getSensorUseCase: GetSensorUseCase): ViewModel() {
 
-    private val dashboardRepository = DashboardRepository(application)
-
-    private val _sensorStatusLiveData: MutableLiveData<MutableList<SensorRecentResponse>> by lazy{
-        MutableLiveData<MutableList<SensorRecentResponse>>()
+    private val _sensorLiveData: MutableLiveData<Entity.Sensors> by lazy{
+        MutableLiveData<Entity.Sensors>()
     }
-    val sensorLiveData = liveData {
-        emit(dashboardRepository.fetchAllSensors())
+    val sensorLiveData: LiveData<Entity.Sensors>
+    get() = _sensorLiveData
+
+    fun loadData(){
+        getSensorUseCase.invoke(viewModelScope, UseCase.NoParams()) {
+            it.either(getSensorUseCase::handleFailure, ::handleSuccess)
+        }
     }
 
-    var selectedMarkerSensor: SensorRecentResponse? = null
-
-    val sensorStatusLiveData: LiveData<MutableList<SensorRecentResponse>>
-    get() = _sensorStatusLiveData
-
-    private val _averageLatitudeLongitudeLiveData: MutableLiveData<LatLng> by lazy{
-        MutableLiveData<LatLng>()
+    private fun handleSuccess(sensors: Entity.Sensors){
+        _sensorLiveData.value = sensors
     }
-    val averageLatitudeLongitudeLiveData: LiveData<LatLng>
-    get() = _averageLatitudeLongitudeLiveData
 }

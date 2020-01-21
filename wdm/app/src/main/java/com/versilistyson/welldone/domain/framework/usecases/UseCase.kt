@@ -2,10 +2,7 @@ package com.versilistyson.welldone.domain.framework.usecases
 
 import com.versilistyson.welldone.domain.common.Either
 import com.versilistyson.welldone.domain.common.Failure
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 /*
     UseCase is called by the viewmodel. UseCases usually wrap repositories and call a specific
@@ -13,6 +10,8 @@ import kotlinx.coroutines.launch
     out of the viewmodel class.
  */
 abstract class UseCase<out Type, in Params> where Type: Any {
+
+    var NETWORK_TIMEOUT = 3000L
 
     abstract suspend fun run(params: Params): Either<Failure, Type>
 
@@ -22,7 +21,13 @@ abstract class UseCase<out Type, in Params> where Type: Any {
         onResult: (Either<Failure, Type>) -> Unit = {}
     ) {
         val backgroundJob = scope.async { run(params) }
-        scope.launch { onResult(backgroundJob.await()) }
+        scope.launch {
+            onResult(
+                withTimeout(NETWORK_TIMEOUT){
+                    backgroundJob.await()
+                }
+            )
+        }
     }
 
     class NoParams

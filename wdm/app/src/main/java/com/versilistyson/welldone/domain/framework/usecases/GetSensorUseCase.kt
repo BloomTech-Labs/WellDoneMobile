@@ -5,9 +5,9 @@ import com.versilistyson.welldone.domain.common.Failure
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.SensorRepository
 
-class GetSensorUseCase(private val sensorRepository: SensorRepository) : UseCase<List<Entity.Sensor>, UseCase.NoParams>() {
+class GetSensorUseCase(private val sensorRepository: SensorRepository) : UseCase<Entity.Sensors, UseCase.NoParams>() {
 
-    override suspend fun run(params: NoParams): Either<Failure, List<Entity.Sensor>> {
+    override suspend fun run(params: NoParams): Either<Failure, Entity.Sensors> {
         return try {
             val sensorResponse = sensorRepository.fetchAllSensorsRemotely()
             if(sensorResponse.body() != null) {
@@ -21,4 +21,8 @@ class GetSensorUseCase(private val sensorRepository: SensorRepository) : UseCase
     }
 
     data class GetSensorsFailure(val error: Exception): Failure.FeatureFailure(error)
+
+    fun handleFailure(failure: Failure){
+
+    }
 }

@@ -24,7 +24,7 @@ sealed class Entity {
         val location: LatLng,
         val padCounts: PadCounts,
         val padSeconds: PadSeconds
-    ): Entity() {
+    ): Entity(), Serializable {
 
         data class PadCounts (
             val padCount0: Double?,
@@ -47,4 +47,9 @@ sealed class Entity {
         val status: Drawable,
         val comment: String
     ) : Entity(), Serializable
+
+    data class Sensors(
+        val allSensors: List<Sensor>,
+        val avgLatLng: LatLng
+    )
 }
