@@ -1,5 +1,5 @@
 package com.versilistyson.welldone.domain.framework.datasource
-
+interface BaseDataSource
 //abstract class BaseDataSource {
 //
 //    protected suspend fun <T> getResult(call: suspend () -> Response<T>) : Result<T> {

@@ -8,7 +8,8 @@ sealed class Entity {
 
     data class AuthenticatedUser(
         val token: String,
-        val userId: Int
+        val userId: Int,
+        val email: String
     ) : Entity()
 
     data class Sensor(

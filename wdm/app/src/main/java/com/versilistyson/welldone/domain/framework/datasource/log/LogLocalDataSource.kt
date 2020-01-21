@@ -1,4 +1,6 @@
 package com.versilistyson.welldone.domain.framework.datasource.log
 
-interface LogLocalDataSource {
+import com.versilistyson.welldone.domain.framework.datasource.BaseDataSource
+
+interface LogLocalDataSource: BaseDataSource {
 }
