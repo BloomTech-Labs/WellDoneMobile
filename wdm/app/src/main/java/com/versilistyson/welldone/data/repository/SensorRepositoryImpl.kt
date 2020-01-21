@@ -10,15 +10,17 @@ class SensorRepositoryImpl(private val remoteDataSource: SensorRemoteDataSource,
                            private val localDataSource: SensorLocalDataSource) : SensorRepository {
 
     //need to map all the DTO objects to entity objects and then return results
-    override suspend fun fetchAllSensorsRemotely(): Response<List<Entity.Sensor>> {
+
+    override suspend fun fetchAllSensorsRemotely(): Response<Entity.Sensors> {
+        //first map all remote sensor DTO objects to entity objects, while calculating the average latlng, then create a "Sensors" obj
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override suspend fun fetchAllSensorsLocally(): Response<List<Entity.Sensor>> {
+    override suspend fun fetchAllSensorsLocally(): Response<Entity.Sensors> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override suspend fun fetchSensorLocally(): Response<List<Entity.Sensor>> {
+    override suspend fun fetchSensorLocally(): Response<Entity.Sensors> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

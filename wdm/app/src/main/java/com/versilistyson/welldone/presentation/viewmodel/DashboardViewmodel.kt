@@ -10,10 +10,10 @@ import com.versilistyson.welldone.domain.framework.usecases.UseCase
 
 class DashboardViewmodel(private val getSensorUseCase: GetSensorUseCase): ViewModel() {
 
-    private val _sensorLiveData: MutableLiveData<List<Entity.Sensor>> by lazy{
-        MutableLiveData<List<Entity.Sensor>>()
+    private val _sensorLiveData: MutableLiveData<Entity.Sensors> by lazy{
+        MutableLiveData<Entity.Sensors>()
     }
-    val sensorLiveData: LiveData<List<Entity.Sensor>>
+    val sensorLiveData: LiveData<Entity.Sensors>
     get() = _sensorLiveData
 
     fun loadData(){
@@ -22,7 +22,7 @@ class DashboardViewmodel(private val getSensorUseCase: GetSensorUseCase): ViewMo
         }
     }
 
-    private fun handleSuccess(sensors: List<Entity.Sensor>){
+    private fun handleSuccess(sensors: Entity.Sensors){
         _sensorLiveData.value = sensors
     }
 }

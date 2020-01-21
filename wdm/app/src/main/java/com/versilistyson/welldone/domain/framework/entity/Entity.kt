@@ -46,4 +46,9 @@ sealed class Entity {
         val status: Drawable,
         val comment: String
     ) : Entity(), Serializable
+
+    data class Sensors(
+        val allSensors: List<Sensor>,
+        val avgLatLng: LatLng
+    )
 }
