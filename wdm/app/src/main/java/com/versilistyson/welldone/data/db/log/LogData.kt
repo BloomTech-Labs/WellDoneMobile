@@ -3,9 +3,7 @@ package com.versilistyson.welldone.data.db.log
 import android.graphics.drawable.Drawable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
-import java.io.Serializable
 
 sealed class LogData {
     @Entity(
