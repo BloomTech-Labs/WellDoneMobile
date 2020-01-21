@@ -13,9 +13,9 @@ interface LogDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveAll(logs: List<LogData>)
 
-    @Query("SELECT * FROM log_table WHERE sensor_id = :sensorId")
-    fun getAllLogsBySensorId(sensorId: Int) : LiveData<List<LogData.OperatorLog>>
+    @Query("SELECT * FROM log_table WHERE remote_sensor_id = :remoteSensorId")
+    fun getAllLogsByRemoteSensorId(remoteSensorId: Int) : LiveData<List<LogData>>
 
     @Query("SELECT * FROM log_table WHERE id = :localId")
-    fun getLogById(localId: Int) : LiveData<LogData.OperatorLog>
+    fun getLogByLocalId(localId: Int) : LiveData<LogData>
 }
