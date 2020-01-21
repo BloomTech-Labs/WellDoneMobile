@@ -25,8 +25,5 @@ abstract class UseCase<out Type, in Params> where Type: Any {
         scope.launch { onResult(backgroundJob.await()) }
     }
 
-    private val mainDispatcher = Dispatchers.Main
-    private val backgroundDispatcher = Dispatchers.Default
-
-
+    class NoParams
 }

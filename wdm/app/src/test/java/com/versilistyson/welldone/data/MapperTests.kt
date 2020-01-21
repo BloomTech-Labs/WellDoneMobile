@@ -11,12 +11,12 @@ class MapperTests {
 
     @Test
     fun testSensorDtoSensorEntityMapping(){
-        val sensorDataSensorEntityMapper = SensorDtoSensorEntityMapper()
+        val sensorDtoSensorEntityMapper = SensorDtoSensorEntityMapper()
         val sensorRecentResponse = SensorApi.Dto.SensorRecentResponse(
             5, 0, "01/05/2019", "Kalkuth", "Kcommune",
             "Kalkata", "village", 5.64, 3.8, 6.7, 3.4, 1.0,
             2.0, 3.5, 5.6, 2.4, 3.2, 1.6)
-        val sensorEntity = sensorDataSensorEntityMapper.mapFrom(sensorRecentResponse)
+        val sensorEntity = sensorDtoSensorEntityMapper.mapFrom(sensorRecentResponse)
 
         assertEquals(sensorEntity.sensorId, sensorRecentResponse.sensorId)
         assertEquals(sensorEntity.sensorStatus, sensorRecentResponse.sensorStatus)

@@ -4,8 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.squareup.moshi.Json
-import java.util.*
 
 @Entity(
     tableName = "sensor_table",
@@ -14,7 +12,7 @@ import java.util.*
 data class SensorData(
     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "remote_id") val remoteId: Long,
-    @ColumnInfo(name = "last_network_update") val lastNetworkUpdate: Date,
+    @ColumnInfo(name = "last_network_update") val lastNetworkUpdate: String,
     @ColumnInfo(name = "status") val sensorStatus: Int?,
     @ColumnInfo(name = "last_upload_date") val lastUploadDate: Int?,
     @ColumnInfo(name = "district_name") val districtName: String,
