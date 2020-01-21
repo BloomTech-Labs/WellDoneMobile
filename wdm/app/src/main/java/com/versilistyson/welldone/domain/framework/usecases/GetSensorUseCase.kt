@@ -21,4 +21,8 @@ class GetSensorUseCase(private val sensorRepository: SensorRepository) : UseCase
     }
 
     data class GetSensorsFailure(val error: Exception): Failure.FeatureFailure(error)
+
+    fun handleFailure(failure: Failure){
+
+    }
 }
