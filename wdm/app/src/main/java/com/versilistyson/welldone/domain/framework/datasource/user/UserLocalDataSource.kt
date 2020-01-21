@@ -2,6 +2,5 @@ package com.versilistyson.welldone.domain.framework.datasource.user
 
 import com.versilistyson.welldone.domain.framework.datasource.BaseDataSource
 
-interface UserRemoteDataSource: BaseDataSource {
-
+interface UserLocalDataSource: BaseDataSource {
 }

@@ -1,4 +1,6 @@
 package com.versilistyson.welldone.domain.framework.datasource.log
 
-interface LogDataRemoteSource {
+import com.versilistyson.welldone.domain.framework.datasource.BaseDataSource
+
+interface LogDataRemoteSource: BaseDataSource {
 }

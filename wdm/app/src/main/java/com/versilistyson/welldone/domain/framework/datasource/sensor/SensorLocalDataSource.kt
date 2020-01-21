@@ -1,4 +1,6 @@
 package com.versilistyson.welldone.domain.framework.datasource.sensor
 
-interface SensorLocalDataSource {
+import com.versilistyson.welldone.domain.framework.datasource.BaseDataSource
+
+interface SensorLocalDataSource: BaseDataSource {
 }
