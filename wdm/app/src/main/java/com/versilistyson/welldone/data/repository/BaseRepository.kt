@@ -4,9 +4,9 @@ import com.versilistyson.welldone.data.util.Mappable
 import com.versilistyson.welldone.domain.common.Result
 import retrofit2.Response
 
-abstract class BaseRepository<T: Mappable<out L>, D, out L> {
+abstract class BaseRepository<T: Mappable<out L>, out L> {
 
-    open suspend fun fetchNetworkObjects(call: ()-> Response<List<T>>): Result<List<L>> {
+    open suspend fun fetchNetworkObjects(call: suspend ()-> Response<List<T>>): Result<List<L>> {
         try {
             val response = call()
             val mappedResponse = mutableListOf<L>()
