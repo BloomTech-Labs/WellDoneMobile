@@ -48,6 +48,8 @@ class AuthSharedViewModel @Inject constructor(private val signInUseCase: SignInU
        when(failure) {
            is Failure.NetworkConnection -> {}
            is SignInUseCase.InvalidSignInCredentials-> {}
+           is Failure.ServerError -> {}
+           is Failure.EmptyResponse -> {}
        }
     }
 

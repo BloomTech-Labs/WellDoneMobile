@@ -7,9 +7,9 @@ import java.io.Serializable
 sealed class Entity {
 
     data class AuthenticatedUser(
-        val token: String,
         val userId: Int,
-        val email: String
+        val email: String,
+        val phone: String
     ) : Entity()
 
     data class Sensor(
