@@ -14,8 +14,8 @@ data class Result<out T>(val status: Status, val data: T? = null, val responseCo
     companion object {
         fun <T> Success(data: T, code: Int?): Result<T> = Result(Status.SUCCESS, data, code, null)
 
-        fun <T> NetworkError(code: Int, exception: Exception? = null): Result<T> =
-            Result(Status.NETWORK_ERROR, null, code, exception)
+        fun <T> NetworkError(exception: Exception? = null): Result<T> =
+            Result(Status.NETWORK_ERROR, null, null, exception)
 
         fun <T> LocalError(exception: Exception? = null): Result<T> =
             Result(Status.LOCAL_ERROR, null, null, exception)

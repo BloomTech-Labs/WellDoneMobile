@@ -5,15 +5,23 @@ import com.versilistyson.welldone.data.db.sensor.SensorDao
 import com.versilistyson.welldone.domain.common.Result
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.SensorRepository
-import retrofit2.Response
 
 class SensorRepositoryImpl(private val sensorApi: SensorApi,
                            private val sensorDao: SensorDao) : SensorRepository {
 
     //need to map all the DTO objects to entity objects and then return results
 
-    override suspend fun fetchAllSensorsRemotely(): Response<List<Entity.Sensor>?> {
-
+    override suspend fun fetchAllSensorsRemotely(): Result<List<Entity.Sensor>?> {
+        try {
+            response = sensorApi.getSensors()
+            val mappedResponse = mutableListOf<Entity.Sensor>()
+            for (sensor in response.body()!!) {
+                mappedResponse.add(sensor.map())
+            }
+            Result.Success(mappedResponse)
+        } catch(e: Exception){
+            Result.NetworkError(response.code(), e)
+        }
     }
 
     override suspend fun fetchAllSensorsLocally(): Result<Entity.Sensors?> {

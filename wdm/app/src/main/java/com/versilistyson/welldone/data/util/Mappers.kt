@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.data.mappers
+package com.versilistyson.welldone.data.util
 
 import com.google.android.gms.maps.model.LatLng
 import com.versilistyson.welldone.data.api.SensorApi
