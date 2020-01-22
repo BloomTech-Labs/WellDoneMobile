@@ -2,8 +2,6 @@ package com.versilistyson.welldone.data
 
 import com.versilistyson.welldone.data.api.SensorApi
 import com.versilistyson.welldone.data.api.UserApi
-import com.versilistyson.welldone.data.mappers.AuthResponseToAuthUserMapper
-import com.versilistyson.welldone.data.mappers.SensorDtoSensorEntityMapper
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 
