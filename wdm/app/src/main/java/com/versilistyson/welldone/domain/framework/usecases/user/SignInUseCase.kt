@@ -30,7 +30,7 @@ class SignInUseCase(private val userRepository: UserRepository) :
                 }
             }
         } catch (exception: Exception) {
-            return Either.Left(Failure.None)
+            return Either.Left(Failure.ServerError)
         }
     }
 
