@@ -8,6 +8,8 @@ sealed class Entity {
 
     data class AuthenticatedUser(
         val userId: Int,
+        val firstName: String,
+        val lastName: String,
         val email: String,
         val phone: String
     ) : Entity()

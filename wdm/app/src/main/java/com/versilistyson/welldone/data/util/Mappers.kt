@@ -20,8 +20,9 @@ fun SensorApi.Dto.SensorRecentResponse.map() =
         padSeconds = Entity.Sensor.PadSeconds(padSeconds0, padSeconds1, padSeconds2, padSeconds3)
     )
 
+/*
 fun UserApi.Dto.AuthenticationResponse.map() =
     Entity.AuthenticatedUser(
         token = authToken,
         userId = userId
-    )
+    )*/

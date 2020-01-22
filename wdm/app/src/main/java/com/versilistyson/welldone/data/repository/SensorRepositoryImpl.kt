@@ -2,9 +2,11 @@ package com.versilistyson.welldone.data.repository
 
 import com.versilistyson.welldone.data.api.SensorApi
 import com.versilistyson.welldone.data.db.sensor.SensorDao
+import com.versilistyson.welldone.data.util.map
 import com.versilistyson.welldone.domain.common.Result
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.SensorRepository
+import java.io.IOException
 
 class SensorRepositoryImpl(private val sensorApi: SensorApi,
                            private val sensorDao: SensorDao) : SensorRepository {
@@ -13,14 +15,25 @@ class SensorRepositoryImpl(private val sensorApi: SensorApi,
 
     override suspend fun fetchAllSensorsRemotely(): Result<List<Entity.Sensor>?> {
         try {
-            response = sensorApi.getSensors()
+            val response = sensorApi.getSensors()
             val mappedResponse = mutableListOf<Entity.Sensor>()
-            for (sensor in response.body()!!) {
-                mappedResponse.add(sensor.map())
+            return if (response.isSuccessful) {
+                when (response.body()) {
+                    null -> {
+                        Result.success(code = response.code())
+                    }
+                    else -> {
+                        for (sensor in response.body()!!) {
+                            mappedResponse.add(sensor.map())
+                        }
+                        Result.success(mappedResponse, response.code())
+                    }
+                }
+            } else {
+                Result.networkError(code = response.code())
             }
-            Result.Success(mappedResponse)
-        } catch(e: Exception){
-            Result.NetworkError(response.code(), e)
+        } catch (e: Exception) {
+            return Result.networkError(e)
         }
     }
 
