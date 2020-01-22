@@ -21,6 +21,9 @@ class AuthSharedViewModel @Inject constructor(private val signInUseCase: SignInU
         data class SUCCESS(val user: Entity.AuthenticatedUser)
     }
 
+    private val _errorCode: MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>()
+    }
     private val _errorMessage: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
@@ -45,7 +48,10 @@ class AuthSharedViewModel @Inject constructor(private val signInUseCase: SignInU
         when(signInFailure.failureType) {
             Failure.None -> {}
             Failure.EmptyResponse -> {}
-            Failure.ServerError -> {}
+            Failure.ServerError -> {
+                _errorCode.value = signInFailure.errorCode
+                _errorMessage.value = signInFailure.errorMessage
+            }
             Failure.NetworkConnection -> {}
         }
     }
