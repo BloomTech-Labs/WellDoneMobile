@@ -6,13 +6,11 @@ import com.versilistyson.welldone.data.util.map
 import com.versilistyson.welldone.domain.common.Result
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.SensorRepository
-import java.io.IOException
 
 class SensorRepositoryImpl(private val sensorApi: SensorApi,
                            private val sensorDao: SensorDao) : SensorRepository {
 
     //need to map all the DTO objects to entity objects and then return results
-
     override suspend fun fetchAllSensorsRemotely(): Result<List<Entity.Sensor>?> {
         try {
             val response = sensorApi.getSensors()

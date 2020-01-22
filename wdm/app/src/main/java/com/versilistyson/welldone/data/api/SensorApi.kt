@@ -1,6 +1,9 @@
 package com.versilistyson.welldone.data.api
 
+import com.google.android.gms.maps.model.LatLng
 import com.squareup.moshi.Json
+import com.versilistyson.welldone.data.util.Mappable
+import com.versilistyson.welldone.domain.framework.entity.Entity
 import retrofit2.Response
 import retrofit2.http.GET
 
@@ -9,7 +12,7 @@ interface SensorApi {
     suspend fun getSensors(): Response<List<Dto.SensorRecentResponse>>
 
     sealed class Dto {
-        data class SensorRecentResponse(
+        class SensorRecentResponse(
             @Json(name = "pump_index") val sensorId: Int,
             @Json(name = "status") val sensorStatus: Int?,
             @Json(name = "data_finished") val lastUploadDate: String,
@@ -50,6 +53,23 @@ interface SensorApi {
             //@Json(name = "training") val training: String?,
             //@Json(name = "type") val type: String?,
             //@Json(name = "yield") val yield: Double?
-        ) : Dto()
+
+
+        ) : Dto(), Mappable<Entity.Sensor> {
+            override fun map(): Entity.Sensor =
+                Entity.Sensor(
+                    sensorId = sensorId,
+                    sensorStatus = sensorStatus,
+                    lastUploadDate = lastUploadDate,
+                    districtName = districtName,
+                    commune = commune,
+                    province = province,
+                    village = village,
+                    wellDepth = wellDepth,
+                    location = LatLng(latitude, longitude),
+                    padCounts = Entity.Sensor.PadCounts(padCount0, padCount1, padCount2, padCount3),
+                    padSeconds = Entity.Sensor.PadSeconds(padSeconds0, padSeconds1, padSeconds2, padSeconds3)
+                )
+        }
     }
 }

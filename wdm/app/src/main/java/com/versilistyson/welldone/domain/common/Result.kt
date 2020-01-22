@@ -1,7 +1,5 @@
 package com.versilistyson.welldone.domain.common
 
-import java.lang.Exception
-
 //all this class does is allows us to re-wrap the response information because it needs to be mapped
 data class Result<out T>(val status: Status, val data: T? = null, val responseCode: Int? = null, val exception: Exception?) {
 
