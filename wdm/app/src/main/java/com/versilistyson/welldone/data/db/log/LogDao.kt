@@ -14,8 +14,8 @@ interface LogDao {
     suspend fun saveAll(logs: List<LogData>)
 
     @Query("SELECT * FROM log_table WHERE remote_sensor_id = :remoteSensorId")
-    fun getAllLogsByRemoteSensorId(remoteSensorId: Int) : LiveData<List<LogData>>
+    suspend fun getAllLogsByRemoteSensorId(remoteSensorId: Int) : LiveData<List<LogData>>
 
     @Query("SELECT * FROM log_table WHERE id = :localId")
-    fun getLogByLocalId(localId: Int) : LiveData<LogData>
+    suspend fun getLogByLocalId(localId: Int) : LiveData<LogData>
 }

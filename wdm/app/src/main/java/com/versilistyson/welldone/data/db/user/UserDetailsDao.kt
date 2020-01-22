@@ -9,5 +9,5 @@ import androidx.room.Update
 interface UserDetailsDao {
 
     @Query("SELECT * FROM user_table WHERE id = :localId")
-    fun getUserDetailsByLocalId(localId: String) : LiveData<UserDetailsData>
+    suspend fun getUserDetailsByLocalId(localId: String) : LiveData<UserDetailsData>
 }
