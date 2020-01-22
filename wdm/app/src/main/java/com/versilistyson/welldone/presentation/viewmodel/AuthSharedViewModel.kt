@@ -41,7 +41,13 @@ class AuthSharedViewModel @Inject constructor(private val signInUseCase: SignInU
     private fun onSuccess(authenticatedUser: Entity.AuthenticatedUser) {
     }
 
-    private fun onFailure(failure: Failure) {
+    private fun onFailure(signInFailure: SignInUseCase.SignInFailure) {
+        when(signInFailure.failureType) {
+            Failure.None -> {}
+            Failure.EmptyResponse -> {}
+            Failure.ServerError -> {}
+            Failure.NetworkConnection -> {}
+        }
     }
 
     /*private val _uid: MutableLiveData<Int> by lazy { MutableLiveData<Int>() }
