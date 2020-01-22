@@ -4,6 +4,7 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
 import retrofit2.Response
 
 interface SensorRepository {
+
     suspend fun fetchAllSensorsRemotely(): Response<Entity.Sensors>
     suspend fun fetchAllSensorsLocally(): Response<Entity.Sensors>
     suspend fun fetchSensorLocally(): Response<Entity.Sensors>

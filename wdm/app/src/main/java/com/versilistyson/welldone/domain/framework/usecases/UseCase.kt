@@ -23,12 +23,10 @@ abstract class UseCase<out Type, in Params> where Type: Any {
         val backgroundJob = scope.async { run(params) }
         scope.launch {
             onResult(
-                withTimeout(NETWORK_TIMEOUT){
-                    backgroundJob.await()
-                }
+                backgroundJob.await()
             )
         }
     }
 
-    class NoParams
+    class None
 }

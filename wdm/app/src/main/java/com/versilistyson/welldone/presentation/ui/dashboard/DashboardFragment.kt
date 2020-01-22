@@ -67,7 +67,7 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 6.0f))
 
         for(s in allSensors){
-            //add a marker to the map
+            //add a marker to the map in the sensor
             mMap.addMarker(generateMarker(s))
         }
     }

@@ -46,6 +46,7 @@ def glideVersion = '4.10.0'
 def retrofitVersion = '2.7.0'
 def daggerVersion = '2.24'
 def roomVersion = '2.0.0'
+def store_version = "4.0.0-alpha01"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -108,6 +109,8 @@ dependencies {
     implementation 'androidx.room:room-compiler:2.2.3'
     implementation 'androidx.room:room-coroutines:2.1.0-alpha04'
     implementation 'androidx.room:room-common:2.2.3'
+    //store
+    implementation "com.dropbox.mobile.store:store4:$store_version"
 }
 
 apply plugin: 'com.google.gms.google-services'

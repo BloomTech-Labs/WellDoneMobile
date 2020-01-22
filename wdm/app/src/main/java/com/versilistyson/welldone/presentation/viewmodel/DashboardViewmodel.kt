@@ -17,7 +17,7 @@ class DashboardViewmodel(private val getSensorUseCase: GetSensorUseCase): ViewMo
     get() = _sensorLiveData
 
     fun loadData(){
-        getSensorUseCase.invoke(viewModelScope, UseCase.NoParams()) {
+        getSensorUseCase.invoke(viewModelScope, UseCase.None()) {
             it.either(getSensorUseCase::handleFailure, ::handleSuccess)
         }
     }
