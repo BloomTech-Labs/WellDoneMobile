@@ -18,7 +18,7 @@ class AuthSharedViewModel @Inject constructor(private val signInUseCase: SignInU
         object LOADING : AuthenticationResult()
         object EMPTY : AuthenticationResult()
         object LOGIN_FAILED : AuthenticationResult()
-        data class SUCCESS(val user: Entity.AuthenticatedUser)
+        data class SUCCESS(val user: Entity.User)
     }
 
     private val _errorCode: MutableLiveData<Int> by lazy {
@@ -41,7 +41,7 @@ class AuthSharedViewModel @Inject constructor(private val signInUseCase: SignInU
             it.either(::onFailure,::onSuccess)
         }
 
-    private fun onSuccess(authenticatedUser: Entity.AuthenticatedUser) {
+    private fun onSuccess(authenticatedUser: Entity.User) {
     }
 
     private fun onFailure(failure: Failure) {

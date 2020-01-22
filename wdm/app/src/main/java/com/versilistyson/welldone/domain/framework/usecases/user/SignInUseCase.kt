@@ -8,10 +8,10 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
 import java.lang.Exception
 
 class SignInUseCase(private val userRepository: UserRepository) :
-    UseCase<Entity.AuthenticatedUser, SignInUseCase.Params>() {
+    UseCase<Entity.User, SignInUseCase.Params>() {
 
 
-    override suspend fun run(params: Params): Either<Failure, Entity.AuthenticatedUser> {
+    override suspend fun run(params: Params): Either<Failure, Entity.User> {
         try {
             val authenticationResponse = userRepository.signInUser(params.email, params.password)
             return if (authenticationResponse.isSuccessful) {

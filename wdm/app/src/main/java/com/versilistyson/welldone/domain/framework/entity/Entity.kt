@@ -6,12 +6,12 @@ import java.io.Serializable
 
 sealed class Entity {
 
-    data class AuthenticatedUser(
+    data class User(
         val userId: Int,
         val firstName: String,
         val lastName: String,
-        val email: String,
-        val phone: String
+        val email: String = "",
+        val phone: String = ""
     ) : Entity()
 
     data class Sensor(

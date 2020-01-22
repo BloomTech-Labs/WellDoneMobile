@@ -5,9 +5,11 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.UserRepository
 import retrofit2.Response
 
-class UserAuthRepositoryImpl (private val remoteDataSource: UserRemoteDataSource) : UserRepository {
+class UserAuthRepositoryImpl (
+    private val remoteDataSource: UserRemoteDataSource
+) : UserRepository {
 
-    override fun signInUser(): Response<Entity.AuthenticatedUser> {
+    override fun signInUser(): Response<Entity.User> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
