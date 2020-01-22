@@ -8,48 +8,34 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
 import java.lang.Exception
 
 class SignInUseCase(private val userRepository: UserRepository) :
-    UseCase<Entity.AuthenticatedUser, SignInUseCase.Params, SignInUseCase.SignInFailure>() {
+    UseCase<Entity.AuthenticatedUser, SignInUseCase.Params>() {
 
 
-    override suspend fun run(params: Params): Either<SignInFailure, Entity.AuthenticatedUser> {
+    override suspend fun run(params: Params): Either<Failure, Entity.AuthenticatedUser> {
         try {
             val authenticationResponse = userRepository.signInUser(params.email, params.password)
             return if (authenticationResponse.isSuccessful) {
                 when (authenticationResponse.body()) {
                     null -> {
-                        Either.Left(SignInFailure.EmptyResponse())
+                        Either.Left(Failure.EmptyResponse)
                     }
                     else -> {
                         Either.Right(authenticationResponse.body()!!)
                     }
                 }
             } else {
-                return Either.Left(
-                    SignInFailure.UnsuccessfulAuthenticationResponse(authenticationResponse.message(), authenticationResponse.code())
-                )
+                return when(authenticationResponse.code()) {
+                    401 -> Either.Left(InvalidSignInCredentials())
+                    else -> Either.Left(Failure.ServerError)
+                }
             }
         } catch (exception: Exception) {
-            return Either.Left(SignInFailure.GenericFailure(exception))
+            return Either.Left(Failure.None)
         }
     }
 
     data class Params(val email: String, val password: String)
 
-    sealed class SignInFailure(
-        val failureType: Failure,
-        val errorMessage: String? = "",
-        val errorCode: Int? = 0,
-        val exc: Exception = Exception("Sign In Failure")
-    ) : Failure.FeatureFailure(exc) {
-
-        data class GenericFailure(val e: Exception): SignInFailure(failureType = None, exc = e)
-        data class EmptyResponse(val e: Exception = Exception("Sign In Failure: Empty Response Body")): SignInFailure(failureType = EmptyResponse, exc = e)
-        data class UnsuccessfulAuthenticationResponse(
-            val eMessage: String?,
-            val eCode: Int?,
-            val e: Exception = Exception("Sign In Failure: Unsuccessful Authentication Response")
-        ) : SignInFailure(ServerError, eMessage, eCode, e)
-
-    }
+    data class InvalidSignInCredentials(val e: Exception = Exception(Exception("Bad Authentication"))): Failure.FeatureFailure(e)
 
 }

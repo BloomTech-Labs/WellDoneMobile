@@ -9,16 +9,16 @@ import kotlinx.coroutines.*
     method, and will determine what result to provide to the viewmodel. This keeps business logic
     out of the viewmodel class.
  */
-abstract class UseCase<out Type, in Params, F: Failure> where Type: Any {
+abstract class UseCase<out Type, in Params> where Type: Any {
 
     var NETWORK_TIMEOUT = 3000L
 
-    abstract suspend fun run(params: Params): Either<F, Type>
+    abstract suspend fun run(params: Params): Either<Failure, Type>
 
     open operator fun invoke(
         scope: CoroutineScope,
         params: Params,
-        onResult: (Either<F, Type>) -> Unit = {}
+        onResult: (Either<Failure, Type>) -> Unit = {}
     ) {
         val backgroundJob = scope.async { run(params) }
         scope.launch {
