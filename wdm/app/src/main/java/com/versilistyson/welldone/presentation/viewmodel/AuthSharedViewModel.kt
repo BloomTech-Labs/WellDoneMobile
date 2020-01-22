@@ -1,38 +1,50 @@
 package com.versilistyson.welldone.presentation.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.versilistyson.welldone.presentation.MyApplication
-import com.versilistyson.welldone.data.remote.dto.AuthenticationRequest
-import com.versilistyson.welldone.presentation.util.AuthenticationState
-import com.versilistyson.welldone.repository.AuthenticationRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.IOException
+import com.versilistyson.welldone.domain.common.Failure
+import com.versilistyson.welldone.domain.framework.entity.Entity
+import com.versilistyson.welldone.domain.framework.usecases.user.SignInUseCase
 import javax.inject.Inject
 
 //with a matching scope in the component, this will determine that the component does not exist outside the lifetime of the component
 
-class AuthSharedViewModel @Inject constructor(private val application: Application,
-                                              private val authRepository: AuthenticationRepository): ViewModel() {
+class AuthSharedViewModel @Inject constructor(private val signInUseCase: SignInUseCase) :
+    ViewModel() {
+
+    sealed class AuthenticationResult {
+        object LOADING : AuthenticationResult()
+        object EMPTY : AuthenticationResult()
+        object LOGIN_FAILED : AuthenticationResult()
+        data class SUCCESS(val user: Entity.AuthenticatedUser)
+    }
 
     private val _errorMessage: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
     val errorMessage: LiveData<String>
-    get() = _errorMessage
+        get() = _errorMessage
 
-    private val _authenticationState: MutableLiveData<AuthenticationState> = MutableLiveData(
-        AuthenticationState.WAITING
+    private val _authenticationResult: MutableLiveData<AuthenticationResult> = MutableLiveData(
+        AuthenticationResult.LOADING
     )
-    val authenticationState: LiveData<AuthenticationState>
-    get() = _authenticationState
+    val authenticationResult: LiveData<AuthenticationResult>
+        get() = _authenticationResult
 
-    private val _uid: MutableLiveData<Int> by lazy { MutableLiveData<Int>() }
+    fun signInUser(email: String, password: String) =
+        signInUseCase.invoke(viewModelScope, SignInUseCase.Params(email, password)) {
+            it.either(::onFailure,::onSuccess)
+        }
+
+    private fun onSuccess(authenticatedUser: Entity.AuthenticatedUser) {
+    }
+
+    private fun onFailure(failure: Failure) {
+    }
+
+    /*private val _uid: MutableLiveData<Int> by lazy { MutableLiveData<Int>() }
     val uid: LiveData<Int>
         get() = _uid
 
@@ -42,35 +54,7 @@ class AuthSharedViewModel @Inject constructor(private val application: Applicati
     val authToken: LiveData<String>
         get() = _authToken
 
-    fun authenticateUser(email: String, password: String) = viewModelScope.launch {
-        _authenticationState.postValue(AuthenticationState.PROCESSING)
-        val result = withContext(Dispatchers.IO) {
-            authRepository.signIn(
-                AuthenticationRequest(
-                    email,
-                    password
-                )
-            )
-        }
-        if (result.isSuccessful && result.body() != null) {
-            val resultBody = result.body()
-            _uid.postValue(resultBody!!.userId)
-            _authToken.postValue(resultBody.authToken)
-            //save the token in shared preferences
-            (application as MyApplication).saveToken(resultBody.authToken)
-            _authenticationState.postValue(AuthenticationState.SUCCESSFUL)
-        } else {
-            try {
-                _authenticationState.postValue(AuthenticationState.FAILED)
-                val errorMessage = result.message()
-                _errorMessage.postValue(errorMessage)
-            } catch (e: IOException) {
-
-            }
-        }
-    }
-
     fun resetAuthenticationState() {
         _authenticationState.postValue(AuthenticationState.WAITING)
-    }
+    }*/
 }

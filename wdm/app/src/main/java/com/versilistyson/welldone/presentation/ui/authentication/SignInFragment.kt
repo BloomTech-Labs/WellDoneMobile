@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.presentation.viewmodel.AuthSharedViewModel
 import com.versilistyson.welldone.presentation.ui.authentication.fragment.SignInFragmentDirections
-import com.versilistyson.welldone.presentation.util.AuthenticationState
 import kotlinx.android.synthetic.main.fragment_sign_in_screen.*
 import javax.inject.Inject
 
@@ -43,7 +42,7 @@ class SignInFragment : Fragment() {
             }
         )
 
-        authSharedViewModel.authenticationState.observe(
+        authSharedViewModel.authenticationResult.observe(
             viewLifecycleOwner,
             Observer { newAuthenticationState ->
                 when (newAuthenticationState) {
