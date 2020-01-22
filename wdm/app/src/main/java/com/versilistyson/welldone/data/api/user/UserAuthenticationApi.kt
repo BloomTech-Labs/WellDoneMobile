@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.data.api
+package com.versilistyson.welldone.data.api.user
 
 import com.squareup.moshi.Json
 import retrofit2.Response

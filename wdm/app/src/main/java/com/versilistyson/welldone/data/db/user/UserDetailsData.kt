@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
     tableName = "user_table",
     indices = [Index(value = ["remote_id"], unique = true)]
 )
-data class UserData(
+data class UserDetailsData(
     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "remote_id") val remoteId: Long,
     @ColumnInfo(name = "email") val email: String,

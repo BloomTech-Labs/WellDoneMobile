@@ -6,7 +6,7 @@ import java.io.Serializable
 
 sealed class Entity {
 
-    data class User(
+    data class UserDetails(
         val userId: Int,
         val firstName: String,
         val lastName: String,
