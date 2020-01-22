@@ -1,7 +1,7 @@
 package com.versilistyson.welldone.data
 
 import com.versilistyson.welldone.data.api.SensorApi
-import com.versilistyson.welldone.data.api.UserApi
+import com.versilistyson.welldone.data.api.UserAuthenticationApi
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 
@@ -38,7 +38,7 @@ class MapperTests {
     @Test
     fun testAuthResponseToAuthUserEntityMapping(){
         val authResponseToAuthUserMapper = AuthResponseToAuthUserMapper()
-        val authResponse = UserApi.Dto.AuthenticationResponse("random_token", 5)
+        val authResponse = UserAuthenticationApi.Dto.AuthenticationResponse("random_token", 5)
         val authUser = authResponseToAuthUserMapper.mapFrom(authResponse)
 
         assertEquals(authUser.token, authResponse.authToken)

@@ -2,7 +2,6 @@ package com.versilistyson.welldone.data.util
 
 import com.google.android.gms.maps.model.LatLng
 import com.versilistyson.welldone.data.api.SensorApi
-import com.versilistyson.welldone.data.api.UserApi
 import com.versilistyson.welldone.domain.framework.entity.Entity
 
 fun SensorApi.Dto.SensorRecentResponse.map() =

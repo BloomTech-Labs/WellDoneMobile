@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface UserApi {
+interface UserAuthenticationApi {
     @POST("/api/auth/login")
     suspend fun signIn(
         @Body
@@ -15,8 +15,7 @@ interface UserApi {
 
     sealed class Dto {
         data class AuthenticationResponse(
-            @Json(name = "token") val authToken: String,
-            @Json(name = "id") val userId: Int
+            @Json(name = "token") val authToken: String
         ) : Dto()
     }
 }
