@@ -13,15 +13,9 @@ interface SensorDao {
     suspend fun saveAll(sensors: List<SensorData>)
 
     @Query("SELECT * FROM sensor_table")
-    fun getAll() : LiveData<List<SensorData>>
+    suspend fun getAll() : LiveData<List<SensorData>>
 
-    @Query("SELECT * FROM sensor_table WHERE id = :localId")
-    fun getSensorByLocalId(localId: Long) : LiveData<SensorData>
-
-    @Query("SELECT remote_id FROM sensor_table WHERE id = :localId")
-    fun getRemoteIdByLocalId(localId: Long) : LiveData<Long>
-
-    @Query("SELECT * FROM sensor_table WHERE remote_id = :remoteId")
-    fun getSensorByRemoteId(remoteId: Long) : LiveData<SensorData>
+    @Query("SELECT * FROM sensor_table WHERE sensor_id = :sensorId")
+    suspend fun getSensorBySensorId(sensorId: Int) : LiveData<SensorData>
 
 }

@@ -1,7 +1,7 @@
 package com.versilistyson.welldone.data
 
 import com.versilistyson.welldone.data.api.SensorApi
-import com.versilistyson.welldone.data.api.UserAuthenticationApi
+import com.versilistyson.welldone.data.api.user.UserAuthenticationApi
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 

@@ -8,15 +8,15 @@ import com.versilistyson.welldone.data.db.log.LogDao
 import com.versilistyson.welldone.data.db.log.LogData
 import com.versilistyson.welldone.data.db.sensor.SensorDao
 import com.versilistyson.welldone.data.db.sensor.SensorData
-import com.versilistyson.welldone.data.db.user.UserDao
-import com.versilistyson.welldone.data.db.user.UserData
+import com.versilistyson.welldone.data.db.user.UserDetailsDao
+import com.versilistyson.welldone.data.db.user.UserDetailsData
 
-@Database(entities = [SensorData::class, LogData::class, UserData::class], version = 1, exportSchema = false)
+@Database(entities = [SensorData::class, LogData::class, UserDetailsData::class], version = 1, exportSchema = false)
 abstract class WellDoneDatabase : RoomDatabase() {
 
     abstract fun sensorDao(): SensorDao
     abstract fun logDao(): LogDao
-    abstract fun userDao(): UserDao
+    abstract fun userDao(): UserDetailsDao
 
     companion object {
         @Volatile
