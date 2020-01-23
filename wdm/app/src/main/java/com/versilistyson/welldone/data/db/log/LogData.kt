@@ -22,5 +22,6 @@ data class LogData(
     @ColumnInfo(name = "last_modified") val lastModified: String,
     @ColumnInfo(name = "status") val status: Int,
     @ColumnInfo(name = "comment") val comment: String,
+    @ColumnInfo(name = "pictures") val pictures: List<String>,
     @ColumnInfo(name = "operator_id") val operatorId: Long
 )

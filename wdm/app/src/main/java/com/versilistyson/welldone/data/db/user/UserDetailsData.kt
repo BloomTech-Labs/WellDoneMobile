@@ -10,8 +10,9 @@ import androidx.room.PrimaryKey
     indices = [Index(value = ["remote_id"], unique = true)]
 )
 data class UserDetailsData(
-    @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Long,
-    @ColumnInfo(name = "remote_id") val remoteId: Long,
-    @ColumnInfo(name = "email") val email: String,
-    @ColumnInfo(name = "phone") val phone: String
+    @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = false) val id: Long,
+    @ColumnInfo(name = "first_name") val firstName: String,
+    @ColumnInfo(name = "last_name") val lastName: String,
+    @ColumnInfo(name = "email") val email: String?,
+    @ColumnInfo(name = "phone") val phone: String?
 )

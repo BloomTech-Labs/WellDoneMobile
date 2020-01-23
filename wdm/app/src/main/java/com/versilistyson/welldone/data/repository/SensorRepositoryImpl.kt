@@ -23,8 +23,4 @@ class SensorRepositoryImpl(private val sensorApi: SensorApi,
 
     override suspend fun saveAllSensorsLocally(sensors: List<SensorData>): Result<List<Entity.Sensor>> =
         saveLocalObjects(sensors, sensorDao::saveAll)
-
-    override suspend fun updateSensor(sensor: Entity.Sensor): Result<Entity.Sensor> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

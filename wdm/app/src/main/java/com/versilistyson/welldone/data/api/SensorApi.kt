@@ -1,10 +1,8 @@
 package com.versilistyson.welldone.data.api
 
-import com.google.android.gms.maps.model.LatLng
 import com.squareup.moshi.Json
 import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.data.util.Mappable
-import com.versilistyson.welldone.domain.framework.entity.Entity
 import retrofit2.Response
 import retrofit2.http.GET
 
