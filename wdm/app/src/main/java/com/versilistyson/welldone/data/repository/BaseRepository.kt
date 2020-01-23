@@ -3,7 +3,7 @@ package com.versilistyson.welldone.data.repository
 import com.versilistyson.welldone.data.util.Mappable
 import com.versilistyson.welldone.domain.common.Result
 import retrofit2.Response
-
+//handles the fetching from remote and local data sources
 abstract class BaseRepository<RemoteEntity : Mappable<out DatabaseEntity>, DatabaseEntity : Mappable<out DomainEntity>, out DomainEntity> {
 
     open suspend fun fetchNetworkObjects(
