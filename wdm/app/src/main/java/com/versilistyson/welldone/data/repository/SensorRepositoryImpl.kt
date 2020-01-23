@@ -12,7 +12,7 @@ class SensorRepositoryImpl(private val sensorApi: SensorApi,
                            private val sensorDao: SensorDao) : SensorRepository, BaseRepository<SensorApi.Dto.SensorRecentResponse, SensorData, Entity.Sensor>() {
 
     //need to map all the DTO objects to entity objects and then return results
-    override suspend fun fetchAllSensorsRemotely(): Result<LiveData<List<Entity.Sensor>>> =
+    override suspend fun fetchAllSensorsRemotely(): Result<List<Entity.Sensor>> =
         fetchNetworkObjects(sensorApi::getSensors, sensorDao::saveAll)
 
     override suspend fun fetchAllSensorsLocally(): Result<Entity.Sensors?> {

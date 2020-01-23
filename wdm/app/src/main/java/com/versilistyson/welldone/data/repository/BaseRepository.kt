@@ -9,7 +9,7 @@ abstract class BaseRepository<RemoteEntity : Mappable<out DatabaseEntity>, Datab
 
     open suspend fun fetchNetworkObjects(
         getFromNetwork: suspend () -> Response<List<RemoteEntity>>,
-        saveToDatabase: suspend (List<DatabaseEntity>) -> LiveData<List<DatabaseEntity>>
+        saveToDatabase: suspend (List<DatabaseEntity>) -> List<DatabaseEntity>
     ): Result<List<DomainEntity>> {
         try {
             val remoteResponse = getFromNetwork.invoke()
@@ -25,7 +25,7 @@ abstract class BaseRepository<RemoteEntity : Mappable<out DatabaseEntity>, Datab
                                 remoteEntity.map()
                             }
                         )
-                            .value?.map { databaseEntity ->
+                        .map { databaseEntity ->
                             databaseEntity.map()
                         }
                         Result.success(dbResponse, code = remoteResponse.code())
@@ -41,7 +41,7 @@ abstract class BaseRepository<RemoteEntity : Mappable<out DatabaseEntity>, Datab
 
     open suspend fun fetchNetworkObject(
         getFromNetwork: suspend () -> Response<RemoteEntity>,
-        saveToDatabase: suspend (DatabaseEntity) -> LiveData<DatabaseEntity>
+        saveToDatabase: suspend (DatabaseEntity) -> DatabaseEntity
     ): Result<DomainEntity> {
         return try {
             val remoteResponse = getFromNetwork.invoke()
@@ -53,7 +53,7 @@ abstract class BaseRepository<RemoteEntity : Mappable<out DatabaseEntity>, Datab
                     else -> {
                         val mappedResponse = remoteResponse.body()!!.map()
                         val databaseResponse = saveToDatabase.invoke(mappedResponse)
-                        Result.success(databaseResponse.value?.map(), remoteResponse.code())
+                        Result.success(databaseResponse.map(), remoteResponse.code())
                     }
                 }
             } else {
@@ -64,15 +64,14 @@ abstract class BaseRepository<RemoteEntity : Mappable<out DatabaseEntity>, Datab
         }
     }
 
-    open suspend fun fetchLocalObjects(getFromDataBase: suspend () -> LiveData<List<DatabaseEntity>>): Result<List<DomainEntity>> {
+    open suspend fun fetchLocalObjects(getFromDataBase: suspend () -> List<DatabaseEntity>): Result<List<DomainEntity>> {
         return try {
-            val dbResponse = getFromDataBase.invoke()
-            when (dbResponse.value) {
+            when (val dbResponse = getFromDataBase.invoke()) {
                 null -> {
                     Result.success()
                 }
                 else -> {
-                    Result.success(dbResponse.value?.map { dbEntities -> dbEntities.map() })
+                    Result.success(dbResponse.map { dbEntities -> dbEntities.map() })
                 }
             }
         } catch (e: Exception) {
@@ -80,15 +79,14 @@ abstract class BaseRepository<RemoteEntity : Mappable<out DatabaseEntity>, Datab
         }
     }
 
-    open suspend fun fetchLocalObject(getFromDatabase: suspend () -> LiveData<List<DatabaseEntity>>): Result<List<DomainEntity>> {
+    open suspend fun fetchLocalObject(getFromDatabase: suspend () -> List<DatabaseEntity>): Result<List<DomainEntity>> {
         return try {
-            val dbResponse = getFromDatabase.invoke()
-            when(dbResponse.value) {
+            when(val dbResponse = getFromDatabase.invoke()) {
                 null -> {
                     Result.success()
                 }
                 else -> {
-                    Result.success(dbResponse.value?.map { dbEntity -> dbEntity.map() })
+                    Result.success(dbResponse.map { dbEntity -> dbEntity.map() })
                 }
             }
         } catch(e: java.lang.Exception) {
