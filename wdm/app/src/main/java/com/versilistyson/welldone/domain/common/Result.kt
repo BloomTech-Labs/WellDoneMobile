@@ -10,7 +10,7 @@ data class Result<out T>(val status: Status, val data: T? = null, val responseCo
     }
 
     companion object {
-        fun <T> success(data: T? = null, code: Int?): Result<T> = Result(Status.SUCCESS, data, code, null)
+        fun <T> success(data: T? = null, code: Int? = null): Result<T> = Result(Status.SUCCESS, data, code, null)
 
         fun <T> networkError(exception: Exception? = null, code: Int? = null): Result<T> =
             Result(Status.NETWORK_ERROR, null, code, exception)
