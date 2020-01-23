@@ -1,39 +1,19 @@
 package com.versilistyson.welldone.data.repository
 
+import androidx.lifecycle.LiveData
 import com.versilistyson.welldone.data.api.SensorApi
 import com.versilistyson.welldone.data.db.sensor.SensorDao
-import com.versilistyson.welldone.data.util.map
+import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.domain.common.Result
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.SensorRepository
 
 class SensorRepositoryImpl(private val sensorApi: SensorApi,
-                           private val sensorDao: SensorDao) : SensorRepository {
+                           private val sensorDao: SensorDao) : SensorRepository, BaseRepository<SensorApi.Dto.SensorRecentResponse, SensorData, Entity.Sensor>() {
 
     //need to map all the DTO objects to entity objects and then return results
-    override suspend fun fetchAllSensorsRemotely(): Result<List<Entity.Sensor>?> {
-        try {
-            val response = sensorApi.getSensors()
-            val mappedResponse = mutableListOf<Entity.Sensor>()
-            return if (response.isSuccessful) {
-                when (response.body()) {
-                    null -> {
-                        Result.success(code = response.code())
-                    }
-                    else -> {
-                        for (sensor in response.body()!!) {
-                            mappedResponse.add(sensor.map())
-                        }
-                        Result.success(mappedResponse, response.code())
-                    }
-                }
-            } else {
-                Result.networkError(code = response.code())
-            }
-        } catch (e: Exception) {
-            return Result.networkError(e)
-        }
-    }
+    override suspend fun fetchAllSensorsRemotely(): Result<LiveData<List<Entity.Sensor>>> =
+        fetchNetworkObjects(sensorApi::getSensors, sensorDao::saveAll)
 
     override suspend fun fetchAllSensorsLocally(): Result<Entity.Sensors?> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
