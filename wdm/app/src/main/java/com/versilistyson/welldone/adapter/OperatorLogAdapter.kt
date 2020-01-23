@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.data.local.model.OperatorLog
 import kotlinx.android.synthetic.main.log_entry_layout.view.*
-
+//hi
 class OperatorLogAdapter(private val logs: MutableList<OperatorLog>, val listener: LogClickReceived? = null): RecyclerView.Adapter<OperatorLogAdapter.LogViewHolder>() {
 
     interface LogClickReceived {
