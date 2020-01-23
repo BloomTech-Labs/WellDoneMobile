@@ -1,6 +1,5 @@
 package com.versilistyson.welldone.data.repository
 
-import androidx.lifecycle.LiveData
 import com.versilistyson.welldone.data.util.Mappable
 import com.versilistyson.welldone.domain.common.Result
 import retrofit2.Response
@@ -79,20 +78,32 @@ abstract class BaseRepository<RemoteEntity : Mappable<out DatabaseEntity>, Datab
         }
     }
 
-    open suspend fun fetchLocalObject(getFromDatabase: suspend () -> List<DatabaseEntity>): Result<List<DomainEntity>> {
+    open suspend fun fetchLocalObject(objectId: Long, getFromDatabase: suspend (Long) -> DatabaseEntity): Result<DomainEntity> {
         return try {
-            when(val dbResponse = getFromDatabase.invoke()) {
-                null -> {
+            when(val dbResponse = getFromDatabase.invoke(objectId)) {
+                null-> {
                     Result.success()
                 }
                 else -> {
-                    Result.success(dbResponse.map { dbEntity -> dbEntity.map() })
+                    Result.success(dbResponse.map())
                 }
             }
-        } catch(e: java.lang.Exception) {
+        } catch(e: Exception) {
             Result.localError(e)
         }
     }
 
+    open suspend fun saveLocalObjects(databaseEntities: List<DatabaseEntity>,
+                                      saveToDatabase: suspend (List<DatabaseEntity>) -> List<DatabaseEntity>): Result<List<DomainEntity>>{
+        return try {
+            val dbResponse = saveToDatabase.invoke(databaseEntities)
+                .map { databaseEntity ->
+                    databaseEntity.map()
+                }
+            Result.success(dbResponse)
+        } catch(e: Exception) {
+            Result.localError(e)
+        }
+    }
 
 }

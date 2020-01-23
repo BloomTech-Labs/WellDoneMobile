@@ -17,6 +17,6 @@ interface SensorDao {
     suspend fun getAll() : List<SensorData>
 
     @Query("SELECT * FROM sensor_table WHERE sensor_id = :sensorId")
-    suspend fun getSensorBySensorId(sensorId: Int) : SensorData
+    suspend fun getSensorBySensorId(sensorId: Long) : SensorData
 
 }
