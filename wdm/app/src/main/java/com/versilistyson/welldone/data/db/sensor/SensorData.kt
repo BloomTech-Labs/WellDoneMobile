@@ -1,7 +1,6 @@
 package com.versilistyson.welldone.data.db.sensor
 
 import androidx.room.ColumnInfo
-import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.android.gms.maps.model.LatLng
 import com.versilistyson.welldone.data.util.Mappable

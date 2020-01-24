@@ -60,14 +60,5 @@ class MapperTests {
         assertEquals(sensorEntity.padSeconds.padSeconds1, sensorData.padSeconds1)
         assertEquals(sensorEntity.padSeconds.padSeconds2, sensorData.padSeconds2)
         assertEquals(sensorEntity.padSeconds.padSeconds3, sensorData.padSeconds3)
-
-    }
-
-    @Test
-    fun testAuthResponseToAuthUserEntityMapping(){
-        val authResponse = UserAuthenticationApi.Dto.AuthenticationResponse("random_token")
-
-        assertEquals(authUser.token, authResponse.authToken)
-        assertEquals(authUser.userId, authResponse.userId)
     }
 }
