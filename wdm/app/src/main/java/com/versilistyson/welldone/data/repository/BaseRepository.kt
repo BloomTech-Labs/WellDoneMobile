@@ -7,9 +7,7 @@ import retrofit2.Response
 abstract class BaseRepository<RemoteEntity : Mappable<out DatabaseEntity>, DatabaseEntity : Mappable<out DomainEntity>, out DomainEntity> {
 
     open suspend fun fetchNetworkObjects(
-        getFromNetwork: suspend () -> Response<List<RemoteEntity>>,
-        saveToDatabase: suspend (List<DatabaseEntity>) -> List<DatabaseEntity>
-    ): Result<List<DomainEntity>> {
+        getFromNetwork: suspend () -> Response<List<RemoteEntity>>): Result<List<DatabaseEntity>> {
         try {
             val remoteResponse = getFromNetwork.invoke()
             return if (remoteResponse.isSuccessful) {
@@ -18,16 +16,7 @@ abstract class BaseRepository<RemoteEntity : Mappable<out DatabaseEntity>, Datab
                         Result.success(code = remoteResponse.code())
                     }
                     else -> {
-
-                        val dbResponse = saveToDatabase.invoke(
-                            remoteResponse.body()!!.map { remoteEntity ->
-                                remoteEntity.map()
-                            }
-                        )
-                        .map { databaseEntity ->
-                            databaseEntity.map()
-                        }
-                        Result.success(dbResponse, code = remoteResponse.code())
+                        Result.success(remoteResponse.body()!!.map { it.map() }, code = remoteResponse.code())
                     }
                 }
             } else {
@@ -39,9 +28,7 @@ abstract class BaseRepository<RemoteEntity : Mappable<out DatabaseEntity>, Datab
     }
 
     open suspend fun fetchNetworkObject(
-        getFromNetwork: suspend () -> Response<RemoteEntity>,
-        saveToDatabase: suspend (DatabaseEntity) -> DatabaseEntity
-    ): Result<DomainEntity> {
+        getFromNetwork: suspend () -> Response<RemoteEntity>): Result<DatabaseEntity> {
         return try {
             val remoteResponse = getFromNetwork.invoke()
             if (remoteResponse.isSuccessful) {
@@ -50,9 +37,7 @@ abstract class BaseRepository<RemoteEntity : Mappable<out DatabaseEntity>, Datab
                         Result.success(null, remoteResponse.code())
                     }
                     else -> {
-                        val mappedResponse = remoteResponse.body()!!.map()
-                        val databaseResponse = saveToDatabase.invoke(mappedResponse)
-                        Result.success(databaseResponse.map(), remoteResponse.code())
+                        Result.success(remoteResponse.body()!!.map(), remoteResponse.code())
                     }
                 }
             } else {
@@ -88,6 +73,16 @@ abstract class BaseRepository<RemoteEntity : Mappable<out DatabaseEntity>, Datab
                     Result.success(dbResponse.map())
                 }
             }
+        } catch(e: Exception) {
+            Result.localError(e)
+        }
+    }
+
+    open suspend fun saveLocalObject(databaseEntity: DatabaseEntity,
+                                     saveToDatabase: suspend (DatabaseEntity) -> DatabaseEntity): Result<DatabaseEntity>{
+        return try {
+            val dbResponse = saveToDatabase.invoke(databaseEntity)
+            Result.success(dbResponse)
         } catch(e: Exception) {
             Result.localError(e)
         }
