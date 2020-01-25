@@ -31,7 +31,7 @@ interface LogApi {
                     lastModified = lastModified,
                     status = status,
                     comment = comment,
-                    pictures = pictures,
+                    pictures = pictures.toString(),
                     operatorId = operatorId
                 )
         }

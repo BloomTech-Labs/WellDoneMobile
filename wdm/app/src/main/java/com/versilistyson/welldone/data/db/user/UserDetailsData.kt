@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "user_table",
-    indices = [Index(value = ["remote_id"], unique = true)]
+    indices = [Index(value = ["id"], unique = true)]
 )
 data class UserDetailsData(
     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = false) val id: Long,

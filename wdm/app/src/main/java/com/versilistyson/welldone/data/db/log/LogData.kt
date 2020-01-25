@@ -9,11 +9,11 @@ import com.versilistyson.welldone.data.db.sensor.SensorData
     tableName = "log_table",
     foreignKeys = [ForeignKey(
         entity = SensorData::class,
-        parentColumns = ["log_id"],
+        parentColumns = ["sensor_id"],
         childColumns = ["sensor_id"],
         onDelete = ForeignKey.CASCADE
     )],
-    indices = [Index(value = ["remote_id"], unique = true)]
+    indices = [Index(value = ["log_id"], unique = true)]
 )
 data class LogData(
     @ColumnInfo(name = "log_id") @PrimaryKey(autoGenerate = false) val logId: Long,
@@ -22,6 +22,7 @@ data class LogData(
     @ColumnInfo(name = "last_modified") val lastModified: String,
     @ColumnInfo(name = "status") val status: Int,
     @ColumnInfo(name = "comment") val comment: String,
-    @ColumnInfo(name = "pictures") val pictures: List<String>,
+    //use type converter for list<string> later
+    @ColumnInfo(name = "pictures") val pictures: String,
     @ColumnInfo(name = "operator_id") val operatorId: Long
 )

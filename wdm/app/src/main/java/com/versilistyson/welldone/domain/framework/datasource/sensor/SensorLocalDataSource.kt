@@ -1,6 +1,12 @@
 package com.versilistyson.welldone.domain.framework.datasource.sensor
 
+import com.versilistyson.welldone.data.api.SensorApi
+import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.domain.framework.datasource.BaseDataSource
+import com.versilistyson.welldone.domain.framework.entity.Entity
+import kotlinx.coroutines.flow.Flow
 
 interface SensorLocalDataSource: BaseDataSource {
+    suspend fun getSensors(): Flow<List<SensorData>>
+    suspend fun saveSensors(sensors: List<SensorData>): Int
 }
