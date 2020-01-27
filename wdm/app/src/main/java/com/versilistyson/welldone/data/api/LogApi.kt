@@ -4,13 +4,21 @@ import com.squareup.moshi.Json
 import com.versilistyson.welldone.data.db.log.LogData
 import com.versilistyson.welldone.data.util.Mappable
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface LogApi {
 
     @GET("api/log/{sensorId}")
     suspend fun getLogs(@Path("sensorId") sensorId: Long): Response<List<Dto.Log>>
+
+    @POST("api/logs")
+    suspend fun addLog(@Body log: Dto.Log): Response<Any>
+
+    @PUT("api/logs/{logId}")
+    suspend fun updateLog(@Path("logId") logId: Long): Response<Dto.Log>
+
+    @DELETE("api/logs/log")
+    suspend fun deleteLog(@Path("logId") logId: Long): Response<Dto.Log>
 
     sealed class Dto {
         class Log(
@@ -35,6 +43,10 @@ interface LogApi {
                     operatorId = operatorId
                 )
         }
+        class LogToPost(
+            @Json(name = "sensor_id") val sensorId: Long,
+            @Json(name = "comment") val comment: String
+        )
     }
 
 }
