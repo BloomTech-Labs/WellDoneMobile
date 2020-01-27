@@ -1,9 +1,12 @@
 package com.versilistyson.welldone.data.db.log
 
+import androidx.core.content.ContextCompat
 import androidx.room.*
 import com.versilistyson.welldone.data.db.sensor.SensorData
+import com.versilistyson.welldone.data.util.Mappable
+import com.versilistyson.welldone.domain.framework.entity.Entity
 
-@Entity(
+@androidx.room.Entity(
     tableName = "log_table",
     foreignKeys = [ForeignKey(
         entity = SensorData::class,
@@ -23,4 +26,15 @@ class LogData(
     //TODO: use type converter for list<string> later
     @ColumnInfo(name = "pictures") val pictures: String,
     @ColumnInfo(name = "operator_id") val operatorId: Long
-)
+): Mappable<Entity.Log> {
+    override fun map() =
+        Entity.Log(
+            logId = logId,
+            sensorId = sensorId,
+            dateFiled = dateFiled,
+            lastModified = lastModified,
+            status = status,
+            comment = comment,
+            operatorId = operatorId
+        )
+}

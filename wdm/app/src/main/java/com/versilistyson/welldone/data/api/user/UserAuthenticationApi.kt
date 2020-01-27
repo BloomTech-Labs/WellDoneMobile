@@ -6,8 +6,9 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface UserAuthenticationApi {
-    @POST("/api/auth/login")
-    suspend fun signIn(
+
+    @POST("/api/operators/login")
+    suspend fun login(
         @Body
         @Json(name = "email_address") email: String,
         @Json(name = "password") password: String
@@ -15,7 +16,8 @@ interface UserAuthenticationApi {
 
     sealed class Dto {
         data class AuthenticationResponse(
-            @Json(name = "token") val authToken: String
+            @Json(name = "token") val authToken: String,
+            @Json(name = "user_id") val userId: Long
         ) : Dto()
     }
 }
