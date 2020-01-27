@@ -22,7 +22,7 @@ data class LogData(
     @ColumnInfo(name = "last_modified") val lastModified: String,
     @ColumnInfo(name = "status") val status: Int,
     @ColumnInfo(name = "comment") val comment: String,
-    //use type converter for list<string> later
+    //TODO: use type converter for list<string> later
     @ColumnInfo(name = "pictures") val pictures: String,
     @ColumnInfo(name = "operator_id") val operatorId: Long
 )
