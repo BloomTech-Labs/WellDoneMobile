@@ -34,7 +34,8 @@ interface UserDetailsApi {
         }
         class UserDetailsToUpdate(
             @Json(name = "email_address") email: String,
-            @Json(name = "phone") phone: String
+            @Json(name = "phone") phone: String,
+            @Json(name = "password") password: String
         ): Dto()
     }
 }

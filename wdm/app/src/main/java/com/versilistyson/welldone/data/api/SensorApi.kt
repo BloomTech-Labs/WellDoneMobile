@@ -7,7 +7,8 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface SensorApi {
-    @GET("api/sensors/recent")
+
+    @GET("api/operators/assigned/sensors")
     suspend fun getSensors(): Response<List<Dto.SensorRecentResponse>>
 
     sealed class Dto {
