@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
     tableName = "user_table",
     indices = [Index(value = ["id"], unique = true)]
 )
-data class UserDetailsData(
+class UserDetailsData(
     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = false) val id: Long,
     @ColumnInfo(name = "first_name") val firstName: String,
     @ColumnInfo(name = "last_name") val lastName: String,

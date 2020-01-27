@@ -8,16 +8,7 @@ import com.versilistyson.welldone.domain.framework.repository.SensorRepository
 class GetSensorUseCase(private val sensorRepository: SensorRepository) : UseCase<Entity.Sensors, UseCase.None>() {
 
     override suspend fun run(params: None): Either<Failure, Entity.Sensors> {
-        return try {
-            val sensorResponse = sensorRepository.fetchAllSensorsRemotely()
-            if(sensorResponse.body() != null) {
-                Either.Right(sensorResponse.body()!!)
-            } else
-                Either.Left(Failure.None)
-
-        } catch(exp: Exception){
-            Either.Left(GetSensorsFailure(exp))
-        }
+        TODO()
     }
 
     data class GetSensorsFailure(val error: Exception): Failure.FeatureFailure(error)
@@ -26,3 +17,13 @@ class GetSensorUseCase(private val sensorRepository: SensorRepository) : UseCase
 
     }
 }
+//return try {
+//            val sensorResponse = sensorRepository.fetchFreshSensors()
+//            if(sensorResponse.body() != null) {
+//                Either.Right(sensorResponse.body()!!)
+//            } else
+//                Either.Left(Failure.None)
+//
+//        } catch(exp: Exception){
+//            Either.Left(GetSensorsFailure(exp))
+//        }

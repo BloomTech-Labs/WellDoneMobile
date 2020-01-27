@@ -25,7 +25,7 @@ class AuthenticationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication)
 
-        authComponent = (applicationContext as MyApplication).appComponent.authComponent()
+//        authComponent = (applicationContext as MyApplication).appComponent.authComponent()
         authComponent.inject(this)
 
         authSharedViewModel = ViewModelProviders.of(this, vmProviderFactory)[AuthSharedViewModel::class.java]

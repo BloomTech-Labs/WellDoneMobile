@@ -2,7 +2,7 @@ package com.versilistyson.welldone.presentation.di.auth
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.versilistyson.welldone.data.remote.AuthenticationService
+import com.versilistyson.welldone.data.api.user.UserAuthenticationApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -46,6 +46,6 @@ object AuthNetworkModule {
     @AuthActivityScope
     @JvmStatic
     @Provides
-    fun provideRetrofitService(retrofit: Retrofit): AuthenticationService =
-        retrofit.create(AuthenticationService::class.java)
+    fun provideRetrofitService(retrofit: Retrofit): UserAuthenticationApi =
+        retrofit.create(UserAuthenticationApi::class.java)
 }

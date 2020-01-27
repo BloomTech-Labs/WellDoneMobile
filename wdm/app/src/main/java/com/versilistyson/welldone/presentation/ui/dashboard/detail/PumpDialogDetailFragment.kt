@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.versilistyson.welldone.R
-import com.versilistyson.welldone.presentation.adapter.OperatorLogAdapter
+import com.versilistyson.welldone.adapter.OperatorLogAdapter
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.presentation.viewmodel.PumpDialogViewModel
 import kotlinx.android.synthetic.main.fragment_dialog_pump_detail.*
@@ -33,20 +32,20 @@ class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickRe
             dismiss()
         }
         bindSensor()
-        viewModel.listOfLogs.add(
-            Entity.Log(
-                "13/05/2018", "13/06/2019",
-                ContextCompat.getDrawable(context!!, R.drawable.pump_non_functioning)!!, "HIMAN"
-            )
-        )
-        viewModel.listOfLogs.add(
-            Entity.Log(
-                "14/05/2020",
-                "15/06/2020",
-                ContextCompat.getDrawable(context!!, R.drawable.pump_no_data)!!,
-                "The pump was not working and it needed repairs"
-            )
-        )
+//        viewModel.listOfLogs.add(
+//            Entity.Log(
+//                "13/05/2018", "13/06/2019",
+//                ContextCompat.getDrawable(context!!, R.drawable.pump_non_functioning)!!, "HIMAN"
+//            )
+//        )
+//        viewModel.listOfLogs.add(
+//            Entity.Log(
+//                "14/05/2020",
+//                "15/06/2020",
+//                ContextCompat.getDrawable(context!!, R.drawable.pump_no_data)!!,
+//                "The pump was not working and it needed repairs"
+//            )
+//        )
         initRecyclerView()
     }
 

@@ -6,17 +6,16 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Build
 import com.versilistyson.welldone.domain.util.Variables
-import com.versilistyson.welldone.presentation.di.app.DaggerAppComponent
 import com.versilistyson.welldone.presentation.util.SharedPreference
 
 class MyApplication: Application() {
 
-    val appComponent by lazy {
-        DaggerAppComponent
-            .builder()
-            .application(this)
-            .build()
-    }
+//    val appComponent by lazy {
+//        DaggerAppComponent
+//            .builder()
+//            .application(this)
+//            .build()
+//    }
 
     private lateinit var sharedPreferences: SharedPreference
 

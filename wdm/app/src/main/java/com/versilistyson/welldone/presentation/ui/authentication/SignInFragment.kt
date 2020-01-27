@@ -9,10 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.presentation.viewmodel.AuthSharedViewModel
-import com.versilistyson.welldone.presentation.ui.authentication.fragment.SignInFragmentDirections
 import kotlinx.android.synthetic.main.fragment_sign_in_screen.*
 import javax.inject.Inject
 
@@ -46,34 +44,35 @@ class SignInFragment : Fragment() {
             viewLifecycleOwner,
             Observer { newAuthenticationState ->
                 when (newAuthenticationState) {
-                    AuthenticationState.SUCCESSFUL -> {
-                        authSharedViewModel.resetAuthenticationState()
-                        action =
-                            SignInFragmentDirections.actionSignInScreenToDashboardActivity()
-                        findNavController().navigate(action)
-                    }
-                    AuthenticationState.FAILED -> {
-                        bttn_signIn.isEnabled = true
-                        signInFragment_cv_authFailed.visibility = View.VISIBLE
-                        cv_forSignInStatus.visibility = View.INVISIBLE
-                        signIn_progressBar.animate().cancel()
-                    }
-                    AuthenticationState.ERROR -> {
-                        bttn_signIn.isEnabled = true
-                        authSharedViewModel.resetAuthenticationState()
-                    }
-                    AuthenticationState.PROCESSING -> {
-                        bttn_signIn.isEnabled = false
-                        cv_forSignInStatus.visibility = View.VISIBLE
-                        signInFragment_cv_authFailed.visibility = View.INVISIBLE
-                        signIn_progressBar.animate().start()
-                    }
-                    AuthenticationState.WAITING -> {
-                        bttn_signIn.isEnabled = true
-                        cv_forSignInStatus.visibility = View.INVISIBLE
-                        signInFragment_cv_authFailed.visibility = View.INVISIBLE
-                        signIn_progressBar.animate().cancel()
-                    }
+//                    AuthenticationState.SUCCESSFUL -> {
+//                        authSharedViewModel.resetAuthenticationState()
+//                        action =
+//                            SignInFragmentDirections.actionSignInScreenToDashboardActivity()
+//                        findNavController().navigate(action)
+//                    }
+//                    AuthenticationState.FAILED -> {
+//                        bttn_signIn.isEnabled = true
+//                        signInFragment_cv_authFailed.visibility = View.VISIBLE
+//                        cv_forSignInStatus.visibility = View.INVISIBLE
+//                        signIn_progressBar.animate().cancel()
+//                    }
+//                    AuthenticationState.ERROR -> {
+//                        bttn_signIn.isEnabled = true
+//                        authSharedViewModel.resetAuthenticationState()
+//                    }
+//                    AuthenticationState.PROCESSING -> {
+//                        bttn_signIn.isEnabled = false
+//                        cv_forSignInStatus.visibility = View.VISIBLE
+//                        signInFragment_cv_authFailed.visibility = View.INVISIBLE
+//                        signIn_progressBar.animate().start()
+//                    }
+//                    AuthenticationState.WAITING -> {
+//                        bttn_signIn.isEnabled = true
+//                        cv_forSignInStatus.visibility = View.INVISIBLE
+//                        signInFragment_cv_authFailed.visibility = View.INVISIBLE
+//                        signIn_progressBar.animate().cancel()
+//                    }
+//                }
                 }
             }
         )
@@ -82,7 +81,7 @@ class SignInFragment : Fragment() {
             if (!signInFragment_et_email.text.isNullOrBlank() && !signInFragment_et_password.text.isNullOrBlank()) {
                 val email = signInFragment_et_email.text.toString()
                 val password = signInFragment_et_password.text.toString()
-                authSharedViewModel.authenticateUser(email, password)
+//                authSharedViewModel.authenticateUser(email, password)
             }
         }
     }

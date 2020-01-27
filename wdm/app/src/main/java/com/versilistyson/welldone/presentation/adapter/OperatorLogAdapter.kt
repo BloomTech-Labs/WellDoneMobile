@@ -5,18 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.versilistyson.welldone.R
-import com.versilistyson.welldone.data.local.model.OperatorLog
+import com.versilistyson.welldone.domain.framework.entity.Entity
 import kotlinx.android.synthetic.main.log_entry_layout.view.*
-//hi
-class OperatorLogAdapter(private val logs: MutableList<OperatorLog>, val listener: LogClickReceived? = null): RecyclerView.Adapter<OperatorLogAdapter.LogViewHolder>() {
+
+class OperatorLogAdapter(private val logs: MutableList<Entity.Log>, val listener: LogClickReceived? = null): RecyclerView.Adapter<OperatorLogAdapter.LogViewHolder>() {
 
     interface LogClickReceived {
-        fun onLogClicked(log: OperatorLog)
+        fun onLogClicked(log: Entity.Log)
     }
 
     inner class LogViewHolder(val view: View): RecyclerView.ViewHolder(view){
 
-        fun viewClickListener(log: OperatorLog){
+        fun viewClickListener(log: Entity.Log){
             view.setOnClickListener {
                 listener?.onLogClicked(log)
             }
@@ -37,8 +37,8 @@ class OperatorLogAdapter(private val logs: MutableList<OperatorLog>, val listene
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
         val log = logs[position]
         holder.viewClickListener(log)
-        holder.tvDateCreated.text = log.date_filed
-        holder.tvLastEdited.text = log.last_modified
+        holder.tvDateCreated.text = log.dateFiled
+        holder.tvLastEdited.text = log.lastModified
         holder.imgStatus.setImageDrawable(log.status)
         holder.tvComment.text = log.comment
     }
