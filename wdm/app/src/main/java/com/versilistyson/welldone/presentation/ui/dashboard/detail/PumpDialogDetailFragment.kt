@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.versilistyson.welldone.R
-import com.versilistyson.welldone.adapter.OperatorLogAdapter
+import com.versilistyson.welldone.presentation.adapter.OperatorLogAdapter
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.presentation.viewmodel.PumpDialogViewModel
 import kotlinx.android.synthetic.main.fragment_dialog_pump_detail.*

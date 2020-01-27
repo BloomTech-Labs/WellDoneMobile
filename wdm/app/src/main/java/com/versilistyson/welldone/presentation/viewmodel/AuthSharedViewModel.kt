@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 //with a matching scope in the component, this will determine that the component does not exist outside the lifetime of the component
 
-class AuthSharedViewModel @Inject constructor(private val signInUseCase: SignInUseCase) :
+class AuthSharedViewModel(private val signInUseCase: SignInUseCase) :
     ViewModel() {
 
     sealed class AuthenticationResult {

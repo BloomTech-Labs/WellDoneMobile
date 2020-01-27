@@ -21,16 +21,16 @@ interface UserDetailsApi {
             @Json(name = "id") val userId: Long,
             @Json(name = "first_name") val firstName: String,
             @Json(name = "last_name") val lastName: String,
-            @Json(name = "email_address") val email: String? = "",
-            @Json(name = "mobile_number") val phone: String? = ""
+            @Json(name = "email_address") val emailAddress: String? = "",
+            @Json(name = "mobile_number") val phoneNumber: String? = ""
         ) : Dto(), Mappable<UserDetailsData>{
             override fun map(): UserDetailsData =
                 UserDetailsData(
                     userId = userId,
                     firstName = firstName,
                     lastName = lastName,
-                    email = email,
-                    phone = phone
+                    emailAddress = emailAddress,
+                    phoneNumber = phoneNumber
                 )
         }
         class UserDetailsToUpdate(

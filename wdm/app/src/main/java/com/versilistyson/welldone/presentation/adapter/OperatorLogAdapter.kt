@@ -1,8 +1,9 @@
-package com.versilistyson.welldone.adapter
+package com.versilistyson.welldone.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.domain.framework.entity.Entity
@@ -39,7 +40,13 @@ class OperatorLogAdapter(private val logs: MutableList<Entity.Log>, val listener
         holder.viewClickListener(log)
         holder.tvDateCreated.text = log.dateFiled
         holder.tvLastEdited.text = log.lastModified
-        holder.imgStatus.setImageDrawable(log.status)
+        holder.imgStatus.setImageDrawable(
+            when(log.status){
+                null -> ContextCompat.getDrawable(holder.view.context, R.drawable.pump_functioning)
+                1 -> ContextCompat.getDrawable(holder.view.context, R.drawable.pump_no_data)
+                else -> ContextCompat.getDrawable(holder.view.context, R.drawable.pump_non_functioning)
+            }
+        )
         holder.tvComment.text = log.comment
     }
 }
