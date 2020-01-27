@@ -7,12 +7,12 @@ import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorLocal
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import kotlinx.coroutines.flow.Flow
 
-class SensorLocalDataSourceImpl(dao: SensorDao) : SensorLocalDataSource {
+class SensorLocalDataSourceImpl(private val dao: SensorDao) : SensorLocalDataSource {
     override suspend fun getSensors(): Flow<List<SensorData>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return dao.getAll()
     }
 
-    override suspend fun saveSensors(sensors: List<SensorData>): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override suspend fun saveSensors(sensors: List<SensorData>): Int  {
+        return dao.saveAll(sensors)
     }
 }

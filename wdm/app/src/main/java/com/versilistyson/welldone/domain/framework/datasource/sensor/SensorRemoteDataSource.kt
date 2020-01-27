@@ -2,7 +2,8 @@ package com.versilistyson.welldone.domain.framework.datasource.sensor
 
 import com.versilistyson.welldone.data.api.SensorApi
 import com.versilistyson.welldone.domain.framework.datasource.BaseDataSource
+import retrofit2.Response
 
 interface SensorRemoteDataSource: BaseDataSource {
-    fun getSensors(): List<SensorApi.Dto.SensorRecentResponse>
+    suspend fun getSensors(): Response<List<SensorApi.Dto.SensorRecentResponse>>
 }

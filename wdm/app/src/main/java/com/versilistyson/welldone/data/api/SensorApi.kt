@@ -12,7 +12,7 @@ interface SensorApi {
     suspend fun getSensors(): Response<List<Dto.SensorRecentResponse>>
 
     sealed class Dto {
-        class SensorRecentResponse(
+        data class SensorRecentResponse(
             @Json(name = "pump_index") val sensorId: Int,
             @Json(name = "status") val sensorStatus: Int?,
             @Json(name = "data_finished") val lastUploadDate: String,
