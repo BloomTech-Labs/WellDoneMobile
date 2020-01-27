@@ -6,7 +6,7 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.UserDetailRepository
 import com.versilistyson.welldone.domain.framework.usecases.UseCase
 
-class SignInUseCase(private val userRepository: UserDetailRepository) :
+class SignInUseCase(private val userRepository: UserDetailRepository):
     UseCase<Entity.UserDetails, SignInUseCase.Params>() {
 
 

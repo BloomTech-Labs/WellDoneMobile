@@ -1,7 +1,5 @@
 package com.versilistyson.welldone.domain.framework.repository
 
-import com.versilistyson.welldone.data.db.sensor.SensorData
-import com.versilistyson.welldone.domain.common.Result
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import kotlinx.coroutines.flow.Flow
 

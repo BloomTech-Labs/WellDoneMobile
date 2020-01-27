@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDirections
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.presentation.viewmodel.AuthSharedViewModel
@@ -17,11 +18,12 @@ import javax.inject.Inject
 class SignInFragment : Fragment() {
 
     private lateinit var action: NavDirections
-    @Inject lateinit var authSharedViewModel: AuthSharedViewModel
+    /*@Inject*/ lateinit var authSharedViewModel: AuthSharedViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as AuthenticationActivity).authComponent.inject(this)
+//        (activity as AuthenticationActivity).authComponent.inject(this)
+        authSharedViewModel = ViewModelProvider(activity!!)[AuthSharedViewModel::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

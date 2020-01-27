@@ -6,7 +6,9 @@ import com.versilistyson.welldone.data.db.user.UserDetailsData
 import com.versilistyson.welldone.domain.framework.datasource.BaseDataSource
 
 interface UserDetailsLocalDataSource: BaseDataSource {
+
     fun getUserDetails(userId: Long)
+
     fun storeUserDetails(
         userId: Long,
         firstName: String,

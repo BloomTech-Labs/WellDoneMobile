@@ -10,12 +10,12 @@ import com.versilistyson.welldone.presentation.util.SharedPreference
 
 class MyApplication: Application() {
 
-    val appComponent by lazy {
-        DaggerAppComponent
-            .builder()
-            .application(this)
-            .build()
-    }
+//    val appComponent by lazy {
+//        DaggerAppComponent
+//            .builder()
+//            .application(this)
+//            .build()
+//    }
 
     private lateinit var sharedPreferences: SharedPreference
 
