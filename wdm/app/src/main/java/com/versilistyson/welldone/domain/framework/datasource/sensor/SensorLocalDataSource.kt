@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface SensorLocalDataSource: BaseDataSource {
     fun getSensors(keyList: (List<SensorData>) -> List<Int>): Flow<List<SensorData>>
-    suspend fun saveSensors(sensors: List<SensorData>)
+    suspend fun saveSensors(fn1: (List<SensorData>) -> List<Int>, sensors: List<SensorData>)
 }
