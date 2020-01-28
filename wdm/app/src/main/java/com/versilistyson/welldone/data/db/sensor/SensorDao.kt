@@ -7,16 +7,14 @@ import kotlinx.coroutines.flow.Flow
 interface SensorDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveAll(key: (List<SensorData>) -> List<Int>, sensors: List<SensorData>)
+    suspend fun saveAll(key: String, sensors: List<SensorData>)
 
     @Delete
     fun deleteAll(key: (List<SensorData>) -> List<Int>)
 
     @Query("SELECT * FROM sensor_table")
-    fun getAll(key: (List<SensorData>) -> List<Int>) : Flow<List<SensorData>>
+    fun getAll(key: String) : Flow<List<SensorData>>
 
     @Query("SELECT * FROM sensor_table WHERE sensor_id = :sensorId")
     fun getSensorBySensorId(key: (SensorData) -> Int, sensorId: Long) : Flow<SensorData>
-
-
 }

@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 
 class SensorLocalDataSourceImpl(private val dao: SensorDao) : SensorLocalDataSource {
 
-    override fun getSensors(keyList: (List<SensorData>) -> List<Int>): Flow<List<SensorData>> =
-        dao.getAll(keyList)
+    override fun getSensors(key: String): Flow<List<SensorData>> =
+        dao.getAll(key)
 
-    override suspend fun saveSensors(keyList: (List<SensorData>) -> List<Int>, sensors: List<SensorData>)
-            = dao.saveAll(keyList, sensors)
+    override suspend fun saveSensors(key: String, sensors: List<SensorData>) =
+        dao.saveAll(key, sensors)
 }
 

@@ -8,5 +8,4 @@ class SensorRemoteDataSourceImpl(private val api: SensorApi): SensorRemoteDataSo
     override suspend fun getSensors(): Response<List<SensorApi.Dto.SensorRecentResponse>> {
         return api.getSensors()
     }
-
 }

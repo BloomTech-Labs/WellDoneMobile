@@ -7,5 +7,5 @@ interface LogRepository {
 
     fun fetchLogs(): Flow<List<Entity.LogDetails>>
     fun fetchFreshLogs(): Flow<List<Entity.LogDetails>>
-    fun fetchLocalLogs(): Flow<List<Entity.LogDetails>>
+//    fun fetchLocalLogs(): Flow<List<Entity.LogDetails>>
 }

@@ -16,8 +16,4 @@ class LogRepositoryImpl(private val remoteDataSource: LogDataRemoteSource,
     override fun fetchFreshLogs(): Flow<List<Entity.LogDetails>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
-    override fun fetchLocalLogs(): Flow<List<Entity.LogDetails>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

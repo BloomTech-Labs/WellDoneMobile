@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface SensorRepository {
 //    suspend fun fetchSensors(): Flow<StoreResponse<List<SensorData>>>
     suspend fun fetchFreshSensors(): Flow<StoreResponse<List<SensorData>>>
-    suspend fun fetchLocalSensors(): Flow<StoreResponse<List<SensorData>>>
+    suspend fun fetchSensors(): Flow<StoreResponse<List<SensorData>>>
 }
