@@ -1,8 +1,6 @@
 package com.versilistyson.welldone.data.repository
 
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
-import com.dropbox.android.external.store4.StoreResponse
+import com.dropbox.android.external.store4.*
 import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorLocalDataSource
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorRemoteDataSource
@@ -10,6 +8,7 @@ import com.versilistyson.welldone.domain.framework.repository.SensorRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
+import java.util.concurrent.TimeUnit
 
 @ExperimentalCoroutinesApi
 @FlowPreview
@@ -33,6 +32,11 @@ class SensorRepositoryImpl(
             .persister(
                 reader = localDataSource::getSensors,
                 writer = localDataSource::saveSensors
+            ).cachePolicy(
+                MemoryPolicy.builder()
+                    .setExpireAfterAccess(8)
+                    .setExpireAfterTimeUnit(TimeUnit.DAYS)
+                    .build()
             )
             .build()
 
