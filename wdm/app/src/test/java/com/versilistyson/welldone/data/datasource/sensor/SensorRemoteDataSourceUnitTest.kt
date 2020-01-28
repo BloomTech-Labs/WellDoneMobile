@@ -9,6 +9,7 @@ import com.versilistyson.welldone.test_util.builder.sensor.SensorRecentResponseT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
@@ -63,6 +64,6 @@ class SensorRemoteDataSourceUnitTest {
         result = sensorRemoteDataSource.getSensors()
         // CHECK
         verify(mockSensorApi).getSensors()
-        Assert.assertEquals(expected, result)
+        expected shouldBeEqualTo result
     }
 }

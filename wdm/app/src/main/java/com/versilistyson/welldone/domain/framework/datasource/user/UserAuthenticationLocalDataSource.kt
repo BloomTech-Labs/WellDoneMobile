@@ -1,8 +1,8 @@
 package com.versilistyson.welldone.domain.framework.datasource.user
 
 interface UserAuthenticationLocalDataSource {
-    fun saveToken(token: String)
-    fun saveId(id: String)
-    fun deleteUserId()
-    fun deleteToken(userId: String)
+    suspend fun saveToken(token: String): Boolean
+    suspend fun saveId(id: String): Boolean
+    suspend fun deleteUserId(): Boolean
+    suspend fun deleteToken(userId: String): Boolean
 }
