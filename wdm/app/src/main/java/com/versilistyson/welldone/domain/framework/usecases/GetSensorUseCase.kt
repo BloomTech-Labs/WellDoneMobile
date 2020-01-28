@@ -27,46 +27,52 @@ class GetSensorUseCase(private val sensorRepository: SensorRepository, private v
         val sensorCollector = object : FlowCollector<StoreResponse<List<SensorData>>> {
             override suspend fun emit(response: StoreResponse<List<SensorData>>) {
                 when (response) {
-                    is StoreResponse.Loading -> TODO()
+                    is StoreResponse.Loading -> handleLoading()
                     is StoreResponse.Data -> {
                         handleData(response.requireData())
                     }
-                    is StoreResponse.Error -> TODO()
+                    is StoreResponse.Error -> {
+                        handleError(response.error)
+                    }
                 }
             }
         }
         coroutineScope.launch {
             sensorRepository.fetchSensors().collect(sensorCollector)
         }
+        return eitherReturnValue
+    }
 
-        fun handleData(sensors: List<SensorData>) {
-            val mappedSensors = mutableListOf<Entity.Sensor>()
-            var totalLatitude: Double = 0.0
-            var totalLongitude: Double = 0.0
-            sensors.forEach { sensor ->
-                mappedSensors.add(sensor.map())
-                totalLatitude += sensor.latitude
-                totalLongitude += sensor.longitude
-            }
-            sensorsLiveData.value = Entity.Sensors(
-                mappedSensors,
-                LatLng(
-                    totalLatitude / (mappedSensors.size + 1),
-                    totalLongitude / (mappedSensors.size + 1)
-                )
+    fun handleLoading() {
+        eitherReturnValue = Either.Left(Failure.CurrentlyLoading)
+    }
+
+    fun handleData(sensors: List<SensorData>) {
+        val mappedSensors = mutableListOf<Entity.Sensor>()
+        var totalLatitude: Double = 0.0
+        var totalLongitude: Double = 0.0
+        sensors.forEach { sensor ->
+            mappedSensors.add(sensor.map())
+            totalLatitude += sensor.latitude
+            totalLongitude += sensor.longitude
+        }
+        sensorsLiveData.value = Entity.Sensors(
+            mappedSensors,
+            LatLng(
+                totalLatitude / (mappedSensors.size + 1),
+                totalLongitude / (mappedSensors.size + 1)
             )
-            eitherReturnValue = Either.Right(sensorsLiveData)
-        }
+        )
+        eitherReturnValue = Either.Right(sensorsLiveData)
+    }
 
-        fun handleLoading() {
+    fun handleError(error: Throwable){
+        eitherReturnValue = Either.Left(GetSensorsFailure(error as Exception))
+    }
 
-        }
+    data class GetSensorsFailure(val error: Exception) : Failure.FeatureFailure(error)
+}
 
-        data class GetSensorsFailure(val error: Exception) : Failure.FeatureFailure(error)
-
-        fun handleFailure(failure: Failure) {
-
-        }
 
 //return try {
 //            val sensorResponse = sensorRepository.fetchFreshSensors()
