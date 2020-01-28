@@ -2,6 +2,7 @@ package com.versilistyson.welldone.data.api
 
 import com.squareup.moshi.Json
 import com.versilistyson.welldone.data.db.log.LogData
+import com.versilistyson.welldone.data.db.log.PictureData
 import com.versilistyson.welldone.data.util.Mappable
 import retrofit2.Response
 import retrofit2.http.*
@@ -39,9 +40,16 @@ interface LogApi {
                     lastModified = lastModified,
                     status = status,
                     comment = comment,
-                    pictures = pictures.toString(),
                     operatorId = operatorId
                 )
+            fun mapToPictureData(picPosition: Int) =  object : Mappable<PictureData> {
+                override fun map() =
+                    PictureData(
+                        pictureLink = pictures[picPosition].imageUri,
+                        subtitle = pictures[picPosition].subtitle,
+                        logId = logId
+                    )
+            }
         }
         data class LogPicture(
             @Json(name = "image_uri") val imageUri: String,

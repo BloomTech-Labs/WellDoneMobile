@@ -49,7 +49,7 @@ class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickRe
         initRecyclerView()
     }
 
-    override fun onLogClicked(log: Entity.Log) {
+    override fun onLogClicked(log: Entity.LogDetails) {
         //start alert dialog for log that shows when a log on the list is clicked
         val logDialogFragment =
             LogDialogFragment()

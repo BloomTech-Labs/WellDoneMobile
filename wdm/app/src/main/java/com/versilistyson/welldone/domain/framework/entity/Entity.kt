@@ -42,14 +42,15 @@ sealed class Entity {
         )
     }
 
-    data class Log(
+    data class LogDetails(
         val logId: Long,
         val sensorId: Long,
         val dateFiled: String,
         val lastModified: String,
         val status: Int?,
         val comment: String,
-        val operatorId: Long
+        val operatorId: Long,
+        val logImages: List<String>?
     ) : Entity(), Serializable
 
     data class Sensors(

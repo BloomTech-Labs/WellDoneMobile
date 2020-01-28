@@ -9,15 +9,15 @@ import kotlinx.coroutines.flow.Flow
 class LogRepositoryImpl(private val remoteDataSource: LogDataRemoteSource,
                         private val localDataSource: LogLocalDataSource): LogRepository {
 
-    override fun fetchLogs(): Flow<List<Entity.Log>> {
+    override fun fetchLogs(): Flow<List<Entity.LogDetails>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun fetchFreshLogs(): Flow<List<Entity.Log>> {
+    override fun fetchFreshLogs(): Flow<List<Entity.LogDetails>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun fetchLocalLogs(): Flow<List<Entity.Log>> {
+    override fun fetchLocalLogs(): Flow<List<Entity.LogDetails>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
