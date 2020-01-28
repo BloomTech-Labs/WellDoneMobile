@@ -1,6 +1,6 @@
 package com.versilistyson.welldone.domain.framework.datasource.user
 
-interface UserAuthenticationLocalDataSource {
+interface AuthenticationLocalDataSource {
     suspend fun saveToken(token: String): Boolean
     suspend fun saveId(id: String): Boolean
     suspend fun deleteUserId(): Boolean
