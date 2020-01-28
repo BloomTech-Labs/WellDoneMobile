@@ -10,7 +10,7 @@ class SensorLocalDataSourceImpl(private val dao: SensorDao) : SensorLocalDataSou
     override fun getSensors(keyList: (List<SensorData>) -> List<Int>): Flow<List<SensorData>> =
         dao.getAll(keyList)
 
-    override suspend fun saveSensors(fn1: (List<SensorData>) -> List<Int>, sensors: List<SensorData>)
-            = dao.saveAll(fn1, sensors)
+    override suspend fun saveSensors(keyList: (List<SensorData>) -> List<Int>, sensors: List<SensorData>)
+            = dao.saveAll(keyList, sensors)
 }
 
