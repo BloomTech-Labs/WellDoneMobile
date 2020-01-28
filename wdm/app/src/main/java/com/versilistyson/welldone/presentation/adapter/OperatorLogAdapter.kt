@@ -9,15 +9,15 @@ import com.versilistyson.welldone.R
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import kotlinx.android.synthetic.main.log_entry_layout.view.*
 
-class OperatorLogAdapter(private val logs: MutableList<Entity.Log>, val listener: LogClickReceived? = null): RecyclerView.Adapter<OperatorLogAdapter.LogViewHolder>() {
+class OperatorLogAdapter(private val logs: MutableList<Entity.LogDetails>, val listener: LogClickReceived? = null): RecyclerView.Adapter<OperatorLogAdapter.LogViewHolder>() {
 
     interface LogClickReceived {
-        fun onLogClicked(log: Entity.Log)
+        fun onLogClicked(log: Entity.LogDetails)
     }
 
     inner class LogViewHolder(val view: View): RecyclerView.ViewHolder(view){
 
-        fun viewClickListener(log: Entity.Log){
+        fun viewClickListener(log: Entity.LogDetails){
             view.setOnClickListener {
                 listener?.onLogClicked(log)
             }

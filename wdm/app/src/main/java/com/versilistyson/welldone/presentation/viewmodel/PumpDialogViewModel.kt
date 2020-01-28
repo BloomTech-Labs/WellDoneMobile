@@ -7,6 +7,6 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
 class PumpDialogViewModel : ViewModel() {
 
     val listOfLogs by lazy {
-        mutableListOf<Entity.Log>()
+        mutableListOf<Entity.LogDetails>()
     }
 }

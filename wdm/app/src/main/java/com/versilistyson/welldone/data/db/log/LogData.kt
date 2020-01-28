@@ -1,7 +1,9 @@
 package com.versilistyson.welldone.data.db.log
 
-import androidx.core.content.ContextCompat
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.ForeignKey
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.data.util.Mappable
 import com.versilistyson.welldone.domain.framework.entity.Entity
@@ -16,25 +18,24 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
     )],
     indices = [Index(value = ["log_id"], unique = true)]
 )
-class LogData(
+data class LogData(
     @ColumnInfo(name = "log_id") @PrimaryKey(autoGenerate = false) val logId: Long,
     @ColumnInfo(name = "sensor_id") val sensorId: Long,
     @ColumnInfo(name = "date_filed") val dateFiled: String,
     @ColumnInfo(name = "last_modified") val lastModified: String,
     @ColumnInfo(name = "status") val status: Int,
     @ColumnInfo(name = "comment") val comment: String,
-    //TODO: use type converter for list<string> later
-    @ColumnInfo(name = "pictures") val pictures: String,
     @ColumnInfo(name = "operator_id") val operatorId: Long
-): Mappable<Entity.Log> {
+): Mappable<Entity.LogDetails> {
     override fun map() =
-        Entity.Log(
+        Entity.LogDetails(
             logId = logId,
             sensorId = sensorId,
             dateFiled = dateFiled,
             lastModified = lastModified,
             status = status,
             comment = comment,
-            operatorId = operatorId
+            operatorId = operatorId,
+            logImages = null //this will be added after we retrieve the images from store
         )
 }

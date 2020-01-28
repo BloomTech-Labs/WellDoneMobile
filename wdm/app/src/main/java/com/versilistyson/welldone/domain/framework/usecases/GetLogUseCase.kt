@@ -5,9 +5,9 @@ import com.versilistyson.welldone.domain.common.Failure
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.LogRepository
 
-class GetLogUseCase(private val logRepository: LogRepository): UseCase<List<Entity.Log>, GetLogUseCase.Params>() {
+class GetLogUseCase(private val logRepository: LogRepository): UseCase<List<Entity.LogDetails>, GetLogUseCase.Params>() {
 
-    override suspend fun run(params: Params): Either<Failure, List<Entity.Log>> {
+    override suspend fun run(params: Params): Either<Failure, List<Entity.LogDetails>> {
         TODO()
     }
 

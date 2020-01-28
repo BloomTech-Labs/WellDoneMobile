@@ -15,11 +15,13 @@ class SharedPreference(val application: Application) {
         editor.putInt(KEY_NAME.keyName, value)
         editor.apply()
     }
+
     fun save(KEY_NAME: Keys, value: String) {
         val editor = sharedPref.edit()
         editor.putString(KEY_NAME.keyName, value)
         editor.apply()
     }
+
     fun retrieveString(KEY_NAME: Keys): String? {
         return sharedPref.getString(KEY_NAME.keyName, "none")
     }

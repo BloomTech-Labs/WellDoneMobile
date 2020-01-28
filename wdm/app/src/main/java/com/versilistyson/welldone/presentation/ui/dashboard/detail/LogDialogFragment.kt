@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.full_log_layout.*
 
 class LogDialogFragment: DialogFragment() {
 
-    private lateinit var currentLog: Entity.Log
+    private lateinit var currentLog: Entity.LogDetails
 
     override fun getTheme(): Int {
         return R.style.AlertScreenDialog
@@ -24,7 +24,7 @@ class LogDialogFragment: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        currentLog = arguments!!.getSerializable("log") as Entity.Log
+        currentLog = arguments!!.getSerializable("log") as Entity.LogDetails
         bindView()
 
         img_pic_adder.setOnClickListener {
