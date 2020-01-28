@@ -11,8 +11,6 @@ import kotlinx.coroutines.*
  */
 abstract class UseCase<out Type, in Params> where Type: Any {
 
-    var NETWORK_TIMEOUT = 3000L
-
     abstract suspend fun run(params: Params): Either<Failure, Type>
 
     open operator fun invoke(

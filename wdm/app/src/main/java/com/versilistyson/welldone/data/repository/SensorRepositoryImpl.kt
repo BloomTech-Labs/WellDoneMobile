@@ -5,6 +5,7 @@ import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorLocalDataSource
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorRemoteDataSource
 import com.versilistyson.welldone.domain.framework.repository.SensorRepository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -37,13 +38,14 @@ class SensorRepositoryImpl(
                     .setExpireAfterAccess(8)
                     .setExpireAfterTimeUnit(TimeUnit.DAYS)
                     .build()
-            )
-            .build()
+            ).build()
+
+
 
     //fetches fresh sensors, returns an error if it fails to load the data from the network
-    override suspend fun fetchFreshSensors(): Flow<StoreResponse<List<SensorData>>> =
-        store.stream(StoreRequest.fresh(SENSORS_KEY))
+    override suspend fun fetchFreshSensors(): Flow<StoreResponse<List<SensorData>>>
+            = store.stream(StoreRequest.fresh(SENSORS_KEY))
 
-    override suspend fun fetchSensors(): Flow<StoreResponse<List<SensorData>>> =
-        store.stream(StoreRequest.cached(SENSORS_KEY, true))
+    override suspend fun fetchSensors(): Flow<StoreResponse<List<SensorData>>>
+            = store.stream(StoreRequest.cached(SENSORS_KEY, true))
 }
