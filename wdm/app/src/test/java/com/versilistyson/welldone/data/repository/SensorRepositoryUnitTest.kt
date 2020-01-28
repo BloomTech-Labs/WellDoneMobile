@@ -44,10 +44,6 @@ class SensorRepositoryUnitTest {
     private val mockLocalSensorDataSource: SensorLocalDataSource = mock()
     private val mockRemoteSensorDataSource: SensorRemoteDataSource = mock()
 
-
-    /*
-        This is going to test
-     */
     @Test
     fun `Fetch fresh sensors returns a StoreResponse of Flow of List of SensorData`() = testScope.runBlockingTest {
 
@@ -74,10 +70,8 @@ class SensorRepositoryUnitTest {
         val expected = flowOf(StoreResponse.Data(sensorDataList, ResponseOrigin.Fetcher))
 
         //EXECUTE
-        whenever(sensorRepository.store.stream(StoreRequest.fresh(StoreKey.SensorsKey()))).thenReturn(expected)
         result = sensorRepository.fetchFreshSensors()
 
-        verify(sensorRepository.store).stream(StoreRequest.fresh(StoreKey.SensorsKey()))
         verify(mockLocalSensorDataSource).getSensors(StoreKey.SensorsKey())
         verify(mockLocalSensorDataSource).saveSensors(StoreKey.SensorsKey(), sensorDataList)
         expected shouldBeEqualTo result
