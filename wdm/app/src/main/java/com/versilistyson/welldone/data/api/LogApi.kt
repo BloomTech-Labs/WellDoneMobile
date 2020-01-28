@@ -29,7 +29,7 @@ interface LogApi {
             @Json(name = "last_modified") val lastModified: String,
             @Json(name = "status") val status: Int,
             @Json(name = "comment") val comment: String,
-            @Json(name = "pictures") val pictures: List<String>,
+            @Json(name = "picture_details") val pictures: List<LogPicture>,
             @Json(name = "operator_id") val operatorId: Long
         ): Mappable<LogData>, Dto() {
             override fun map(): LogData =
@@ -42,20 +42,23 @@ interface LogApi {
                     comment = comment,
                     operatorId = operatorId
                 )
-
-            fun mapToPictureData(picturePosition: Int) =  object : Mappable<PictureData> {
+            fun mapToPictureData(picPosition: Int) =  object : Mappable<PictureData> {
                 override fun map() =
                     PictureData(
-                        pictureLink = pictures[picturePosition],
-                        subtitle = picture
+                        pictureLink = pictures[picPosition].imageUri,
+                        subtitle = pictures[picPosition].subtitle,
+                        logId = logId
                     )
             }
         }
-
-        class LogToPost(
+        data class LogPicture(
+            @Json(name = "image_uri") val imageUri: String,
+            @Json(name = "subtitle") val subtitle: String
+        )
+        data class LogToPost(
             @Json(name = "sensor_id") val sensorId: Long,
             @Json(name = "comment") val comment: String
-        )
+        ) : Dto()
     }
 
 }

@@ -14,7 +14,17 @@ class SensorRepositoryImpl(
 ) : SensorRepository, BaseRepository<SensorApi.Dto.SensorRecentResponse,
         SensorData, Entity.Sensor>() {
 
-    private val storeBuilder = StoreBuilder
+    private val storeBuilder = StoreBuilder.fromNonFlow<SensorData, List<SensorData>> {
+        val sensorList = sensorApi.getSensors().body()
+        val mappedSensorList = mutableListOf<SensorData>()
+        sensorList?.forEach {
+            mappedSensorList.add(it.map())
+        }
+        mappedSensorList
+    }.persister(
+        reader = sensorDao::getAll,
+        writer = sensorDao::saveAll
+    )
     override suspend fun fetchSensors(): Flow<List<Entity.Sensor>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
