@@ -7,6 +7,6 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
 import kotlinx.coroutines.flow.Flow
 
 interface SensorLocalDataSource: BaseDataSource {
-    suspend fun getSensors(): Flow<List<SensorData>>
-    suspend fun saveSensors(sensors: List<SensorData>): Int
+    fun getSensors(keyList: (List<SensorData>) -> List<Int>): Flow<List<SensorData>>
+    suspend fun saveSensors(sensors: List<SensorData>)
 }
