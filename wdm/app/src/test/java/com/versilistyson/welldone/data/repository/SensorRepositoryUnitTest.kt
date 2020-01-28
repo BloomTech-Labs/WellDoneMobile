@@ -6,8 +6,8 @@ import com.dropbox.android.external.store4.StoreResponse
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import com.versilistyson.welldone.data.db.StoreKey
 import com.versilistyson.welldone.data.db.sensor.SensorData
+import com.versilistyson.welldone.data.util.StoreKey
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorLocalDataSource
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorRemoteDataSource
 import com.versilistyson.welldone.test_util.builder.sensor.SensorDataTestBuilder
