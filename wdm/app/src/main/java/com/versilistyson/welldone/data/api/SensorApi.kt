@@ -3,7 +3,6 @@ package com.versilistyson.welldone.data.api
 import com.squareup.moshi.Json
 import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.data.util.Mappable
-import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import retrofit2.http.GET
 
@@ -56,8 +55,6 @@ interface SensorApi {
                     padSeconds2 = padSeconds2,
                     padSeconds3 = padSeconds3
                 )
-
-
         }
     }
 }

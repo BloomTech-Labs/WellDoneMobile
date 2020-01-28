@@ -4,7 +4,7 @@ import com.versilistyson.welldone.data.api.SensorApi
 
 data class SensorRecentResponseTestBuilder(
     private val sensorId: Int = DEFAULT_SENSOR_ID,
-    private val sensorStatus: Int? = DEFAULT_SENSOR_ID,
+    private val sensorStatus: Int? = DEFAULT_SENSOR_STATUS,
     private val lastUploadDate: String = DEFAULT_LAST_UPLOAD_DATE,
     private val districtName: String = DEFAULT_DISTRICT_NAME,
     private val commune: String = DEFAULT_COMMUNE_NAME,
@@ -17,10 +17,10 @@ data class SensorRecentResponseTestBuilder(
     private val padCount1: Double? = DEFAULT_PADCOUNT_1,
     private val padCount2: Double? = DEFAULT_PADCOUNT_2,
     private val padCount3: Double? = DEFAULT_PADCOUNT_3,
-    private val padSeconds0: Double? = DEFAULT_PADCOUNT_0,
-    private val padSeconds1: Double? = DEFAULT_PADCOUNT_1,
-    private val padSeconds2: Double? = DEFAULT_PADCOUNT_2,
-    private val padSeconds3: Double? = DEFAULT_PADCOUNT_3
+    private val padSeconds0: Double? = DEFAULT_PADSECONDS_0,
+    private val padSeconds1: Double? = DEFAULT_PADSECONDS_1,
+    private val padSeconds2: Double? = DEFAULT_PADSECONDS_2,
+    private val padSeconds3: Double? = DEFAULT_PADSECONDS_3
 ) {
 
     companion object {

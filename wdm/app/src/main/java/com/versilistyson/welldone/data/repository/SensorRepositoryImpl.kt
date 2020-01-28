@@ -20,7 +20,7 @@ class SensorRepositoryImpl(
     private val localDataSource: SensorLocalDataSource,
     private val remoteDataSource: SensorRemoteDataSource) : SensorRepository {
 
-    private val store =
+    val store =
         StoreBuilder
             .fromNonFlow<StoreKey.SensorsKey, List<SensorData>>{
                 val sensors = mutableListOf<SensorData>()
