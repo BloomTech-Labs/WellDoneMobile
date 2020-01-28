@@ -16,7 +16,8 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
         childColumns = ["sensor_id"],
         onDelete = ForeignKey.CASCADE
     )],
-    indices = [Index(value = ["log_id"], unique = true)]
+    indices = [Index(value = ["log_id"], unique = true),
+                Index(value = ["sensor_id"], unique = false)]
 )
 data class LogData(
     @ColumnInfo(name = "log_id") @PrimaryKey(autoGenerate = false) val logId: Long,
