@@ -5,6 +5,7 @@ import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
 import com.versilistyson.welldone.data.db.user.UserDetailsData
+import com.versilistyson.welldone.data.util.RepositoryConstants.Companion.USER_DETAILS_KEY
 import com.versilistyson.welldone.domain.framework.datasource.user.UserDetailsLocalDataSource
 import com.versilistyson.welldone.domain.framework.datasource.user.UserDetailsRemoteDataSource
 import com.versilistyson.welldone.domain.framework.repository.UserDetailRepository
@@ -20,30 +21,35 @@ class UserDetailRepositoryImpl (
     private val remoteDataSource: UserDetailsRemoteDataSource
 ) : UserDetailRepository {
 
-    companion object {
-        const val USER_DETAILS_KEY = "userDetailsKey"
+//    private val store =
+//        StoreBuilder
+//            .fromNonFlow<String, UserDetailsData>{
+//                remoteDataSource.getUserDetails().body()?.map()!!
+//            }
+//            .persister(
+//                reader = localDataSource::getUserDetails,
+//                writer = localDataSource::saveUserDetails
+//            ).cachePolicy(
+//                MemoryPolicy.builder()
+//                    .setMemorySize(1)
+//                    .setExpireAfterAccess(8)
+//                    .setExpireAfterTimeUnit(TimeUnit.DAYS)
+//                    .build()
+//            )
+//            .build()
+
+    override fun fetchFreshUserDetails(): Flow<StoreResponse<UserDetailsData>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private val store =
-        StoreBuilder
-            .fromNonFlow<String, UserDetailsData>{
-                remoteDataSource.getUserDetails().body()?.map()!!
-            }
-            .persister(
-                reader = localDataSource::getUserDetails,
-                writer = localDataSource::saveUserDetails
-            ).cachePolicy(
-                MemoryPolicy.builder()
-                    .setMemorySize(1)
-                    .setExpireAfterAccess(8)
-                    .setExpireAfterTimeUnit(TimeUnit.DAYS)
-                    .build()
-            )
-            .build()
-
-    override fun fetchUserDetails(): Flow<StoreResponse<UserDetailsData>> =
-        store.stream(StoreRequest.cached(USER_DETAILS_KEY, false))
-
-    override fun fetchFreshUserDetails(): Flow<StoreResponse<UserDetailsData>> =
-        store.stream(StoreRequest.fresh(USER_DETAILS_KEY))
+    override fun fetchUserDetails(): Flow<StoreResponse<UserDetailsData>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
+
+
+//    override fun fetchUserDetails(): Flow<StoreResponse<UserDetailsData>> =
+//        store.stream(StoreRequest.cached(USER_DETAILS_KEY, false))
+//
+//    override fun fetchFreshUserDetails(): Flow<StoreResponse<UserDetailsData>> =
+//        store.stream(StoreRequest.fresh(USER_DETAILS_KEY))
