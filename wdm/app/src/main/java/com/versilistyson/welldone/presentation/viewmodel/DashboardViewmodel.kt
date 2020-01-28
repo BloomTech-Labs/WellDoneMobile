@@ -7,8 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.usecases.GetSensorUseCase
 import com.versilistyson.welldone.domain.framework.usecases.UseCase
+import kotlinx.coroutines.InternalCoroutinesApi
 
-class DashboardViewmodel(private val getSensorUseCase: GetSensorUseCase): ViewModel() {
+class DashboardViewmodel @UseExperimental(InternalCoroutinesApi::class) constructor(private val getSensorUseCase: GetSensorUseCase): ViewModel() {
 
     private val _sensorLiveData: MutableLiveData<Entity.Sensors> by lazy{
         MutableLiveData<Entity.Sensors>()
@@ -16,9 +17,10 @@ class DashboardViewmodel(private val getSensorUseCase: GetSensorUseCase): ViewMo
     val sensorLiveData: LiveData<Entity.Sensors>
     get() = _sensorLiveData
 
+    @InternalCoroutinesApi
     fun loadData(){
         getSensorUseCase.invoke(viewModelScope, UseCase.None()) {
-            it.either(getSensorUseCase::handleFailure, ::handleSuccess)
+            TODO()
         }
     }
 

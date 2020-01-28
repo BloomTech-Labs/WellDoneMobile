@@ -4,7 +4,7 @@ import com.dropbox.android.external.store4.MemoryPolicy
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
-import com.versilistyson.welldone.data.db.StoreKey
+import com.versilistyson.welldone.data.util.StoreKey
 import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorLocalDataSource
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorRemoteDataSource

@@ -5,7 +5,6 @@ import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
 import com.versilistyson.welldone.data.db.user.UserDetailsData
-import com.versilistyson.welldone.data.util.RepositoryConstants.Companion.USER_DETAILS_KEY
 import com.versilistyson.welldone.domain.framework.datasource.user.UserDetailsLocalDataSource
 import com.versilistyson.welldone.domain.framework.datasource.user.UserDetailsRemoteDataSource
 import com.versilistyson.welldone.domain.framework.repository.UserDetailRepository

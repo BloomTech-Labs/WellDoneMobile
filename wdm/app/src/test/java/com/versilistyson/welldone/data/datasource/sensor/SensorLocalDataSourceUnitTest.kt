@@ -3,10 +3,9 @@ package com.versilistyson.welldone.data.datasource.sensor
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import com.versilistyson.welldone.data.db.StoreKey
+import com.versilistyson.welldone.data.util.StoreKey
 import com.versilistyson.welldone.data.db.sensor.SensorDao
 import com.versilistyson.welldone.data.db.sensor.SensorData
-import com.versilistyson.welldone.data.util.RepositoryConstants.Companion.SENSORS_KEY
 import com.versilistyson.welldone.test_util.builder.sensor.SensorDataTestBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -41,9 +40,9 @@ class SensorLocalDataSourceUnitTest {
         val sensorList = listOf(SensorDataTestBuilder.withDefaults().build())
         val sensorLocalDataSource = SensorLocalDataSourceImpl(mockSensorDao)
         // Execute
-        sensorLocalDataSource.saveSensors(SENSORS_KEY, sensorList)
+        sensorLocalDataSource.saveSensors(StoreKey.SensorsKey(), sensorList)
         // Check
-        verify(mockSensorDao).saveAll(StoreKey.SensorsKey(), sensorList)
+        verify(mockSensorDao).saveAll(sensorList)
     }
 
     @Test
@@ -60,10 +59,10 @@ class SensorLocalDataSourceUnitTest {
         val expected = flowOf(sensorList)
 
         // EXECUTE
-        whenever(mockSensorDao.getAll(StoreKey.SensorsKey())).thenReturn(expected)
-        result = sensorLocalDataSource.getSensors(SENSORS_KEY)
+        whenever(mockSensorDao.getAll()).thenReturn(expected)
+        result = sensorLocalDataSource.getSensors(StoreKey.SensorsKey())
         // CHECK
-        verify(mockSensorDao).getAll(StoreKey.SensorsKey())
+        verify(mockSensorDao).getAll()
         expected shouldBeEqualTo result
     }
 }
