@@ -1,0 +1,736 @@
+Index: wdm/app/src/test/java/com/versilistyson/welldone/presentation/PumpDialogViewModelTest.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/test/java/com/versilistyson/welldone/presentation/PumpDialogViewModelTest.kt	(date 1580149267374)
++++ wdm/app/src/test/java/com/versilistyson/welldone/presentation/PumpDialogViewModelTest.kt	(date 1580149267374)
+@@ -0,0 +1,37 @@
++package com.versilistyson.welldone.presentation
++
++import com.nhaarman.mockitokotlin2.given
++import com.versilistyson.welldone.domain.common.Either
++import com.versilistyson.welldone.domain.framework.entity.Entity
++import com.versilistyson.welldone.domain.framework.usecases.GetLogUseCase
++import com.versilistyson.welldone.presentation.viewmodel.PumpDialogViewModel
++import kotlinx.coroutines.runBlocking
++import org.junit.Before
++import org.junit.Test
++import org.mockito.Mock
++
++class PumpDialogViewModelTest {
++
++    private val params = GetLogUseCase.Params(2)
++    private lateinit var pumpDialogViewModel: PumpDialogViewModel
++    @Mock private lateinit var getLogUseCase: GetLogUseCase
++
++    @Before
++    fun setup(){
++        pumpDialogViewModel = PumpDialogViewModel(getLogUseCase)
++    }
++
++    @Test
++    fun `should update log live data`(){
++        val logs = listOf(
++            Entity.Log(0, 2, "01/05/2019", "02/04/2019", ),
++        )
++        given { runBlocking { getLogUseCase.run(params) } }.willReturn(Either.Right(sensors))
++
++        pumpDialogViewModel.logLiveData.observeForever {
++
++        }
++
++        given { runBlocking { pumpDialogViewModel.loadLogs(2) } }
++    }
++}
+\ No newline at end of file
+Index: wdm/app/src/test/java/com/versilistyson/welldone/test_util/builder/sensor/SensorRecentResponseBuilder.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/test/java/com/versilistyson/welldone/test_util/builder/sensor/SensorRecentResponseBuilder.kt	(date 1580149267379)
++++ wdm/app/src/test/java/com/versilistyson/welldone/test_util/builder/sensor/SensorRecentResponseBuilder.kt	(date 1580149267379)
+@@ -0,0 +1,5 @@
++package com.versilistyson.welldone.test_util.builder.sensor
++
++class SensorRecentResponseBuilder {
++
++}
+\ No newline at end of file
+Index: wdm/app/src/test/java/com/versilistyson/welldone/test_util/builder/sensor/SensorDataTestBuilder.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/test/java/com/versilistyson/welldone/test_util/builder/sensor/SensorDataTestBuilder.kt	(date 1580149267377)
++++ wdm/app/src/test/java/com/versilistyson/welldone/test_util/builder/sensor/SensorDataTestBuilder.kt	(date 1580149267377)
+@@ -0,0 +1,83 @@
++package com.versilistyson.welldone.test_util.builder.sensor
++
++import com.versilistyson.welldone.data.db.sensor.SensorData
++import com.versilistyson.welldone.domain.framework.entity.Entity
++data class SensorDataTestBuilder(
++    private val sensorId: Int = DEFAULT_SENSOR_ID,
++    private val sensorStatus: Int? = DEFAULT_SENSOR_STATUS,
++    private val lastUpload: String = DEFAULT_LAST_UPLOAD_DATE,
++    private val districtName: String = DEFAULT_DISTRICT_NAME,
++    private val commune: String = DEFAULT_COMMUNE,
++    private val province: String = DEFAULT_PROVINCE,
++    private val village: String = DEFAULT_VILLAGE,
++    private val latitude: Double = DEFAULT_LATITUDE,
++    private val longitude: Double = DEFAULT_LONGITUDE,
++    private val wellDepth: Double = DEFAULT_WELL_DEPTH,
++    private val padCount0: Double? = DEFAULT_PAD_COUNT_0,
++    private val padCount1: Double? = DEFAULT_PAD_COUNT_1,
++    private val padCount2: Double? = DEFAULT_PAD_COUNT_2,
++    private val padCount3: Double? = DEFAULT_PAD_COUNT_3,
++    private val padSeconds0: Double? = DEFAULT_PAD_SECONDS_0,
++    private val padSeconds1: Double? = DEFAULT_PAD_SECONDS_1,
++    private val padSeconds2: Double? = DEFAULT_PAD_SECONDS_2,
++    private val padSeconds3: Double? = DEFAULT_PAD_SECONDS_3
++) {
++    fun build() = SensorData(
++        sensorId,
++        sensorStatus,
++        lastUpload,
++        districtName,
++        commune,
++        province,
++        village,
++        latitude,
++        longitude,
++        wellDepth,
++        padCount0,
++        padCount1,
++        padCount2,
++        padCount3,
++        padSeconds0,
++        padSeconds1,
++        padSeconds2,
++        padSeconds3
++    )
++    companion object {
++        private const val DEFAULT_SENSOR_ID = 1
++        private const val DEFAULT_SENSOR_STATUS = 1
++        private const val DEFAULT_LAST_UPLOAD_DATE = "11/21/19"
++        private const val DEFAULT_DISTRICT_NAME = "district"
++        private const val DEFAULT_COMMUNE = "commune"
++        private const val DEFAULT_PROVINCE = "province"
++        private const val DEFAULT_VILLAGE = "village"
++        private const val DEFAULT_LATITUDE = 32.0
++        private const val DEFAULT_LONGITUDE = 32.0
++        private const val DEFAULT_WELL_DEPTH = 100.0
++        private const val DEFAULT_PAD_COUNT_0 = 0.0
++        private const val DEFAULT_PAD_COUNT_1 = 1.0
++        private const val DEFAULT_PAD_COUNT_2 = 2.0
++        private const val DEFAULT_PAD_COUNT_3 = 3.0
++        private const val DEFAULT_PAD_SECONDS_0 = 0.0
++        private const val DEFAULT_PAD_SECONDS_1 = 1.0
++        private const val DEFAULT_PAD_SECONDS_2 = 2.0
++        private const val DEFAULT_PAD_SECONDS_3 = 3.0
++
++        fun withDefaults(): SensorDataTestBuilder {
++            return SensorDataTestBuilder()
++        }
++        fun withNullSensorStatusAndPadData(id: Int = 1): SensorDataTestBuilder {
++            return SensorDataTestBuilder(
++                sensorId = id,
++                sensorStatus = null,
++                padCount0 = null,
++                padCount1 = null,
++                padCount2 = null,
++                padCount3 = null,
++                padSeconds0 = null,
++                padSeconds1 = null,
++                padSeconds2 = null,
++                padSeconds3 = null
++            )
++        }
++    }
++}
+\ No newline at end of file
+Index: wdm/app/src/test/java/com/versilistyson/welldone/data/datasource/sensor/SensorLocalDataSourceUnitTest.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/test/java/com/versilistyson/welldone/data/datasource/sensor/SensorLocalDataSourceUnitTest.kt	(date 1580149267370)
++++ wdm/app/src/test/java/com/versilistyson/welldone/data/datasource/sensor/SensorLocalDataSourceUnitTest.kt	(date 1580149267370)
+@@ -0,0 +1,96 @@
++package com.versilistyson.welldone.data.datasource.sensor
++
++import com.nhaarman.mockitokotlin2.doReturn
++import com.nhaarman.mockitokotlin2.mock
++import com.nhaarman.mockitokotlin2.verify
++import com.nhaarman.mockitokotlin2.whenever
++import com.versilistyson.welldone.data.db.sensor.SensorDao
++import com.versilistyson.welldone.data.db.sensor.SensorData
++import com.versilistyson.welldone.test_util.builder.sensor.SensorDataTestBuilder
++import com.versilistyson.welldone.test_util.builder.sensor.SensorEntityTestBuilder
++import kotlinx.coroutines.Dispatchers
++import kotlinx.coroutines.ExperimentalCoroutinesApi
++import kotlinx.coroutines.flow.Flow
++import kotlinx.coroutines.flow.asFlow
++import kotlinx.coroutines.flow.flow
++import kotlinx.coroutines.flow.flowOf
++import kotlinx.coroutines.runBlocking
++import kotlinx.coroutines.test.*
++import org.junit.After
++import org.junit.Assert
++import org.junit.Before
++import org.junit.Test
++
++@ExperimentalCoroutinesApi
++class SensorLocalDataSourceUnitTest {
++    private val testDispatcher = TestCoroutineDispatcher()
++    private val testScope = TestCoroutineScope(testDispatcher)
++    @Before
++    fun before() {
++        Dispatchers.setMain(testDispatcher)
++    }
++
++    @After
++    fun after() {
++        Dispatchers.resetMain()
++        testScope.cleanupTestCoroutines()
++    }
++
++    @Test
++    fun `Should send back a single sensor entity`() = testScope.runBlockingTest {
++        // Setup
++        val sensor = SensorDataTestBuilder.withDefaults().build()
++        val sensorList = listOf(sensor)
++        val mockSensorDao =
++            mock<SensorDao> { onBlocking { saveAll(sensorList) } doReturn 1 }
++        val sensorLocalDataSource = SensorLocalDataSourceImpl(mockSensorDao)
++        val expected = 1
++        // Execute
++        val result: Int = 1
++        // Check
++        verify(mockSensorDao).saveAll(sensorList)
++        Assert.assertEquals(expected, result)
++    }
++
++    fun `Should save multiple Sensor Entities`() = testScope.runBlockingTest {
++        // SETUP
++        val sensor1 = SensorDataTestBuilder(1).build()
++        val sensor2 = SensorDataTestBuilder(2).build()
++        val sensor3 = SensorDataTestBuilder(3).build()
++        val sensor4 = SensorDataTestBuilder(4).build()
++        val sensorList = listOf(sensor1, sensor2, sensor3)
++        val mockSensorDao = mock<SensorDao> {
++            onBlocking { saveAll(sensorList) } doReturn 1
++        }
++        val sensorLocalDataSource = SensorLocalDataSourceImpl(mockSensorDao)
++        val expected = 1
++        val result: Int
++        // Execute
++        result = sensorLocalDataSource.saveSensors(sensorList)
++        // Check
++        verify(mockSensorDao).saveAll(sensorList)
++        Assert.assertEquals(expected, result)
++
++
++    }
++
++    fun `Should save Sensor Entities with null values correctly`() = testScope.runBlockingTest {
++        // SETUP
++        val sensorList = listOf(
++            SensorDataTestBuilder.withNullSensorStatusAndPadData(1).build(),
++            SensorDataTestBuilder.withNullSensorStatusAndPadData(2).build(),
++            SensorDataTestBuilder.withNullSensorStatusAndPadData(3).build()
++        )
++        val mockSensorDao = mock<SensorDao> {
++            onBlocking {saveAll(sensorList)} doReturn 1
++        }
++        val sensorLocalDataSource = SensorLocalDataSourceImpl(mockSensorDao)
++        val result: Int
++        val expected = 1
++        // EXECUTE
++        result = sensorLocalDataSource.saveSensors(sensorList)
++        // CHECK
++        verify(mockSensorDao).saveAll(sensorList)
++        Assert.assertEquals(expected, result)
++    }
++}
+Index: wdm/app/src/test/java/com/versilistyson/welldone/test_util/builder/sensor/SensorEntityTestBuilder.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/test/java/com/versilistyson/welldone/test_util/builder/sensor/SensorEntityTestBuilder.kt	(date 1580149267378)
++++ wdm/app/src/test/java/com/versilistyson/welldone/test_util/builder/sensor/SensorEntityTestBuilder.kt	(date 1580149267378)
+@@ -0,0 +1,57 @@
++package com.versilistyson.welldone.test_util.builder.sensor
++
++import com.google.android.gms.maps.model.LatLng
++import com.versilistyson.welldone.domain.framework.entity.Entity
++
++data class SensorEntityTestBuilder(
++    private val sensorId: Int = DEFAULT_SENSOR_ID,
++    private val sensorStatus: Int? = DEFAULT_SENSOR_STATUS,
++    private val lastUploadDate: String = DEFAULT_LAST_UPLOAD_DATE,
++    private val districtName: String = DEFAULT_DISTRICT_NAME,
++    private val commune: String = DEFAULT_COMMUNE,
++    private val province: String = DEFAULT_PROVINCE,
++    private val village: String = DEFAULT_VILLAGE,
++    private val wellDepth: Double = DEFAULT_WELL_DEPTH,
++    private val location: LatLng = DEFAULT_LAT_LNG,
++    private val padCounts: Entity.Sensor.PadCounts = DEFAULT_PAD_COUNTS,
++    private val padSeconds: Entity.Sensor.PadSeconds = DEFAULT_PAD_SECONDS
++) {
++    fun build() = Entity.Sensor(sensorId, sensorStatus, lastUploadDate, districtName, commune, province, village, wellDepth, location, padCounts, padSeconds)
++    companion object {
++        private const val DEFAULT_SENSOR_ID = 1
++        private const val DEFAULT_SENSOR_STATUS = 1
++        private const val DEFAULT_LAST_UPLOAD_DATE = "1/20/19"
++        private const val DEFAULT_DISTRICT_NAME = "district"
++        private const val DEFAULT_COMMUNE = "commune"
++        private const val DEFAULT_PROVINCE = "province"
++        private const val DEFAULT_VILLAGE = "village"
++        private const val DEFAULT_WELL_DEPTH = 32.0
++        private val DEFAULT_LAT_LNG = LatLng(32.0, 32.0)
++        private val DEFAULT_PAD_COUNTS = Entity.Sensor.PadCounts(
++            1.0,2.0,3.0,4.0
++        )
++        private val NULL_PAD_COUNTS = Entity.Sensor.PadCounts(null, null, null, null)
++        private val DEFAULT_PAD_SECONDS = Entity.Sensor.PadSeconds(1.0, 2.0, 3.0, 4.0)
++        private val NULL_PAD_SECONDS = Entity.Sensor.PadSeconds(null, null, null, null)
++
++        fun withDefaults(): SensorEntityTestBuilder {
++            return SensorEntityTestBuilder()
++        }
++        fun withEmptyPadCounts(): SensorEntityTestBuilder {
++            return SensorEntityTestBuilder(
++                padCounts = NULL_PAD_COUNTS
++            )
++        }
++        fun withEmptyPadSeconds(): SensorEntityTestBuilder {
++            return SensorEntityTestBuilder(
++                padSeconds = NULL_PAD_SECONDS
++            )
++        }
++        fun withNullSensorStatus(): SensorEntityTestBuilder {
++            return SensorEntityTestBuilder(
++                sensorStatus = null
++            )
++        }
++    }
++}
++
+Index: wdm/app/src/main/java/com/versilistyson/welldone/data/datasource/sensor/SensorLocalDataSourceImpl.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/main/java/com/versilistyson/welldone/data/datasource/sensor/SensorLocalDataSourceImpl.kt	(date 1580149267366)
++++ wdm/app/src/main/java/com/versilistyson/welldone/data/datasource/sensor/SensorLocalDataSourceImpl.kt	(date 1580149267366)
+@@ -0,0 +1,18 @@
++package com.versilistyson.welldone.data.datasource.sensor
++
++import com.versilistyson.welldone.data.api.SensorApi
++import com.versilistyson.welldone.data.db.sensor.SensorDao
++import com.versilistyson.welldone.data.db.sensor.SensorData
++import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorLocalDataSource
++import com.versilistyson.welldone.domain.framework.entity.Entity
++import kotlinx.coroutines.flow.Flow
++
++class SensorLocalDataSourceImpl(dao: SensorDao) : SensorLocalDataSource {
++    override suspend fun getSensors(): Flow<List<SensorData>> {
++        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
++    }
++
++    override suspend fun saveSensors(sensors: List<SensorData>): Int {
++        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
++    }
++}
+\ No newline at end of file
+Index: wdm/app/src/main/java/com/versilistyson/welldone/data/db/user/UserDetailsDao.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/main/java/com/versilistyson/welldone/data/db/user/UserDetailsDao.kt	(date 1580142893000)
++++ wdm/app/src/main/java/com/versilistyson/welldone/data/db/user/UserDetailsDao.kt	(date 1580149267534)
+@@ -4,10 +4,19 @@
+ import androidx.room.Dao
+ import androidx.room.Query
+ import androidx.room.Update
++<<<<<<< Updated upstream
++=======
++import kotlinx.coroutines.flow.Flow
++>>>>>>> Stashed changes
+ 
+ @Dao
+ interface UserDetailsDao {
+ 
++<<<<<<< Updated upstream
+     @Query("SELECT * FROM user_table WHERE id = :localId")
+     suspend fun getUserDetailsByLocalId(localId: String) : LiveData<UserDetailsData>
++=======
++    @Query("SELECT * FROM user_table WHERE id = :id")
++    suspend fun getUserDetailsByLocalId(id: String) : Flow<UserDetailsData>
++>>>>>>> Stashed changes
+ }
+\ No newline at end of file
+Index: wdm/app/src/main/java/com/versilistyson/welldone/data/db/sensor/SensorDao.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/main/java/com/versilistyson/welldone/data/db/sensor/SensorDao.kt	(date 1580142893000)
++++ wdm/app/src/main/java/com/versilistyson/welldone/data/db/sensor/SensorDao.kt	(date 1580149267541)
+@@ -6,11 +6,16 @@
+ import androidx.room.Query
+ import androidx.room.Update
+ import com.versilistyson.welldone.domain.framework.entity.Entity
++<<<<<<< Updated upstream
++=======
++import kotlinx.coroutines.flow.Flow
++>>>>>>> Stashed changes
+ 
+ @Dao
+ interface SensorDao {
+ 
+     @Update(onConflict = OnConflictStrategy.REPLACE)
++<<<<<<< Updated upstream
+     suspend fun saveAll(sensors: List<SensorData>): List<SensorData>
+ 
+     @Query("SELECT * FROM sensor_table")
+@@ -18,5 +23,17 @@
+ 
+     @Query("SELECT * FROM sensor_table WHERE sensor_id = :sensorId")
+     suspend fun getSensorBySensorId(sensorId: Long) : SensorData
++=======
++    suspend fun saveAll(sensors: List<SensorData>): Int
++
++    @Update(onConflict = OnConflictStrategy.REPLACE)
++    suspend fun save(sensor: SensorData): Int
++
++    @Query("SELECT * FROM sensor_table")
++    suspend fun getAll() : Flow<List<SensorData>>
++
++    @Query("SELECT * FROM sensor_table WHERE sensor_id = :sensorId")
++    suspend fun getSensorBySensorId(sensorId: Long) : Flow<SensorData>
++>>>>>>> Stashed changes
+ 
+ }
+\ No newline at end of file
+Index: wdm/app/src/main/java/com/versilistyson/welldone/data/db/user/UserDetailsData.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/main/java/com/versilistyson/welldone/data/db/user/UserDetailsData.kt	(date 1580142893000)
++++ wdm/app/src/main/java/com/versilistyson/welldone/data/db/user/UserDetailsData.kt	(date 1580149267525)
+@@ -7,7 +7,11 @@
+ 
+ @Entity(
+     tableName = "user_table",
++<<<<<<< Updated upstream
+     indices = [Index(value = ["remote_id"], unique = true)]
++=======
++    indices = [Index(value = ["id"], unique = true)]
++>>>>>>> Stashed changes
+ )
+ data class UserDetailsData(
+     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = false) val id: Long,
+Index: wdm/app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/build.gradle	(date 1580142893000)
++++ wdm/app/build.gradle	(date 1580149267564)
+@@ -67,17 +67,17 @@
+     // Google Play Services (Maps)
+ //    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+     // KotlinX Navigation fragment
+-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc04'
++    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0'
+     // KotlinX Navigation UI
+-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-rc04'
++    implementation 'androidx.navigation:navigation-ui-ktx:2.2.0'
+     // KotlinX Lifecycle Live Data
+-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc03'
++    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+     // KotlinX Lifecycle Runtime
+-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-rc03'
++    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
+     // KotlinX Lifecycle Extensions
+-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
++    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+     // KotlinX ViewModel Lifecycle
+-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc03'
++    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+     // KotlinX Coroutines
+     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2'
+     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0'
+@@ -94,23 +94,33 @@
+     implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+     // Material
+-    implementation 'com.google.android.material:material:1.2.0-alpha03'
++    implementation 'com.google.android.material:material:1.2.0-alpha04'
+     //Dagger
+     implementation "com.google.dagger:dagger:$daggerVersion"
+     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+     //firebase stuff for push notifications
+-    implementation 'com.google.firebase:firebase-core:17.2.1'
++    implementation 'com.google.firebase:firebase-core:17.2.2'
+     implementation 'com.google.firebase:firebase-messaging:20.1.0'
+-    implementation 'com.google.firebase:firebase-analytics:17.2.1'
++    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+     //mapbox
+     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:8.5.0'
+     implementation 'com.google.android.gms:play-services-maps:17.0.0'
++<<<<<<< Updated upstream
++=======
++    //room
++>>>>>>> Stashed changes
+     implementation 'androidx.room:room-ktx:2.2.3'
+     implementation 'androidx.room:room-compiler:2.2.3'
+     implementation 'androidx.room:room-coroutines:2.1.0-alpha04'
+     implementation 'androidx.room:room-common:2.2.3'
+     //store
+     implementation "com.dropbox.mobile.store:store4:$store_version"
++<<<<<<< Updated upstream
++=======
++    //mockito-kotlin
++    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2'
++    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
++>>>>>>> Stashed changes
+ }
+ 
+ apply plugin: 'com.google.gms.google-services'
+Index: wdm/app/src/main/java/com/versilistyson/welldone/domain/framework/datasource/sensor/SensorLocalDataSource.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/main/java/com/versilistyson/welldone/domain/framework/datasource/sensor/SensorLocalDataSource.kt	(date 1580142893000)
++++ wdm/app/src/main/java/com/versilistyson/welldone/domain/framework/datasource/sensor/SensorLocalDataSource.kt	(date 1580149267517)
+@@ -1,6 +1,18 @@
+ package com.versilistyson.welldone.domain.framework.datasource.sensor
+ 
++<<<<<<< Updated upstream
++import com.versilistyson.welldone.domain.framework.datasource.BaseDataSource
++
++interface SensorLocalDataSource: BaseDataSource {
++=======
++import com.versilistyson.welldone.data.api.SensorApi
++import com.versilistyson.welldone.data.db.sensor.SensorData
+ import com.versilistyson.welldone.domain.framework.datasource.BaseDataSource
++import com.versilistyson.welldone.domain.framework.entity.Entity
++import kotlinx.coroutines.flow.Flow
+ 
+ interface SensorLocalDataSource: BaseDataSource {
++    suspend fun getSensors(): Flow<List<SensorData>>
++    suspend fun saveSensors(sensors: List<SensorData>): Int
++>>>>>>> Stashed changes
+ }
+\ No newline at end of file
+Index: wdm/app/src/main/java/com/versilistyson/welldone/domain/framework/datasource/sensor/SensorRemoteDataSource.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/main/java/com/versilistyson/welldone/domain/framework/datasource/sensor/SensorRemoteDataSource.kt	(date 1580142893000)
++++ wdm/app/src/main/java/com/versilistyson/welldone/domain/framework/datasource/sensor/SensorRemoteDataSource.kt	(date 1580149267508)
+@@ -1,7 +1,15 @@
+ package com.versilistyson.welldone.domain.framework.datasource.sensor
+ 
++<<<<<<< Updated upstream
++import com.versilistyson.welldone.domain.framework.datasource.BaseDataSource
++
++interface SensorRemoteDataSource: BaseDataSource {
++
++=======
++import com.versilistyson.welldone.data.api.SensorApi
+ import com.versilistyson.welldone.domain.framework.datasource.BaseDataSource
+ 
+ interface SensorRemoteDataSource: BaseDataSource {
+-
++    fun getSensors(): List<SensorApi.Dto.SensorRecentResponse>
++>>>>>>> Stashed changes
+ }
+\ No newline at end of file
+Index: wdm/app/src/main/java/com/versilistyson/welldone/data/db/log/LogDao.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/main/java/com/versilistyson/welldone/data/db/log/LogDao.kt	(date 1580142893000)
++++ wdm/app/src/main/java/com/versilistyson/welldone/data/db/log/LogDao.kt	(date 1580149267553)
+@@ -5,10 +5,15 @@
+ import androidx.room.OnConflictStrategy
+ import androidx.room.Query
+ import androidx.room.Update
++<<<<<<< Updated upstream
++=======
++import kotlinx.coroutines.flow.Flow
++>>>>>>> Stashed changes
+ 
+ @Dao
+ interface LogDao {
+     @Update(onConflict = OnConflictStrategy.REPLACE)
++<<<<<<< Updated upstream
+     suspend fun saveAll(logs: List<LogData>): List<LogData>
+ 
+     @Update(onConflict = OnConflictStrategy.REPLACE)
+@@ -19,4 +24,16 @@
+ 
+     @Query("SELECT * FROM log_table WHERE log_id = :id")
+     suspend fun getLogById(id: Int) : LiveData<LogData>
++=======
++    suspend fun saveAll(logs: List<LogData>): Flow<List<LogData>>
++
++    @Update(onConflict = OnConflictStrategy.REPLACE)
++    suspend fun save(log: LogData): Flow<LogData>
++
++    @Query("SELECT * FROM log_table WHERE sensor_id = :sensorId")
++    suspend fun getAllLogsBySensorId(sensorId: Int) : Flow<List<LogData>>
++
++    @Query("SELECT * FROM log_table WHERE log_id = :id")
++    suspend fun getLogById(id: Int) : Flow<LogData>
++>>>>>>> Stashed changes
+ }
+\ No newline at end of file
+Index: wdm/app/src/main/java/com/versilistyson/welldone/data/db/log/LogData.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/main/java/com/versilistyson/welldone/data/db/log/LogData.kt	(date 1580142893000)
++++ wdm/app/src/main/java/com/versilistyson/welldone/data/db/log/LogData.kt	(date 1580149267546)
+@@ -1,5 +1,6 @@
+ package com.versilistyson.welldone.data.db.log
+ 
++<<<<<<< Updated upstream
+ import android.graphics.drawable.Drawable
+ import androidx.room.*
+ import com.mapbox.mapboxsdk.style.expressions.Expression.array
+@@ -16,12 +17,61 @@
+     indices = [Index(value = ["remote_id"], unique = true)]
+ )
+ data class LogData(
++=======
++import androidx.room.ColumnInfo
++import androidx.room.ForeignKey
++import androidx.room.Index
++import androidx.room.PrimaryKey
++import com.google.android.gms.maps.model.BitmapDescriptorFactory
++import com.versilistyson.welldone.R
++import com.versilistyson.welldone.data.db.sensor.SensorData
++import com.versilistyson.welldone.data.util.Mappable
++import com.versilistyson.welldone.domain.framework.entity.Entity
++
++@androidx.room.Entity(
++    tableName = "log_table",
++    foreignKeys = [ForeignKey(
++        entity = SensorData::class,
++        parentColumns = ["sensor_id"],
++        childColumns = ["sensor_id"],
++        onDelete = ForeignKey.CASCADE
++    )],
++    indices = [Index(value = ["log_id"], unique = true)]
++)
++data class LogData (
++>>>>>>> Stashed changes
+     @ColumnInfo(name = "log_id") @PrimaryKey(autoGenerate = false) val logId: Long,
+     @ColumnInfo(name = "sensor_id") val sensorId: Long,
+     @ColumnInfo(name = "date_filed") val dateFiled: String,
+     @ColumnInfo(name = "last_modified") val lastModified: String,
++<<<<<<< Updated upstream
+     @ColumnInfo(name = "status") val status: Int,
+     @ColumnInfo(name = "comment") val comment: String,
+     @ColumnInfo(name = "pictures") val pictures: List<String>,
+     @ColumnInfo(name = "operator_id") val operatorId: Long
+-)
+\ No newline at end of file
++)
++=======
++    @ColumnInfo(name = "status") val status: Int?,
++    @ColumnInfo(name = "comment") val comment: String,
++    //TODO: use type converter for list<string> later
++    @ColumnInfo(name = "pictures") val pictures: String,
++    @ColumnInfo(name = "operator_id") val operatorId: Long
++): Mappable<Entity.Log> {
++
++    override fun map() =
++        Entity.Log(
++            logId = logId,
++            sensorId = sensorId,
++            dateFiled = dateFiled,
++            lastModified = lastModified,
++            status = when(status){
++                1 -> BitmapDescriptorFactory.fromResource(R.drawable.pump_no_data)
++                2 -> BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning)
++                else -> BitmapDescriptorFactory.fromResource(R.drawable.pump_functioning)
++            },
++            comment = comment,
++            pictures = pictures,
++            operatorId = operatorId
++        )
++}
++>>>>>>> Stashed changes
+Index: wdm/app/src/main/java/com/versilistyson/welldone/domain/framework/repository/SensorRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/main/java/com/versilistyson/welldone/domain/framework/repository/SensorRepository.kt	(date 1580142893000)
++++ wdm/app/src/main/java/com/versilistyson/welldone/domain/framework/repository/SensorRepository.kt	(date 1580149267501)
+@@ -3,10 +3,19 @@
+ import com.versilistyson.welldone.data.db.sensor.SensorData
+ import com.versilistyson.welldone.domain.common.Result
+ import com.versilistyson.welldone.domain.framework.entity.Entity
++<<<<<<< Updated upstream
+ 
+ interface SensorRepository {
+     suspend fun fetchAllSensorsRemotely(): Result<List<SensorData>>
+     suspend fun saveAllSensorsLocally(sensors: List<SensorData>): Result<List<Entity.Sensor>>
+     suspend fun fetchAllSensorsLocally(): Result<List<Entity.Sensor>>
+     suspend fun fetchSensorLocally(sensorId: Long): Result<Entity.Sensor>
++=======
++import kotlinx.coroutines.flow.Flow
++
++interface SensorRepository {
++    suspend fun fetchSensors(): Flow<List<Entity.Sensor>>
++    suspend fun fetchFreshSensors(): Flow<List<Entity.Sensor>>
++    suspend fun fetchLocalSensors(): Flow<List<Entity.Sensor>>
++>>>>>>> Stashed changes
+ }
+\ No newline at end of file
+Index: wdm/app/src/main/java/com/versilistyson/welldone/data/api/LogApi.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wdm/app/src/main/java/com/versilistyson/welldone/data/api/LogApi.kt	(date 1580142893000)
++++ wdm/app/src/main/java/com/versilistyson/welldone/data/api/LogApi.kt	(date 1580149267560)
+@@ -18,7 +18,11 @@
+             @Json(name = "sensor_id") val sensorId: Long,
+             @Json(name = "date_filed") val dateFiled: String,
+             @Json(name = "last_modified") val lastModified: String,
++<<<<<<< Updated upstream
+             @Json(name = "status") val status: Int,
++=======
++            @Json(name = "status") val status: Int?,
++>>>>>>> Stashed changes
+             @Json(name = "comment") val comment: String,
+             @Json(name = "pictures") val pictures: List<String>,
+             @Json(name = "operator_id") val operatorId: Long
+@@ -31,7 +35,11 @@
+                     lastModified = lastModified,
+                     status = status,
+                     comment = comment,
++<<<<<<< Updated upstream
+                     pictures = pictures,
++=======
++                    pictures = pictures.toString(),
++>>>>>>> Stashed changes
+                     operatorId = operatorId
+                 )
+         }
