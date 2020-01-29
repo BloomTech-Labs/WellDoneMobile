@@ -12,14 +12,12 @@ import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
 
-@FlowPreview
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @Module
-abstract class InitialMapModule {
+abstract class GetSensorsModule {
 
     @DashboardActivityScope
     @Provides
@@ -31,7 +29,7 @@ abstract class InitialMapModule {
 
     @DashboardActivityScope
     @Provides
-    abstract fun provideSensorRepository(sensorRepositoryImpl: SensorRepositoryImpl): SensorRepository
+    abstract fun bindSensorRepository(sensorRepositoryImpl: SensorRepositoryImpl): SensorRepository
 
     @DashboardActivityScope
     @Provides

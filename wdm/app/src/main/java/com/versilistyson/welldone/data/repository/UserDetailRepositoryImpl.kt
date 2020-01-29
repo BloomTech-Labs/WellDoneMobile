@@ -42,10 +42,3 @@ class UserDetailRepositoryImpl @Inject constructor(
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
-
-
-//    override fun fetchUserDetails(): Flow<StoreResponse<UserDetailsData>> =
-//        store.stream(StoreRequest.cached(USER_DETAILS_KEY, false))
-//
-//    override fun fetchFreshUserDetails(): Flow<StoreResponse<UserDetailsData>> =
-//        store.stream(StoreRequest.fresh(USER_DETAILS_KEY))

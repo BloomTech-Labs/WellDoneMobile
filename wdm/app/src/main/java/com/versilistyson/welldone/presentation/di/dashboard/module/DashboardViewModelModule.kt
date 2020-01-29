@@ -29,7 +29,7 @@ abstract class DashboardViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(MapSharedViewModel::class)
-    abstract fun bindInitialMapViewModel(mapSharedViewModel: MapSharedViewModel): ViewModel
+    abstract fun bindMapSharedViewModel(mapSharedViewModel: MapSharedViewModel): ViewModel
 
     @DashboardActivityScope
     @Binds
