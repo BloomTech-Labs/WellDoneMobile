@@ -1,10 +1,8 @@
 package com.versilistyson.welldone.data.repository
 
 import com.dropbox.android.external.store4.ResponseOrigin
-import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
 import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.data.util.StoreKey
@@ -14,17 +12,16 @@ import com.versilistyson.welldone.test_util.builder.sensor.SensorDataTestBuilder
 import com.versilistyson.welldone.test_util.builder.sensor.SensorRecentResponseTestBuilder
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.EnumSource
-import org.junit.jupiter.params.provider.ValueSource
 import retrofit2.Response
 
 @InternalCoroutinesApi
@@ -61,33 +58,42 @@ class SensorRepositoryUnitTest {
     )
 
     @Test
-    fun `Fetch fresh sensors should return a StoreResponse of Flow of List of SensorData`() = runBlocking {
+    fun `Fetch fresh sensors should return a StoreResponse of Flow of List of SensorData`() {
 
-        val sensorRepository =
-            SensorRepositoryImpl(mockLocalSensorDataSource, mockRemoteSensorDataSource)
+        try {
+            runBlocking {
 
-        whenever(mockRemoteSensorDataSource.getSensors()).thenReturn(Response.success(sensorDtoList))
-        whenever(mockLocalSensorDataSource.saveSensors(StoreKey.SensorsKey(), sensorDataList)).thenReturn(Unit)
-        whenever(mockLocalSensorDataSource.getSensors(StoreKey.SensorsKey())).thenReturn(flowOf(sensorDataList))
+                val sensorRepository =
+                    SensorRepositoryImpl(mockLocalSensorDataSource, mockRemoteSensorDataSource)
 
-        val result: Flow<StoreResponse<List<SensorData>>>
-        var resultDataValue: List<SensorData>
-        var resultOriginValue: ResponseOrigin
-        val expectedOriginValue = ResponseOrigin.Fetcher
+                whenever(mockRemoteSensorDataSource.getSensors()).thenReturn(Response.success(sensorDtoList))
+                whenever(mockLocalSensorDataSource.saveSensors(StoreKey.SensorsKey(), sensorDataList)).thenReturn(Unit)
+                whenever(mockLocalSensorDataSource.getSensors(StoreKey.SensorsKey())).thenReturn(flowOf(sensorDataList))
 
-        //EXECUTE
-        result = sensorRepository.fetchFreshSensors()
+                val result: Flow<StoreResponse<List<SensorData>>>
+                var resultDataValue: List<SensorData>
+                var resultOriginValue: ResponseOrigin
+                val expectedOriginValue = ResponseOrigin.Fetcher
 
-        result.collect{ value->
-            when(value){
-                is StoreResponse.Data -> {
-                    resultDataValue = value.requireData()
-                    resultOriginValue = value.origin
+                //EXECUTE
+                result = sensorRepository.fetchFreshSensors()
 
-                    resultDataValue shouldBeEqualTo sensorDataList
-                    resultOriginValue shouldBeEqualTo expectedOriginValue
+                result.collect { value ->
+                    when (value) {
+                        is StoreResponse.Data -> {
+                            resultDataValue = value.requireData()
+                            resultOriginValue = value.origin
+
+                            resultDataValue shouldBeEqualTo sensorDataList
+                            resultOriginValue shouldBeEqualTo expectedOriginValue
+
+                            this.cancel()
+                        }
+                    }
                 }
             }
+        } catch(e: CancellationException){
+
         }
     }
 }
