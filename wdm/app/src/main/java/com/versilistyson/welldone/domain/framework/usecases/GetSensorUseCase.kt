@@ -2,6 +2,7 @@ package com.versilistyson.welldone.domain.framework.usecases
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.dropbox.android.external.store4.ResponseOrigin
 import com.dropbox.android.external.store4.StoreResponse
 import com.google.android.gms.maps.model.LatLng
 import com.versilistyson.welldone.data.db.sensor.SensorData
@@ -32,7 +33,11 @@ class GetSensorUseCase(private val sensorRepository: SensorRepository, private v
                         handleData(response.requireData())
                     }
                     is StoreResponse.Error -> {
-                        handleError(response.error)
+                        when(response.origin) {
+                            ResponseOrigin.Cache -> {}
+                            ResponseOrigin.Fetcher -> {}
+                            ResponseOrigin.Persister -> {}
+                        }
                     }
                 }
             }

@@ -1,9 +1,7 @@
 package com.versilistyson.welldone.data.repository
 
-import com.dropbox.android.external.store4.MemoryPolicy
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
-import com.dropbox.android.external.store4.StoreResponse
+import com.dropbox.android.external.store4.*
+import com.versilistyson.welldone.data.db.WellDoneDatabase
 import com.versilistyson.welldone.data.util.StoreKey
 import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorLocalDataSource
@@ -34,6 +32,7 @@ class SensorRepositoryImpl(
                 writer = localDataSource::saveSensors
             ).cachePolicy(
                 MemoryPolicy.builder()
+                    .setMemorySize(100)
                     .setExpireAfterAccess(8)
                     .setExpireAfterTimeUnit(TimeUnit.DAYS)
                     .build()
