@@ -10,7 +10,7 @@ import com.versilistyson.welldone.domain.framework.usecases.UseCase
 import kotlinx.coroutines.InternalCoroutinesApi
 
 @UseExperimental(InternalCoroutinesApi::class)
-class DashboardViewmodel (private val getSensorsUseCase: GetSensorsUseCase): ViewModel() {
+class DashboardViewmodel(private val getSensorsUseCase: GetSensorsUseCase): ViewModel() {
 
     private val _sensorLiveData: MutableLiveData<Entity.Sensors> by lazy{
         MutableLiveData<Entity.Sensors>()
