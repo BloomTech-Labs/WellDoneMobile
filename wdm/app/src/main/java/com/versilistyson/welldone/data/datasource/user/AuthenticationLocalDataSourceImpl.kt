@@ -4,8 +4,9 @@ import android.content.Context
 import com.versilistyson.welldone.data.util.SharedPreferenceKeys.Authentication
 
 import com.versilistyson.welldone.domain.framework.datasource.user.AuthenticationLocalDataSource
+import javax.inject.Inject
 
-class AuthenticationLocalDataSourceImpl(context: Context): AuthenticationLocalDataSource {
+class AuthenticationLocalDataSourceImpl @Inject constructor(context: Context): AuthenticationLocalDataSource {
 
     private val sharedPref = context.getSharedPreferences(Authentication.KEY, Context.MODE_PRIVATE)
     private val editor = sharedPref.edit()

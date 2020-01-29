@@ -1,6 +1,6 @@
 package com.versilistyson.welldone.presentation.di.auth.component
 
-import com.versilistyson.welldone.presentation.di.auth.module.AuthNetworkModule
+import com.versilistyson.welldone.presentation.di.auth.module.AuthenticationModule
 import com.versilistyson.welldone.presentation.di.auth.module.AuthViewModelModule
 import com.versilistyson.welldone.presentation.di.auth.AuthActivityScope
 import com.versilistyson.welldone.presentation.ui.authentication.AuthenticationActivity
@@ -9,8 +9,8 @@ import com.versilistyson.welldone.presentation.ui.authentication.SplashScreenFra
 import dagger.Subcomponent
 
 @AuthActivityScope
-@Subcomponent(modules = [AuthViewModelModule::class, AuthNetworkModule::class])
-interface AuthComponent {
+@Subcomponent(modules = [AuthViewModelModule::class, AuthenticationModule::class])
+interface AuthenticationComponent {
     fun inject(activity: AuthenticationActivity)
     fun inject(fragment: SplashScreenFragment)
     fun inject(fragment: SignInFragment)

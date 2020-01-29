@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.versilistyson.welldone.R
-import com.versilistyson.welldone.presentation.di.auth.component.AuthComponent
+import com.versilistyson.welldone.presentation.di.auth.component.AuthenticationComponent
 import com.versilistyson.welldone.presentation.viewmodel.AuthSharedViewModel
 import com.versilistyson.welldone.presentation.di.viewmodel_util.ViewModelProviderFactory
 import javax.inject.Inject
@@ -16,7 +16,7 @@ class AuthenticationActivity : AppCompatActivity() {
         NavHostFragment.create(R.navigation.auth_nav_graph)
     }
 
-    lateinit var authComponent: AuthComponent
+    lateinit var authenticationComponent: AuthenticationComponent
     @Inject lateinit var vmProviderFactory: ViewModelProviderFactory
     private lateinit var authSharedViewModel: AuthSharedViewModel
 
