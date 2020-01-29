@@ -14,15 +14,23 @@ class AuthenticationLocalDataSourceImpl(context: Context): AuthenticationLocalDa
        return editor.putString(Authentication.USER_TOKEN, token).commit()
     }
 
-    override suspend fun saveId(id: String): Boolean {
-        return editor.putString(Authentication.USER_ID, id).commit()
+    override suspend fun saveId(userId: Long): Boolean {
+        return editor.putLong(Authentication.USER_TOKEN, userId).commit()
     }
 
     override suspend fun deleteUserId(): Boolean {
         return editor.remove(Authentication.USER_ID).commit()
     }
 
-    override suspend fun deleteToken(userId: String): Boolean {
+    override suspend fun deleteToken(): Boolean {
         return editor.remove(Authentication.USER_TOKEN).commit()
+    }
+
+    override fun getToken(): String? {
+        return sharedPref.getString(Authentication.USER_TOKEN, null)
+    }
+
+    override fun getUserId(): Long {
+        return sharedPref.getLong(Authentication.USER_ID, 0)
     }
 }
