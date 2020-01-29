@@ -19,19 +19,19 @@ data class SensorEntityTestBuilder(
     fun build() = Entity.Sensor(sensorId, sensorStatus, lastUploadDate, districtName, commune, province, village, wellDepth, location, padCounts, padSeconds)
     companion object {
         private const val DEFAULT_SENSOR_ID = 1
-        private const val DEFAULT_SENSOR_STATUS = 1
-        private const val DEFAULT_LAST_UPLOAD_DATE = "1/20/19"
+        private const val DEFAULT_SENSOR_STATUS = 3
+        private const val DEFAULT_LAST_UPLOAD_DATE = "11/11/11"
         private const val DEFAULT_DISTRICT_NAME = "district"
         private const val DEFAULT_COMMUNE = "commune"
         private const val DEFAULT_PROVINCE = "province"
         private const val DEFAULT_VILLAGE = "village"
-        private const val DEFAULT_WELL_DEPTH = 32.0
-        private val DEFAULT_LAT_LNG = LatLng(32.0, 32.0)
+        private const val DEFAULT_WELL_DEPTH = 1.0
+        private val DEFAULT_LAT_LNG = LatLng(1.0, 1.0)
         private val DEFAULT_PAD_COUNTS = Entity.Sensor.PadCounts(
-            1.0,2.0,3.0,4.0
+            1.0,1.0,1.0,1.0
         )
         private val NULL_PAD_COUNTS = Entity.Sensor.PadCounts(null, null, null, null)
-        private val DEFAULT_PAD_SECONDS = Entity.Sensor.PadSeconds(1.0, 2.0, 3.0, 4.0)
+        private val DEFAULT_PAD_SECONDS = Entity.Sensor.PadSeconds(1.0, 1.0, 1.0, 1.0)
         private val NULL_PAD_SECONDS = Entity.Sensor.PadSeconds(null, null, null, null)
 
         fun withDefaults(): SensorEntityTestBuilder {

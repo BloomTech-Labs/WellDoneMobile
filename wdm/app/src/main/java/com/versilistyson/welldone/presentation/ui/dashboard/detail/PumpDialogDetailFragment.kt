@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.presentation.adapter.OperatorLogAdapter
 import com.versilistyson.welldone.domain.framework.entity.Entity
-import com.versilistyson.welldone.presentation.viewmodel.PumpDialogViewModel
+import com.versilistyson.welldone.presentation.viewmodel.SensorDialogViewModel
 import kotlinx.android.synthetic.main.fragment_dialog_pump_detail.*
 
 class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickReceived {
 
-    private lateinit var viewModel: PumpDialogViewModel
+    private lateinit var viewModel: SensorDialogViewModel
     private lateinit var sensor: Entity.Sensor
     private lateinit var logAdapter: OperatorLogAdapter
 
@@ -66,7 +66,7 @@ class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickRe
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProviders.of(this).get(PumpDialogViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(SensorDialogViewModel::class.java)
     }
 
     private fun initRecyclerView() {

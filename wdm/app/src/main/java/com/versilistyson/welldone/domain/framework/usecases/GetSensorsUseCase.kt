@@ -15,9 +15,8 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
 
-
 @InternalCoroutinesApi
-class GetSensorUseCase(private val sensorRepository: SensorRepository, private val coroutineScope: CoroutineScope) : UseCase<LiveData<Entity.Sensors>, UseCase.None>() {
+class GetSensorsUseCase(private val sensorRepository: SensorRepository, private val coroutineScope: CoroutineScope) : UseCase<LiveData<Entity.Sensors>, UseCase.None>() {
 
     private val sensorsLiveData: MutableLiveData<Entity.Sensors> by lazy {
         MutableLiveData<Entity.Sensors>()
@@ -28,16 +27,14 @@ class GetSensorUseCase(private val sensorRepository: SensorRepository, private v
         val sensorCollector = object : FlowCollector<StoreResponse<List<SensorData>>> {
             override suspend fun emit(response: StoreResponse<List<SensorData>>) {
                 when (response) {
-                    is StoreResponse.Loading -> handleLoading()
+                    is StoreResponse.Loading -> {
+                        eitherReturnValue = Either.Left(Failure.CurrentlyLoading)
+                    }
                     is StoreResponse.Data -> {
                         handleData(response.requireData())
                     }
                     is StoreResponse.Error -> {
-                        when(response.origin) {
-                            ResponseOrigin.Cache -> {}
-                            ResponseOrigin.Fetcher -> {}
-                            ResponseOrigin.Persister -> {}
-                        }
+                        handleError(response.error as Exception, response.origin)
                     }
                 }
             }
@@ -48,14 +45,10 @@ class GetSensorUseCase(private val sensorRepository: SensorRepository, private v
         return eitherReturnValue
     }
 
-    fun handleLoading() {
-        eitherReturnValue = Either.Left(Failure.CurrentlyLoading)
-    }
-
-    fun handleData(sensors: List<SensorData>) {
+    private fun handleData(sensors: List<SensorData>) {
         val mappedSensors = mutableListOf<Entity.Sensor>()
-        var totalLatitude: Double = 0.0
-        var totalLongitude: Double = 0.0
+        var totalLatitude = 0.0
+        var totalLongitude = 0.0
         sensors.forEach { sensor ->
             mappedSensors.add(sensor.map())
             totalLatitude += sensor.latitude
@@ -71,21 +64,15 @@ class GetSensorUseCase(private val sensorRepository: SensorRepository, private v
         eitherReturnValue = Either.Right(sensorsLiveData)
     }
 
-    fun handleError(error: Throwable){
-        eitherReturnValue = Either.Left(GetSensorsFailure(error as Exception))
+    private fun handleError(error: Exception, origin: ResponseOrigin){
+
+        when(origin) {
+            ResponseOrigin.Cache -> {}
+            ResponseOrigin.Fetcher -> {}
+            ResponseOrigin.Persister -> {}
+        }
+        eitherReturnValue = Either.Left(GetSensorsFailure(error))
     }
 
     data class GetSensorsFailure(val error: Exception) : Failure.FeatureFailure(error)
 }
-
-
-//return try {
-//            val sensorResponse = sensorRepository.fetchFreshSensors()
-//            if(sensorResponse.body() != null) {
-//                Either.Right(sensorResponse.body()!!)
-//            } else
-//                Either.Left(Failure.None)
-//
-//        } catch(exp: Exception){
-//            Either.Left(GetSensorsFailure(exp))
-//        }

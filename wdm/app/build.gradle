@@ -100,7 +100,7 @@ dependencies {
     // Material
     implementation 'com.google.android.material:material:1.2.0-alpha04'
     //Dagger
-    implementation "com.google.dagger:dagger:$daggerVersion"
+    api "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     //firebase stuff for push notifications
     implementation 'com.google.firebase:firebase-core:17.2.2'
