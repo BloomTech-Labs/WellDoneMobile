@@ -9,5 +9,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface SensorRepository {
     fun freshSensorStream(): Flow<StoreResponse<List<Entity.Sensor>>>
-    fun sensorStream(): Flow<StoreResponse<List<Entity.Sensor>>>
+    fun cacheSensorStream(): Flow<StoreResponse<List<Entity.Sensor>>>
 }

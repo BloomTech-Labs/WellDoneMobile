@@ -73,6 +73,6 @@ class SensorRepositoryImpl(
     override fun freshSensorStream(): Flow<StoreResponse<List<Entity.Sensor>>> =
         createSensorStream(StoreRequest.fresh(StoreKey.SensorsKey()))
 
-    override fun sensorStream(): Flow<StoreResponse<List<Entity.Sensor>>> =
-        createSensorStream(StoreRequest.fresh(StoreKey.SensorsKey()))
+    override fun cacheSensorStream(): Flow<StoreResponse<List<Entity.Sensor>>> =
+        createSensorStream(StoreRequest.cached(StoreKey.SensorsKey(), true))
 }

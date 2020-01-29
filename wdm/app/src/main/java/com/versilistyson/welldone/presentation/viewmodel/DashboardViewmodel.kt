@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.versilistyson.welldone.domain.framework.entity.Entity
-import com.versilistyson.welldone.domain.framework.usecases.GetSensorUseCase
-import com.versilistyson.welldone.domain.framework.usecases.UseCase
+import com.versilistyson.welldone.domain.framework.usecases.sensor.GetCacheSensorStreamUseCase
+import com.versilistyson.welldone.domain.framework.usecases.common.UseCase
 import kotlinx.coroutines.InternalCoroutinesApi
 
-class DashboardViewmodel @UseExperimental(InternalCoroutinesApi::class) constructor(private val getSensorUseCase: GetSensorUseCase): ViewModel() {
+class DashboardViewmodel @UseExperimental(InternalCoroutinesApi::class) constructor(private val getSensorUseCase: GetCacheSensorStreamUseCase): ViewModel() {
 
     private val _sensorLiveData: MutableLiveData<Entity.Sensors> by lazy{
         MutableLiveData<Entity.Sensors>()

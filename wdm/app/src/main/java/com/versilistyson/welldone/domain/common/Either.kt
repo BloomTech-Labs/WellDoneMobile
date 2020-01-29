@@ -1,6 +1,6 @@
 package com.versilistyson.welldone.domain.common
 
-// https://github.com/android10/Android-CleanArchitecture-Kotlin/blob/master/app/src/main/kotlin/com/fernandocejas/sample/core/functional/Either.kt
+// https://github.com/android10/Android-CleanArchitectureKotlin/blob/master/app/src/main/kotlin/com/fernandocejas/sample/core/functional/Either.kt
 
 sealed class Either<out L, out R> {
     data class Left<out L>(val left: L): Either<L, Nothing>()
