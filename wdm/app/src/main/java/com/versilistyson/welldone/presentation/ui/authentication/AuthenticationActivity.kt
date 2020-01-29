@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.versilistyson.welldone.R
-import com.versilistyson.welldone.presentation.di.auth.AuthComponent
+import com.versilistyson.welldone.presentation.di.auth.component.AuthComponent
 import com.versilistyson.welldone.presentation.viewmodel.AuthSharedViewModel
-import com.versilistyson.welldone.presentation.viewmodel.ViewModelProviderFactory
+import com.versilistyson.welldone.presentation.di.viewmodel_util.ViewModelProviderFactory
 import javax.inject.Inject
 
 class AuthenticationActivity : AppCompatActivity() {

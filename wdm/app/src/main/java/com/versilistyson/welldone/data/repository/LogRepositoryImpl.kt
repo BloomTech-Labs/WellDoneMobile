@@ -5,9 +5,10 @@ import com.versilistyson.welldone.domain.framework.datasource.log.LogLocalDataSo
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.LogRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class LogRepositoryImpl(private val remoteDataSource: LogDataRemoteSource,
-                        private val localDataSource: LogLocalDataSource): LogRepository {
+class LogRepositoryImpl @Inject constructor(private val remoteDataSource: LogDataRemoteSource,
+                                            private val localDataSource: LogLocalDataSource): LogRepository {
 
     override fun fetchLogs(): Flow<List<Entity.LogDetails>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

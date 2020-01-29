@@ -1,10 +1,4 @@
-package com.versilistyson.welldone.presentation.di.app
-
-import android.app.Application
-import com.versilistyson.welldone.presentation.di.auth.AuthComponent
-import dagger.BindsInstance
-import dagger.Component
-import javax.inject.Singleton
+package com.versilistyson.welldone.presentation.di.app.component
 
 
 //@Singleton

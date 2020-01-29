@@ -8,9 +8,10 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.usecases.GetSensorsUseCase
 import com.versilistyson.welldone.domain.framework.usecases.UseCase
 import kotlinx.coroutines.InternalCoroutinesApi
+import javax.inject.Inject
 
 @UseExperimental(InternalCoroutinesApi::class)
-class DashboardViewmodel(private val getSensorsUseCase: GetSensorsUseCase): ViewModel() {
+class InitialMapViewModel @Inject constructor(private val getSensorsUseCase: GetSensorsUseCase): ViewModel() {
 
     private val _sensorLiveData: MutableLiveData<Entity.Sensors> by lazy{
         MutableLiveData<Entity.Sensors>()

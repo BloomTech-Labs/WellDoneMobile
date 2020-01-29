@@ -23,12 +23,12 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.presentation.adapter.SensorStatusListAdapter
 import com.versilistyson.welldone.presentation.ui.dashboard.detail.PumpDialogDetailFragment
 import com.versilistyson.welldone.presentation.util.MAPVIEW_BUNDLE_KEY
-import com.versilistyson.welldone.presentation.viewmodel.DashboardViewmodel
+import com.versilistyson.welldone.presentation.viewmodel.InitialMapViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
-class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SensorStatusListAdapter.DashboardToDetailsDialog {
+class InitialMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SensorStatusListAdapter.DashboardToDetailsDialog {
 
-    private lateinit var viewmodel: DashboardViewmodel
+    private lateinit var viewmodel: InitialMapViewModel
     private lateinit var mMap: GoogleMap
     private lateinit var mapView: MapView
     private lateinit var sensorStatusListAdapter: SensorStatusListAdapter
@@ -127,7 +127,7 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
             ViewModelProvider
                 .AndroidViewModelFactory
                 .getInstance(appContext)
-                .create(DashboardViewmodel::class.java)
+                .create(InitialMapViewModel::class.java)
         }
     }
 

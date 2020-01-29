@@ -1,8 +1,5 @@
 package com.versilistyson.welldone.data.repository
 
-import com.dropbox.android.external.store4.MemoryPolicy
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
 import com.versilistyson.welldone.data.db.user.UserDetailsData
 import com.versilistyson.welldone.domain.framework.datasource.user.UserDetailsLocalDataSource
@@ -11,11 +8,11 @@ import com.versilistyson.welldone.domain.framework.repository.UserDetailReposito
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
-import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 @FlowPreview
 @ExperimentalCoroutinesApi
-class UserDetailRepositoryImpl (
+class UserDetailRepositoryImpl @Inject constructor(
     private val localDataSource: UserDetailsLocalDataSource,
     private val remoteDataSource: UserDetailsRemoteDataSource
 ) : UserDetailRepository {

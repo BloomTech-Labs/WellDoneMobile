@@ -11,10 +11,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @FlowPreview
-class SensorRepositoryImpl(
+class SensorRepositoryImpl @Inject constructor(
     private val localDataSource: SensorLocalDataSource,
     private val remoteDataSource: SensorRemoteDataSource) : SensorRepository {
 

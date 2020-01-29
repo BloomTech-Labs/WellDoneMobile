@@ -5,8 +5,9 @@ import com.versilistyson.welldone.domain.common.Failure
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.UserDetailRepository
 import com.versilistyson.welldone.domain.framework.usecases.UseCase
+import javax.inject.Inject
 
-class SignInUseCase(private val userRepository: UserDetailRepository):
+class SignInUseCase @Inject constructor(private val userRepository: UserDetailRepository):
     UseCase<Entity.UserDetails, SignInUseCase.Params>() {
 
 
@@ -17,26 +18,4 @@ class SignInUseCase(private val userRepository: UserDetailRepository):
     data class Params(val email: String, val password: String)
 
     data class InvalidSignInCredentials(val e: Exception = Exception(Exception("Bad Authentication"))): Failure.FeatureFailure(e)
-
 }
-
-//try {
-//    val authenticationResponse = userRepository.signInUser(params.email, params.password)
-//    return if (authenticationResponse.isSuccessful) {
-//        when (authenticationResponse.body()) {
-//            null -> {
-//                Either.Left(Failure.EmptyResponse)
-//            }
-//            else -> {
-//                Either.Right(authenticationResponse.body()!!)
-//            }
-//        }
-//    } else {
-//        return when(authenticationResponse.code()) {
-//            401 -> Either.Left(SignInUseCase.InvalidSignInCredentials())
-//            else -> Either.Left(Failure.ServerError)
-//        }
-//    }
-//} catch (exception: Exception) {
-//    return Either.Left(Failure.ServerError)
-//}

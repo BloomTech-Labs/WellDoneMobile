@@ -52,18 +52,4 @@ class AuthSharedViewModel @Inject constructor(private val signInUseCase: SignInU
            is Failure.EmptyResponse -> {}
        }
     }
-
-    /*private val _uid: MutableLiveData<Int> by lazy { MutableLiveData<Int>() }
-    val uid: LiveData<Int>
-        get() = _uid
-
-    private val _authToken: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
-    val authToken: LiveData<String>
-        get() = _authToken
-
-    fun resetAuthenticationState() {
-        _authenticationState.postValue(AuthenticationState.WAITING)
-    }*/
 }

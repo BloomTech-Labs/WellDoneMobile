@@ -1,8 +1,9 @@
-package com.versilistyson.welldone.presentation.di.auth
+package com.versilistyson.welldone.presentation.di.auth.module
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.versilistyson.welldone.data.api.user.UserAuthenticationApi
+import com.versilistyson.welldone.presentation.di.auth.AuthActivityScope
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

@@ -11,11 +11,11 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 
 import com.versilistyson.welldone.R
-import com.versilistyson.welldone.presentation.viewmodel.DashboardViewmodel
+import com.versilistyson.welldone.presentation.viewmodel.InitialMapViewModel
 
 class FullScreenMapFragment : Fragment() {
 
-    private lateinit var viewModel: DashboardViewmodel
+    private lateinit var viewModel: InitialMapViewModel
     private lateinit var fullScreenMap: GoogleMap
     private lateinit var fullScreenMapView: MapView
 
@@ -28,7 +28,7 @@ class FullScreenMapFragment : Fragment() {
             ViewModelProvider
                 .AndroidViewModelFactory
                 .getInstance(appContext)
-                .create(DashboardViewmodel::class.java)
+                .create(InitialMapViewModel::class.java)
         }
         fullScreenMapView = view.findViewById(R.id.fullscreen_map_view)
         return view
