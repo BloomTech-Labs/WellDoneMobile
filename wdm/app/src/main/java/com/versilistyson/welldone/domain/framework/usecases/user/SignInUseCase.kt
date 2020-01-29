@@ -4,7 +4,6 @@ import com.versilistyson.welldone.domain.common.Either
 import com.versilistyson.welldone.domain.common.Failure
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.AuthenticationRepository
-import com.versilistyson.welldone.domain.framework.repository.UserDetailRepository
 import com.versilistyson.welldone.domain.framework.usecases.UseCase
 import javax.inject.Inject
 
