@@ -3,6 +3,7 @@ package com.versilistyson.welldone.data.repository
 import com.dropbox.android.external.store4.ResponseOrigin
 import com.dropbox.android.external.store4.StoreResponse
 import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.data.util.StoreKey
@@ -11,17 +12,9 @@ import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorRemot
 import com.versilistyson.welldone.test_util.builder.sensor.SensorDataTestBuilder
 import com.versilistyson.welldone.test_util.builder.sensor.SensorRecentResponseTestBuilder
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldNotBeEqualTo
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
@@ -46,25 +39,27 @@ class SensorRepositoryUnitTest {
         SensorDataTestBuilder(sensorId = 3).build()
     )
 
+    @Before
+    fun setup() {
+        runBlocking {
+            whenever(mockRemoteSensorDataSource.getSensors()).thenReturn(Response.success(sensorDtoList))
+            whenever(mockLocalSensorDataSource.saveSensors(StoreKey.SensorsKey(), sensorDataList)).thenReturn(Unit)
+            whenever(mockLocalSensorDataSource.getSensors(StoreKey.SensorsKey())).thenReturn(flowOf(sensorDataList))
+        }
+    }
+
     @Test
     fun `Fetch fresh sensors should return a StoreResponse of Flow of List of SensorData`() {
         try {
             runBlocking {
+                val sensorRepository = SensorRepositoryImpl(mockLocalSensorDataSource, mockRemoteSensorDataSource)
 
-                val sensorRepository =
-                    SensorRepositoryImpl(mockLocalSensorDataSource, mockRemoteSensorDataSource)
-
-                whenever(mockRemoteSensorDataSource.getSensors()).thenReturn(Response.success(sensorDtoList))
-                whenever(mockLocalSensorDataSource.saveSensors(StoreKey.SensorsKey(), sensorDataList)).thenReturn(Unit)
-                whenever(mockLocalSensorDataSource.getSensors(StoreKey.SensorsKey())).thenReturn(flowOf(sensorDataList))
-
-                val result: Flow<StoreResponse<List<SensorData>>>
                 var resultDataValue: List<SensorData>
                 var resultOriginValue: ResponseOrigin
                 val expectedOriginValue = ResponseOrigin.Fetcher
 
                 //EXECUTE
-                result = sensorRepository.fetchFreshSensors()
+                val result= sensorRepository.fetchFreshSensors()
 
                 result.collect { value ->
                     when (value) {
@@ -72,8 +67,10 @@ class SensorRepositoryUnitTest {
                             resultDataValue = value.requireData()
                             resultOriginValue = value.origin
 
+                            verify(mockRemoteSensorDataSource).getSensors()
+                            verify(mockLocalSensorDataSource).saveSensors(StoreKey.SensorsKey(), sensorDataList)
+                            verify(mockLocalSensorDataSource).getSensors(StoreKey.SensorsKey())
                             resultDataValue shouldBeEqualTo sensorDataList
-                            resultDataValue.size shouldNotBeEqualTo  0
                             resultOriginValue shouldBeEqualTo expectedOriginValue
 
                             this.cancel()
@@ -82,6 +79,34 @@ class SensorRepositoryUnitTest {
                 }
             }
         } catch(e: CancellationException){
+
+        }
+    }
+
+    @Test
+    fun `Fetch sensors should return a StoreResponse of Flow of List of SensorData`() = runBlocking {
+        try{
+            val sensorRepository = SensorRepositoryImpl(mockLocalSensorDataSource, mockRemoteSensorDataSource)
+
+            var resultDataValue: List<SensorData>
+            var resultOriginValue: ResponseOrigin
+            val expectedOriginValue = ResponseOrigin.Fetcher
+
+            val result = sensorRepository.fetchSensors()
+
+            result.collect {response ->
+                when(response) {
+                    is StoreResponse.Data -> {
+                        resultDataValue = response.requireData()
+                        resultOriginValue = response.origin
+
+                        resultDataValue shouldBeEqualTo sensorDataList
+                        resultOriginValue shouldBeEqualTo expectedOriginValue
+                        this.cancel()
+                    }
+                }
+            }
+        } catch(e: CancellationException) {
 
         }
     }
