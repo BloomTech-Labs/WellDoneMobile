@@ -12,18 +12,22 @@ import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorLocal
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorRemoteDataSource
 import com.versilistyson.welldone.test_util.builder.sensor.SensorDataTestBuilder
 import com.versilistyson.welldone.test_util.builder.sensor.SensorRecentResponseTestBuilder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.*
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
+import org.junit.jupiter.params.provider.ValueSource
 import retrofit2.Response
 
+@InternalCoroutinesApi
 @FlowPreview
 @ExperimentalCoroutinesApi
 class SensorRepositoryUnitTest {
@@ -44,47 +48,46 @@ class SensorRepositoryUnitTest {
     private val mockLocalSensorDataSource: SensorLocalDataSource = mock()
     private val mockRemoteSensorDataSource: SensorRemoteDataSource = mock()
 
+    private val sensorDtoList = listOf(
+        SensorRecentResponseTestBuilder(sensorId = 1).build(),
+        SensorRecentResponseTestBuilder(sensorId = 2).build(),
+        SensorRecentResponseTestBuilder(sensorId = 3).build()
+    )
+
+    private val sensorDataList = listOf(
+        SensorDataTestBuilder(sensorId = 1).build(),
+        SensorDataTestBuilder(sensorId = 2).build(),
+        SensorDataTestBuilder(sensorId = 3).build()
+    )
+
     @Test
-    fun `Fetch fresh sensors returns a StoreResponse of Flow of List of SensorData`() = testScope.runBlockingTest {
+    fun `Fetch fresh sensors should return a StoreResponse of Flow of List of SensorData`() = runBlocking {
 
         val sensorRepository =
             SensorRepositoryImpl(mockLocalSensorDataSource, mockRemoteSensorDataSource)
-
-        val sensorDtoList = listOf(
-            SensorRecentResponseTestBuilder(sensorId = 1).build(),
-            SensorRecentResponseTestBuilder(sensorId = 2).build(),
-            SensorRecentResponseTestBuilder(sensorId = 3).build()
-        )
-
-        val sensorDataList = listOf(
-            SensorDataTestBuilder(sensorId = 1).build(),
-            SensorDataTestBuilder(sensorId = 2).build(),
-            SensorDataTestBuilder(sensorId = 3).build()
-        )
 
         whenever(mockRemoteSensorDataSource.getSensors()).thenReturn(Response.success(sensorDtoList))
         whenever(mockLocalSensorDataSource.saveSensors(StoreKey.SensorsKey(), sensorDataList)).thenReturn(Unit)
         whenever(mockLocalSensorDataSource.getSensors(StoreKey.SensorsKey())).thenReturn(flowOf(sensorDataList))
 
         val result: Flow<StoreResponse<List<SensorData>>>
-        val expected = flowOf(StoreResponse.Data(sensorDataList, ResponseOrigin.Fetcher))
+        var resultDataValue: List<SensorData>
+        var resultOriginValue: ResponseOrigin
+        val expectedOriginValue = ResponseOrigin.Fetcher
 
         //EXECUTE
         result = sensorRepository.fetchFreshSensors()
 
-        verify(mockLocalSensorDataSource).getSensors(StoreKey.SensorsKey())
-        verify(mockLocalSensorDataSource).saveSensors(StoreKey.SensorsKey(), sensorDataList)
-        expected shouldBeEqualTo result
+        result.collect{ value->
+            when(value){
+                is StoreResponse.Data -> {
+                    resultDataValue = value.requireData()
+                    resultOriginValue = value.origin
+
+                    resultDataValue shouldBeEqualTo sensorDataList
+                    resultOriginValue shouldBeEqualTo expectedOriginValue
+                }
+            }
+        }
     }
-
-    @Test
-    fun `Should fetch sensors from local database`() {
-
-    }
-
-    @Test
-    fun `Should force fetch sensors from api`() {
-
-    }
-
 }
