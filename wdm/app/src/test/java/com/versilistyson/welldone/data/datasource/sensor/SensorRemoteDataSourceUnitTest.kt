@@ -5,6 +5,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.versilistyson.welldone.data.api.SensorApi
+import com.versilistyson.welldone.test_util.BaseCoroutineTest
 import com.versilistyson.welldone.test_util.builder.sensor.SensorRecentResponseTestBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,20 +18,7 @@ import org.junit.Test
 import retrofit2.Response
 
 @ExperimentalCoroutinesApi
-class SensorRemoteDataSourceUnitTest {
-    private val testCoroutineDispatcher = TestCoroutineDispatcher()
-    private val testScope = TestCoroutineScope(testCoroutineDispatcher)
-
-    @Before
-    fun before() {
-        Dispatchers.setMain(testCoroutineDispatcher)
-    }
-
-    @After
-    fun after() {
-        Dispatchers.resetMain()
-        testScope.cleanupTestCoroutines()
-    }
+class SensorRemoteDataSourceUnitTest: BaseCoroutineTest() {
 
     private val mockSensorApi: SensorApi = mock()
 

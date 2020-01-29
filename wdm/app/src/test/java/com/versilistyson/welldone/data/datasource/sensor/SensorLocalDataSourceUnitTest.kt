@@ -6,6 +6,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.versilistyson.welldone.data.util.StoreKey
 import com.versilistyson.welldone.data.db.sensor.SensorDao
 import com.versilistyson.welldone.data.db.sensor.SensorData
+import com.versilistyson.welldone.test_util.BaseCoroutineTest
 import com.versilistyson.welldone.test_util.builder.sensor.SensorDataTestBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,19 +19,7 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class SensorLocalDataSourceUnitTest {
-    private val testDispatcher = TestCoroutineDispatcher()
-    private val testScope = TestCoroutineScope(testDispatcher)
-    @Before
-    fun before() {
-        Dispatchers.setMain(testDispatcher)
-    }
-
-    @After
-    fun after() {
-        Dispatchers.resetMain()
-        testScope.cleanupTestCoroutines()
-    }
+class SensorLocalDataSourceUnitTest: BaseCoroutineTest() {
 
     private val mockSensorDao: SensorDao = mock()
 
