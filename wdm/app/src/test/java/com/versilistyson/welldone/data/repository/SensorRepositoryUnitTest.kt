@@ -18,7 +18,9 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldNotBeEqualTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -28,19 +30,6 @@ import retrofit2.Response
 @FlowPreview
 @ExperimentalCoroutinesApi
 class SensorRepositoryUnitTest {
-    private val testCoroutineDispatcher = TestCoroutineDispatcher()
-    private val testScope = TestCoroutineScope(testCoroutineDispatcher)
-
-    @Before
-    fun before() {
-        Dispatchers.setMain(testCoroutineDispatcher)
-    }
-
-    @After
-    fun after() {
-        Dispatchers.resetMain()
-        testScope.cleanupTestCoroutines()
-    }
 
     private val mockLocalSensorDataSource: SensorLocalDataSource = mock()
     private val mockRemoteSensorDataSource: SensorRemoteDataSource = mock()
@@ -59,7 +48,6 @@ class SensorRepositoryUnitTest {
 
     @Test
     fun `Fetch fresh sensors should return a StoreResponse of Flow of List of SensorData`() {
-
         try {
             runBlocking {
 
@@ -85,6 +73,7 @@ class SensorRepositoryUnitTest {
                             resultOriginValue = value.origin
 
                             resultDataValue shouldBeEqualTo sensorDataList
+                            resultDataValue.size shouldNotBeEqualTo  0
                             resultOriginValue shouldBeEqualTo expectedOriginValue
 
                             this.cancel()
