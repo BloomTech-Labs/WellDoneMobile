@@ -1,5 +1,6 @@
 package com.versilistyson.welldone.domain.framework.usecases.sensor
 
+import com.dropbox.android.external.store4.ResponseOrigin
 import com.dropbox.android.external.store4.StoreResponse
 import com.google.android.gms.maps.model.LatLng
 import com.versilistyson.welldone.domain.common.Either
@@ -19,7 +20,7 @@ class GetCacheSensorStreamUseCase(
 ) : FlowUseCase<ResponseResult<Entity.Sensors>, FlowUseCase.None>() {
 
     override suspend fun run(params: None): Flow<Either<Failure, ResponseResult<Entity.Sensors>>> {
-        sensorRepository.cacheSensorStream().map { storeResponse ->
+        return sensorRepository.cacheSensorStream().map { storeResponse ->
             when (storeResponse) {
                 is StoreResponse.Data -> {
                     val sensorList = mutableListOf<Entity.Sensor>()
@@ -35,7 +36,7 @@ class GetCacheSensorStreamUseCase(
                         LatLng(latitude / (sensorList.size + 1), longitude / (sensorList.size + 1))
                     )
                     return@map Either.Right(
-                        ResponseResult.Data<Entity.Sensors>(
+                        ResponseResult.Data(
                             newSensorEntity,
                             storeResponse.origin
                         )
@@ -45,13 +46,21 @@ class GetCacheSensorStreamUseCase(
                     return@map Either.Right(ResponseResult.Loading<Entity.Sensors>(storeResponse.origin))
                 }
                 is StoreResponse.Error -> {
-
+                    when (storeResponse.origin) {
+                        ResponseOrigin.Cache -> {
+                            return@map Either.Left(Failure.CacheFailure(storeResponse.error as Exception))
+                        }
+                        ResponseOrigin.Fetcher -> {
+                            return@map Either.Left(Failure.ServerFailure(storeResponse.error as Exception))
+                        }
+                        ResponseOrigin.Persister -> {
+                            return@map Either.Left(Failure.PersisterFailure(storeResponse.error as Exception))
+                        }
+                    }
                 }
             }
         }
     }
-
-
 }
 
 
