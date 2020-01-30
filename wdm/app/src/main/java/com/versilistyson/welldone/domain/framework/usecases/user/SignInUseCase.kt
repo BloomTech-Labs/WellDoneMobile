@@ -12,7 +12,8 @@ class SignInUseCase @Inject constructor(private val authRepository: Authenticati
     UseCase<ResponseResult<Entity.AuthenticationDetails>, SignInUseCase.Params>() {
 
     override suspend fun run(params: Params): Either<Failure, ResponseResult<Entity.AuthenticationDetails>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        authRepository.signIn(params.email, params.password)
+        TODO()
     }
 
     data class Params(val email: String, val password: String)
