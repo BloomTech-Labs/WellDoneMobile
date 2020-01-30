@@ -47,7 +47,7 @@ class AuthSharedViewModel(private val signInUseCase: SignInUseCase) :
        when(failureOrLoading) {
            is Failure.NetworkConnection -> {}
            is SignInUseCase.InvalidSignInCredentials-> {}
-           is Failure.ServerError -> {}
+           is Failure.ServerFailure -> {}
            is Failure.EmptyResponse -> {}
        }
     }

@@ -5,9 +5,9 @@ sealed class Failure(val exception: Exception = Exception("Failure")) {
     object None: Failure()
     object EmptyResponse: Failure()
     object NetworkConnection: Failure()
-    object ServerError: Failure()
-    object CacheFailure: Failure()
-    object PersisterFailure: Failure()
+    class ServerFailure(val serverException: Exception = Exception("Server Failure")): Failure(serverException)
+    class CacheFailure(val cacheException: Exception = Exception("Cache Failure")): Failure(cacheException)
+    class PersisterFailure(val persisterFailure: Exception = Exception("Persister Failure")): Failure()
 
     abstract class FeatureFailure(featureException: Exception = Exception("Feature failure")) : Failure(featureException)
     override fun equals(other: Any?): Boolean {
