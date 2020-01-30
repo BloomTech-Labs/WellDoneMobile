@@ -23,8 +23,7 @@ class MapSharedViewModel @Inject constructor(
     /*
         First, we normally always get data from cached. Occasionally the user might refresh the sensor data, which
         means store will call its fetcher to fresh new sensors, and update the local persistence and store's cache.
-        We need 1 live data instance that both use case streams will map to, and we need to make sure the previous,
-        instance of live data that we were observing is removed.
+        We need 1 live data instance that both use case streams will map to.
      */
 
     private val sensorLiveData: LiveData<Either<Failure, ResponseResult<Entity.Sensors>>>
@@ -40,16 +39,13 @@ class MapSharedViewModel @Inject constructor(
             this.addSource(sensorLiveData) {
                 liveDataMerger.value = it
             }
-            this.addSource(freshSensorLiveData){
-                liveDataMerger.value = it
-            }
         }
     }
 
     fun newFetchFreshSensor(){
-        freshSensorLiveData = liveData {
+        liveDataMerger.value = liveData {
             emitSource(getFreshSensors.invoke(viewModelScope, FlowUseCase.None()))
-        }
+        }.value
     }
 }
 //liveDataMerger.addSource(freshSensorLiveData) {
