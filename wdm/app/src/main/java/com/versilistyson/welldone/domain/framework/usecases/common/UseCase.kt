@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 /*
     UseCase is called by the viewmodel. UseCases usually wrap repositories and call a specific
     method, and will determine what result to provide to the viewmodel. This keeps business logic
-    out of the viewmodel class.
+    out of the viewmodel class
  */
 abstract class UseCase<out Type, in Params> where Type: Any {
 

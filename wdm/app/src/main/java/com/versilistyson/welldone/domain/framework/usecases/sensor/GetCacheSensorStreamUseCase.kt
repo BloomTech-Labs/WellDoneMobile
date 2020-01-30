@@ -61,6 +61,8 @@ class GetCacheSensorStreamUseCase(
             }
         }
     }
+
+    class GetCacheSensorStreamFailure(featureException: Exception = Exception("Cache Sensor Stream Failure")) : Failure.FeatureFailure(featureException)
 }
 
 

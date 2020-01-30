@@ -76,4 +76,6 @@ class SensorRepositoryImpl @Inject constructor(
 
     override fun cacheSensorStream(): Flow<StoreResponse<List<Entity.Sensor>>> =
         createSensorStream(StoreRequest.cached(StoreKey.SensorsKey(), true))
+
+    suspend fun singleFreshFetch(): List<SensorData> = store.fresh(StoreKey.SensorsKey())
 }

@@ -6,6 +6,7 @@ import com.versilistyson.welldone.domain.common.Either
 import com.versilistyson.welldone.domain.common.Failure
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import kotlin.coroutines.CoroutineContext
 
 @InternalCoroutinesApi
 abstract class FlowUseCase<Type, in Params> where Type : Any {
@@ -16,7 +17,7 @@ abstract class FlowUseCase<Type, in Params> where Type : Any {
         params: Params
     ) : LiveData<Either<Failure,Type>> {
        val liveDataEither = coroutineScope.async {
-           return@async run(params).asLiveData()
+           return@async run(params).asLiveData(coroutineContext)
         }
         return liveDataEither.await()
     }
