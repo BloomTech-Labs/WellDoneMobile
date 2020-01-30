@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.usecases.GetSensorsUseCase
 import com.versilistyson.welldone.domain.framework.usecases.UseCase
+import com.versilistyson.welldone.domain.framework.usecases.common.UseCase
 import kotlinx.coroutines.InternalCoroutinesApi
 import javax.inject.Inject
 

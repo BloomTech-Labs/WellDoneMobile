@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.versilistyson.welldone.domain.common.Failure
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.usecases.user.SignInUseCase
-import javax.inject.Inject
 
 //with a matching scope in the component, this will determine that the component does not exist outside the lifetime of the component
 
@@ -44,8 +43,8 @@ class AuthSharedViewModel @Inject constructor(private val signInUseCase: SignInU
     private fun onSuccess(authenticatedUser: Entity.UserDetails) {
     }
 
-    private fun onFailure(failure: Failure) {
-       when(failure) {
+    private fun onFailure(failureOrLoading: Failure) {
+       when(failureOrLoading) {
            is Failure.NetworkConnection -> {}
            is SignInUseCase.InvalidSignInCredentials-> {}
            is Failure.ServerError -> {}

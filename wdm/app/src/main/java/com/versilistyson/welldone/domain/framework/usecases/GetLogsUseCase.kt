@@ -4,6 +4,7 @@ import com.versilistyson.welldone.domain.common.Either
 import com.versilistyson.welldone.domain.common.Failure
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.LogRepository
+import com.versilistyson.welldone.domain.framework.usecases.common.UseCase
 import javax.inject.Inject
 
 class GetLogsUseCase @Inject constructor(private val logRepository: LogRepository): UseCase<List<Entity.LogDetails>, GetLogsUseCase.Params>() {
