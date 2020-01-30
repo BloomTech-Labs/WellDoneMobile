@@ -3,7 +3,7 @@ package com.versilistyson.welldone.presentation.di.dashboard.component
 import com.versilistyson.welldone.presentation.di.dashboard.DashboardActivityScope
 import com.versilistyson.welldone.presentation.di.dashboard.module.*
 import com.versilistyson.welldone.presentation.ui.dashboard.DashboardActivity
-import com.versilistyson.welldone.presentation.ui.dashboard.InitialMapFragment
+import com.versilistyson.welldone.presentation.ui.dashboard.MainDashboardFragment
 import com.versilistyson.welldone.presentation.ui.dashboard.detail.LogDialogFragment
 import com.versilistyson.welldone.presentation.ui.dashboard.detail.PumpDialogDetailFragment
 import dagger.Subcomponent
@@ -19,7 +19,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
     GetSensorsModule::class, GetUserDetailsModule::class, GetLogsModule::class, SignInModule::class])
 interface DashboardComponent {
     fun inject(activity: DashboardActivity)
-    fun inject(fragment: InitialMapFragment)
+    fun inject(fragment: MainDashboardFragment)
     fun inject(fragment: LogDialogFragment)
     fun inject(fragment: PumpDialogDetailFragment)
 }

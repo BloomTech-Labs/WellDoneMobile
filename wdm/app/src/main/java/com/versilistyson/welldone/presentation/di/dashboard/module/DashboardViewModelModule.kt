@@ -23,7 +23,7 @@ abstract class DashboardViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(FullScreenMapViewModel::class)
-    abstract fun bindInitialMapViewModel(initialMapViewModel: InitialMapViewModel): ViewModel
+    abstract fun bindInitialMapViewModel(mainDashboardViewModel: MainDashboardViewModel): ViewModel
 
     @DashboardActivityScope
     @Binds

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.versilistyson.welldone.domain.common.Failure
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.usecases.user.SignInUseCase
+import javax.inject.Inject
 
 //with a matching scope in the component, this will determine that the component does not exist outside the lifetime of the component
 

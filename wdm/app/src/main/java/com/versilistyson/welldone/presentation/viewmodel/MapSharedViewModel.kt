@@ -19,37 +19,54 @@ class MapSharedViewModel @Inject constructor(
     private val getCachedSensors: GetCacheSensorStreamUseCase
 ) : ViewModel() {
 
-    enum class State {
-        LOADING_FRESH_SENSORS,
-        LOADING_CACHE_SENSORS,
-        LOADED_FRESH_SENSORS,
-        LOADED_CACHE_SENSORS,
-        FAILURE
-    }
+    //merge incoming live data from the use case, observer will be notified of the changes
     val liveDataMerger: MediatorLiveData<Either<Failure, ResponseResult<Entity.Sensors>>> by lazy {
         MediatorLiveData<Either<Failure, ResponseResult<Entity.Sensors>>>()
-            .addSource(freshSensorLiveData)
-            .addSource(cachedSensorLiveData)
     }
+
+    init {
+        liveDataMerger.addSource(freshSensorLiveData){
+            liveDataMerger.value = it
+        }
+
+        liveDataMerger.addSource(sensorLiveData){
+            liveDataMerger.value = it
+        }
+    }
+
     private val freshSensorLiveData: LiveData<Either<Failure, ResponseResult<Entity.Sensors>>>
         get() =
             liveData {
                 emitSource(getFreshSensors.invoke(viewModelScope, FlowUseCase.None()))
             }
 
-    private val cachedSensorLiveData: LiveData<Either<Failure, ResponseResult<Entity.Sensors>>>
+    private val sensorLiveData: LiveData<Either<Failure, ResponseResult<Entity.Sensors>>>
         get() =
             liveData {
                 emitSource(getCachedSensors.invoke(viewModelScope, FlowUseCase.None()))
             }
 
-
-    suspend fun getSensors(coroutineScope: CoroutineScope): LiveData<Either<Failure, ResponseResult<Entity.Sensors>>> {
-           getCachedSensors.invoke(coroutineScope, FlowUseCase.None())
+    fun newFetchFreshSensor(){
+        freshSensorLiveData
     }
-    fun getFreshSensors(coroutineScope: CoroutineScope): LiveData<Either<Failure, ResponseResult<Entity.Sensors>>> {
-        return liveData {
-            emitSource(getFreshSensors.invoke(coroutineScope, FlowUseCase.None()))
-        }
+
+    fun newFetchSensor() {
+        sensorLiveData
     }
 }
+//    enum class State {
+//        LOADING_FRESH_SENSORS,
+//        LOADING_CACHE_SENSORS,
+//        LOADED_FRESH_SENSORS,
+//        LOADED_CACHE_SENSORS,
+//        FAILURE
+//    }
+
+//suspend fun getSensors(coroutineScope: CoroutineScope): LiveData<Either<Failure, ResponseResult<Entity.Sensors>>> {
+//           getCachedSensors.invoke(coroutineScope, FlowUseCase.None())
+//    }
+//    fun getFreshSensors(coroutineScope: CoroutineScope): LiveData<Either<Failure, ResponseResult<Entity.Sensors>>> {
+//        return liveData {
+//            emitSource(getFreshSensors.invoke(coroutineScope, FlowUseCase.None()))
+//        }
+//    }

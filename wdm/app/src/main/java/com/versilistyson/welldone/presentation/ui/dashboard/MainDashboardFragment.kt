@@ -1,6 +1,5 @@
 package com.versilistyson.welldone.presentation.ui.dashboard
 
-import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,30 +18,46 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.versilistyson.welldone.R
+import com.versilistyson.welldone.domain.common.Either
+import com.versilistyson.welldone.domain.common.Failure
+import com.versilistyson.welldone.domain.common.ResponseResult
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.presentation.adapter.SensorStatusListAdapter
 import com.versilistyson.welldone.presentation.ui.dashboard.detail.PumpDialogDetailFragment
 import com.versilistyson.welldone.presentation.util.MAPVIEW_BUNDLE_KEY
-import com.versilistyson.welldone.presentation.viewmodel.InitialMapViewModel
+import com.versilistyson.welldone.presentation.viewmodel.MainDashboardViewModel
+import com.versilistyson.welldone.presentation.viewmodel.MapSharedViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.coroutines.InternalCoroutinesApi
+import javax.inject.Inject
 
-class InitialMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SensorStatusListAdapter.DashboardToDetailsDialog {
+@InternalCoroutinesApi
+class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SensorStatusListAdapter.DashboardToDetailsDialog {
 
-    private lateinit var viewmodel: InitialMapViewModel
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var mapSharedViewmodel: MapSharedViewModel
+    private lateinit var mainDashboardViewModel: MainDashboardViewModel
+
     private lateinit var mMap: GoogleMap
     private lateinit var mapView: MapView
+
     private lateinit var sensorStatusListAdapter: SensorStatusListAdapter
     private val allSensors: List<Entity.Sensor>
         get() = sensorStatusListAdapter.sensors
     private lateinit var averageLatLng: LatLng
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
         initViewModel()
         mapView = view.findViewById(R.id.map_view)
         initGoogleMap(savedInstanceState)
         return view
+    }
+
+    private fun initViewModel(){
+        mapSharedViewmodel = viewModelFactory.create(MapSharedViewModel::class.java)
+        mainDashboardViewModel = viewModelFactory.create(MainDashboardViewModel::class.java)
     }
 
     private fun initGoogleMap(savedInstanceState: Bundle?) {
@@ -52,14 +67,36 @@ class InitialMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             mapView.onCreate(savedInstanceState)
         }
 
-        viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer {
+        mapSharedViewmodel.liveDataMerger.observe(activity!!, Observer { value->
+            when(value){
+                is Either.Right -> {
+                    //returns loading or an actual data value
+                    when(value.right){
+                        is ResponseResult.Loading -> {
 
+                        }
+                        is ResponseResult.Data -> {
+                            mainDashboardViewModel.updateSensorLiveDataValue(value.right.value)
+                        }
+                    }
+                }
+                is Either.Left -> {
+                    when(value.left){
+                        is Failure.PersisterFailure -> {}
+                        is Failure.CacheFailure -> {}
+                        is Failure.ServerFailure -> {}
+                        is Failure.NetworkConnection -> {}
+                    }
+                }
+            }
+        })
+
+        mainDashboardViewModel.sensorsLiveData.observe(this, Observer{
             sensorStatusListAdapter = SensorStatusListAdapter(it.allSensors, this)
             initRecyclerView()
             averageLatLng = it.avgLatLng
             mapView.getMapAsync(this)
         })
-
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -102,7 +139,6 @@ class InitialMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onMarkerClick(marker: Marker?): Boolean {
         marker?.let{
-
             return true
         }
         return false
@@ -117,18 +153,7 @@ class InitialMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_no_data))
             2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning))
         }
-
         return marker
-    }
-
-    private fun initViewModel(){
-        viewmodel = activity.let {
-            val appContext = activity?.applicationContext as Application
-            ViewModelProvider
-                .AndroidViewModelFactory
-                .getInstance(appContext)
-                .create(InitialMapViewModel::class.java)
-        }
     }
 
     override fun moveToDialog(sensor: Entity.Sensor) {

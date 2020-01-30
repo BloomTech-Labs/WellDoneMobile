@@ -10,5 +10,4 @@ class AuthenticationRemoteDataSourceImpl @Inject constructor(private val api: Us
     override suspend fun signIn(email: String, password: String): Response<UserAuthenticationApi.Dto.AuthenticationResponse> {
         return api.login(email, password)
     }
-
 }

@@ -3,8 +3,10 @@ package com.versilistyson.welldone.presentation.ui.authentication
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import com.versilistyson.welldone.R
+import com.versilistyson.welldone.presentation.MyApplication
 import com.versilistyson.welldone.presentation.di.auth.component.AuthenticationComponent
 import com.versilistyson.welldone.presentation.viewmodel.AuthSharedViewModel
 import com.versilistyson.welldone.presentation.di.viewmodel_util.ViewModelProviderFactory
@@ -17,19 +19,13 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     lateinit var authenticationComponent: AuthenticationComponent
-    @Inject lateinit var vmProviderFactory: ViewModelProviderFactory
-    private lateinit var authSharedViewModel: AuthSharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication)
 
-//        authComponent = (applicationContext as MyApplication).appComponent.authComponent()
-//        authComponent.inject(this)
-
-//        authSharedViewModel = ViewModelProviders.of(this, vmProviderFactory)[AuthSharedViewModel::class.java]
-
-        authSharedViewModel = ViewModelProvider(this)[AuthSharedViewModel::class.java]
+//        authenticationComponent = (applicationContext as MyApplication).appComponent.authComponent()
+//        authenticationComponent.inject(this)
 
         supportFragmentManager
             .beginTransaction()
