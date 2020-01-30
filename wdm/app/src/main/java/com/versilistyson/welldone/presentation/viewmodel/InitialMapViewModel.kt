@@ -1,33 +1,29 @@
 package com.versilistyson.welldone.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.versilistyson.welldone.domain.common.Either
+import com.versilistyson.welldone.domain.common.Failure
+import com.versilistyson.welldone.domain.common.ResponseResult
 import com.versilistyson.welldone.domain.framework.entity.Entity
-import com.versilistyson.welldone.domain.framework.usecases.GetSensorsUseCase
-import com.versilistyson.welldone.domain.framework.usecases.UseCase
-import com.versilistyson.welldone.domain.framework.usecases.common.UseCase
+import com.versilistyson.welldone.domain.framework.usecases.common.FlowUseCase
+import com.versilistyson.welldone.domain.framework.usecases.sensor.GetCacheSensorStreamUseCase
+import com.versilistyson.welldone.domain.framework.usecases.sensor.GetFreshSensorStreamUseCase
 import kotlinx.coroutines.InternalCoroutinesApi
 import javax.inject.Inject
 
-@UseExperimental(InternalCoroutinesApi::class)
-class InitialMapViewModel @Inject constructor(private val getSensorsUseCase: GetSensorsUseCase): ViewModel() {
+@InternalCoroutinesApi
+class InitialMapViewModel @Inject constructor(private val getFreshSensors: GetFreshSensorStreamUseCase,
+                                              private val getCachedSensors: GetCacheSensorStreamUseCase): ViewModel() {
 
-    private val _sensorLiveData: MutableLiveData<Entity.Sensors> by lazy{
-        MutableLiveData<Entity.Sensors>()
-    }
-    val sensorLiveData: LiveData<Entity.Sensors>
-    get() = _sensorLiveData
-
-    @InternalCoroutinesApi
-    fun loadData(){
-        getSensorsUseCase.invoke(viewModelScope, UseCase.None()) {
-            TODO()
+    val freshSensorLiveData: LiveData<Either<Failure, ResponseResult<Entity.Sensors>>>
+    get() =
+        liveData {
+            emitSource(getFreshSensors.invoke(viewModelScope, FlowUseCase.None()))
         }
-    }
 
-    private fun handleSuccess(sensors: Entity.Sensors){
-        _sensorLiveData.value = sensors
-    }
+    val cachedSensorLiveData: LiveData<Either<Failure, ResponseResult<Entity.Sensors>>>
+    get() =
+        liveData {
+            emitSource(getCachedSensors.invoke(viewModelScope, FlowUseCase.None()))
+        }
 }
