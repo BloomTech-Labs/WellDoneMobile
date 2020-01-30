@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.dashboard.fragment.FullScreenMapFragment">
+    tools:context=".presentation.ui.dashboard.FullScreenMapFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -35,11 +35,11 @@
         android:layout_height="wrap_content"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:src="@drawable/ic_search_black_24dp"
+        android:src="@drawable/ic_add_white_56dp"
         android:background="@color/color_primary"
         android:id="@+id/fullScreenMapFragment_fab_forSearch"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_anchor="@id/fullScreenMapFragment_bottomAppBar"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -35,11 +35,6 @@ android {
             resValue 'string', "api_key", MyMapKey
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     kapt {
         generateStubs = true
     }
@@ -51,6 +46,7 @@ def glideVersion = '4.10.0'
 def retrofitVersion = '2.7.0'
 def daggerVersion = '2.24'
 def roomVersion = '2.0.0'
+def store_version = "4.0.0-alpha01"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -63,6 +59,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    // Assertions
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.ext:truth:1.2.0'
+    androidTestImplementation 'com.google.truth:truth:0.42'
 
     // Google Play Services (Maps)
 //    implementation 'com.google.android.gms:play-services-maps:17.0.0'
@@ -105,6 +105,12 @@ dependencies {
     //mapbox
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:8.5.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'androidx.room:room-ktx:2.2.3'
+    implementation 'androidx.room:room-compiler:2.2.3'
+    implementation 'androidx.room:room-coroutines:2.1.0-alpha04'
+    implementation 'androidx.room:room-common:2.2.3'
+    //store
+    implementation "com.dropbox.mobile.store:store4:$store_version"
 }
 
 apply plugin: 'com.google.gms.google-services'
