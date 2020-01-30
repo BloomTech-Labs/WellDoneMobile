@@ -1,8 +1,6 @@
 package com.versilistyson.welldone.domain.framework.repository
 
-import com.versilistyson.welldone.domain.common.ResponseResult
 import com.versilistyson.welldone.domain.framework.entity.Entity
-
 
 interface AuthenticationRepository {
     suspend fun signIn(email: String, password: String) : Entity.AuthenticationDetails

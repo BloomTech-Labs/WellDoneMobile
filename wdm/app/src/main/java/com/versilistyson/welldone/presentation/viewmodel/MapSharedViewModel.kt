@@ -10,6 +10,7 @@ import com.versilistyson.welldone.domain.framework.usecases.sensor.GetCacheSenso
 import com.versilistyson.welldone.domain.framework.usecases.sensor.GetFreshSensorStreamUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -19,54 +20,59 @@ class MapSharedViewModel @Inject constructor(
     private val getCachedSensors: GetCacheSensorStreamUseCase
 ) : ViewModel() {
 
-    //merge incoming live data from the use case, observer will be notified of the changes
-    val liveDataMerger: MediatorLiveData<Either<Failure, ResponseResult<Entity.Sensors>>> by lazy {
-        MediatorLiveData<Either<Failure, ResponseResult<Entity.Sensors>>>()
-    }
-
-    init {
-        liveDataMerger.addSource(freshSensorLiveData){
-            liveDataMerger.value = it
-        }
-
-        liveDataMerger.addSource(sensorLiveData){
-            liveDataMerger.value = it
-        }
-    }
-
-    private val freshSensorLiveData: LiveData<Either<Failure, ResponseResult<Entity.Sensors>>>
-        get() =
-            liveData {
-                emitSource(getFreshSensors.invoke(viewModelScope, FlowUseCase.None()))
-            }
+    /*
+        First, we normally always get data from cached. Occasionally the user might refresh the sensor data, which
+        means store will call its fetcher to fresh new sensors, and update the local persistence and store's cache.
+        We need 1 live data instance that both use case streams will map to, and we need to make sure the previous,
+        instance of live data that we were observing is removed.
+     */
 
     private val sensorLiveData: LiveData<Either<Failure, ResponseResult<Entity.Sensors>>>
-        get() =
-            liveData {
-                emitSource(getCachedSensors.invoke(viewModelScope, FlowUseCase.None()))
+    get() =
+        liveData {
+            emitSource(getCachedSensors.invoke(viewModelScope, FlowUseCase.None()))
+        }
+
+    private lateinit var freshSensorLiveData: LiveData<Either<Failure, ResponseResult<Entity.Sensors>>>
+
+    val liveDataMerger: MediatorLiveData<Either<Failure, ResponseResult<Entity.Sensors>>> by lazy {
+        MediatorLiveData<Either<Failure, ResponseResult<Entity.Sensors>>>().apply {
+            this.addSource(sensorLiveData) {
+                liveDataMerger.value = it
             }
+            this.addSource(freshSensorLiveData){
+                liveDataMerger.value = it
+            }
+        }
+    }
 
     fun newFetchFreshSensor(){
-        freshSensorLiveData
-    }
-
-    fun newFetchSensor() {
-        sensorLiveData
+        freshSensorLiveData = liveData {
+            emitSource(getFreshSensors.invoke(viewModelScope, FlowUseCase.None()))
+        }
     }
 }
-//    enum class State {
-//        LOADING_FRESH_SENSORS,
-//        LOADING_CACHE_SENSORS,
-//        LOADED_FRESH_SENSORS,
-//        LOADED_CACHE_SENSORS,
-//        FAILURE
-//    }
-
-//suspend fun getSensors(coroutineScope: CoroutineScope): LiveData<Either<Failure, ResponseResult<Entity.Sensors>>> {
-//           getCachedSensors.invoke(coroutineScope, FlowUseCase.None())
-//    }
-//    fun getFreshSensors(coroutineScope: CoroutineScope): LiveData<Either<Failure, ResponseResult<Entity.Sensors>>> {
-//        return liveData {
-//            emitSource(getFreshSensors.invoke(coroutineScope, FlowUseCase.None()))
+//liveDataMerger.addSource(freshSensorLiveData) {
+//    liveDataMerger.value = it
+//}
+//
+//    init {
+//        liveDataMerger.addSource(sensorLiveData){
+//            liveDataMerger.value = it
 //        }
+//    }
+//
+//
+//    private val sensorLiveData: LiveData<Either<Failure, ResponseResult<Entity.Sensors>>>
+//        get() =
+//            liveData {
+//                emitSource(getCachedSensors.invoke(viewModelScope, FlowUseCase.None()))
+//            }
+//
+//    fun newFetchFreshSensor(){
+//        freshSensorLiveData
+//    }
+//
+//    fun newFetchSensor() {
+//        sensorLiveData
 //    }

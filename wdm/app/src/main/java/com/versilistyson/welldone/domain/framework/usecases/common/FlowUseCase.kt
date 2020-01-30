@@ -12,12 +12,17 @@ import kotlin.coroutines.CoroutineContext
 abstract class FlowUseCase<Type, in Params> where Type : Any {
     abstract suspend fun run(params: Params): Flow<Either<Failure, Type>>
 
+    /*
+        Invoke basically launches run inside a coroutine. Usually we'd want this
+        scoped to the viewmodel's scope. Flow is being collected inside run and
+        returned as live data
+     */
     open suspend operator fun invoke(
         coroutineScope: CoroutineScope,
         params: Params
-    ) : LiveData<Either<Failure,Type>> {
+    ) : LiveData<Either<Failure, Type>> {
        val liveDataEither = coroutineScope.async {
-           return@async run(params).asLiveData(coroutineContext)
+           run(params).asLiveData(coroutineContext)
         }
         return liveDataEither.await()
     }
