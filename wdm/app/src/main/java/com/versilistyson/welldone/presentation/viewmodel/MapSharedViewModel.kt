@@ -25,27 +25,22 @@ class MapSharedViewModel @Inject constructor(
         means store will call its fetcher to fresh new sensors, and update the local persistence and store's cache.
         We need 1 live data instance that both use case streams will map to.
      */
-
-    private val sensorLiveData: LiveData<Either<Failure, ResponseResult<Entity.Sensors>>>
-    get() =
+    private var cachedStreamSensorLiveData =
         liveData {
             emitSource(getCachedSensors.invoke(viewModelScope, FlowUseCase.None()))
         }
+    private val sensorLiveData = MediatorLiveData<Either<Failure, ResponseResult<Entity.Sensors>>>()
 
-    private lateinit var freshSensorLiveData: LiveData<Either<Failure, ResponseResult<Entity.Sensors>>>
-
-    val liveDataMerger: MediatorLiveData<Either<Failure, ResponseResult<Entity.Sensors>>> by lazy {
-        MediatorLiveData<Either<Failure, ResponseResult<Entity.Sensors>>>().apply {
-            this.addSource(sensorLiveData) {
-                liveDataMerger.value = it
-            }
+    init{
+        sensorLiveData.addSource(cachedStreamSensorLiveData){
+            sensorLiveData.value = it
         }
     }
 
-    fun newFetchFreshSensor(){
-        liveDataMerger.value = liveData {
-            emitSource(getFreshSensors.invoke(viewModelScope, FlowUseCase.None()))
-        }.value
+    fun getFreshNewSensors(coroutineContext: CoroutineContext = viewModelScope){
+        liveData(coroutineContext) {
+            emitSource()
+        }
     }
 }
 //liveDataMerger.addSource(freshSensorLiveData) {
