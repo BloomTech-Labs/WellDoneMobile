@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.adapter.SensorStatusListAdapter
 import com.versilistyson.welldone.data.remote.dto.SensorRecentResponse
+import com.versilistyson.welldone.presentation.ui.dashboard.DashboardFragmentDirections
 import com.versilistyson.welldone.ui.dashboard.DashboardViewmodel
 import com.versilistyson.welldone.ui.dashboard.dialog.detail.PumpDialogDetailFragment
 import com.versilistyson.welldone.util.MAPVIEW_BUNDLE_KEY
@@ -59,25 +60,44 @@ class DashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClic
             mapView.onCreate(savedInstanceState)
         }
 
-        viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer {
-            if(it.isSuccessful){
-                it.body()?.let { body->
-                    sensorStatusListAdapter = SensorStatusListAdapter(body, this)
-                    initRecyclerView()
-                }
-                viewLifecycleOwner.lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        averageLatLng = getAvgLatLngSensors(it.body()!!)
-                    }
-                    mapView.getMapAsync(this@DashboardFragment)
-                }
-            }
-        })
+//        viewmodel.sensorLiveData.observe(viewLifecycleOwner, Observer {
+//            if(it.isSuccessful){
+//                it.body()?.let { body->
+//                    sensorStatusListAdapter = SensorStatusListAdapter(body, this)
+//                    initRecyclerView()
+//                }
+//                viewLifecycleOwner.lifecycleScope.launch {
+//                    withContext(Dispatchers.IO) {
+//                        averageLatLng = getAvgLatLngSensors(it.body()!!)
+//                    }
+//                    mapView.getMapAsync(this@DashboardFragment)
+//                }
+//            }
+//        })
+
+        sensorStatusListAdapter = SensorStatusListAdapter(
+            listOf(
+                SensorRecentResponse(null, null, "commune", null,
+                "1/1/2019", "1/2/2019", "3/4/2019", 30, "district", "HQ",
+                3, null, 12.0, 105.0, 3, "WeCare", null, null, null, null, null, null
+                , null, null, 55, "province", 3, null, null, null, 4, 5,
+                6, null, null, null, null, null, "village", null),
+
+                SensorRecentResponse(null, null, "commune", null,
+                    "1/1/2019", "1/2/2019", "3/4/2019", 30, "district", "HQ",
+                    3, null, 10.0, 105.0, 3, "WeCare", null, null, null, null, null, null
+                    , null, null, 55, "province", 3, null, null, null, 4, 5,
+                    6, null, null, null, null, null, "village", null)), this)
+
+        initRecyclerView()
+        listOfMarkersToAdd.add(MarkerOptions().position(LatLng(sensorStatusListAdapter.sensors[0].latitude, sensorStatusListAdapter.sensors[0].longitude)))
+        listOfMarkersToAdd.add(MarkerOptions().position(LatLng(sensorStatusListAdapter.sensors[1].latitude, sensorStatusListAdapter.sensors[1].longitude)))
+        mapView.getMapAsync(this@DashboardFragment)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 6.0f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(11.0, 105.0), 6.0f))
 
         for(marker in listOfMarkersToAdd) {
             mMap.addMarker(marker)
