@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 @Module
 object AuthNetworkModule {
 
-    val BASE_URL = "https://well-done-staging.herokuapp.com/"
+    val BASE_URL = "https://well-done-staging-notification.herokuapp.com/"
 
     @AuthActivityScope
     @JvmStatic
