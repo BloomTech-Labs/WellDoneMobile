@@ -1,6 +1,6 @@
 package com.versilistyson.welldone.data.datasource.log
 
-import com.versilistyson.welldone.data.api.LogApi
+import com.versilistyson.welldone.data.api.log.LogApi
 import com.versilistyson.welldone.domain.framework.datasource.log.LogLocalDataSource
 import javax.inject.Inject
 

@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -28,7 +27,7 @@ import com.versilistyson.welldone.presentation.util.MAPVIEW_BUNDLE_KEY
 import com.versilistyson.welldone.presentation.viewmodel.MainDashboardViewModel
 import com.versilistyson.welldone.presentation.viewmodel.MapSharedViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
-import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @InternalCoroutinesApi
@@ -42,8 +41,6 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var mapView: MapView
 
     private lateinit var sensorStatusListAdapter: SensorStatusListAdapter
-    private val allSensors: List<Entity.Sensor>
-        get() = sensorStatusListAdapter.sensors
     private lateinit var averageLatLng: LatLng
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -67,7 +64,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
             mapView.onCreate(savedInstanceState)
         }
 
-        mapSharedViewmodel.liveDataMerger.observe(activity!!, Observer { value->
+        mapSharedViewmodel.fetchSensorsThroughCache().observe(activity!!, Observer { value->
             when(value){
                 is Either.Right -> {
                     //returns loading or an actual data value
@@ -103,7 +100,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap = googleMap
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 6.0f))
 
-        for(s in allSensors){
+        for(s in sensorStatusListAdapter.sensors){
             //add a marker to the map in the sensor
             mMap.addMarker(generateMarker(s))
         }
@@ -114,9 +111,35 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
         mapExpandButton.setOnClickListener {
             val action =
-                DashboardFragmentDirections.actionDashboardFragmentToFullScreenMapFragment()
+                MainDashboardFragmentDirections.actionDashboardFragmentToFullScreenMapFragment()
             findNavController().navigate(action)
         }
+    }
+
+    private fun refreshMap(){
+        mapSharedViewmodel.fetchFreshSensors().observe(activity!!, Observer { value->
+            when(value){
+                is Either.Right -> {
+                    //returns loading or an actual data value
+                    when(value.right){
+                        is ResponseResult.Loading -> {
+
+                        }
+                        is ResponseResult.Data -> {
+                            mainDashboardViewModel.updateSensorLiveDataValue(value.right.value)
+                        }
+                    }
+                }
+                is Either.Left -> {
+                    when(value.left){
+                        is Failure.PersisterFailure -> {}
+                        is Failure.CacheFailure -> {}
+                        is Failure.ServerFailure -> {}
+                        is Failure.NetworkConnection -> {}
+                    }
+                }
+            }
+        })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -165,9 +188,9 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
             fragmentTransaction.remove(prev)
         }
         fragmentTransaction.addToBackStack(null)
-        val bundle = Bundle()
-        bundle.putSerializable("sensor", sensor)
-        pumpDialogDetailFragment.arguments = bundle
+        pumpDialogDetailFragment.arguments  = Bundle().apply {
+            putSerializable("sensor", sensor)
+        }
         pumpDialogDetailFragment.show(fragmentTransaction, "dialog")
     }
 

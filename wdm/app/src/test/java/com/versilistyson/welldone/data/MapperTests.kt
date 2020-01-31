@@ -1,6 +1,6 @@
 package com.versilistyson.welldone.data
 
-import com.versilistyson.welldone.data.api.SensorApi
+import com.versilistyson.welldone.data.api.sensor.SensorApi
 import com.versilistyson.welldone.data.db.sensor.SensorData
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test

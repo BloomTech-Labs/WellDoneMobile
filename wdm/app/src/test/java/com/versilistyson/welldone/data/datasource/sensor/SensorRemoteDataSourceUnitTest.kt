@@ -1,19 +1,15 @@
 package com.versilistyson.welldone.data.datasource.sensor
 
-import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import com.versilistyson.welldone.data.api.SensorApi
+import com.versilistyson.welldone.data.api.sensor.SensorApi
 import com.versilistyson.welldone.test_util.BaseCoroutineTest
 import com.versilistyson.welldone.test_util.builder.sensor.SensorRecentResponseTestBuilder
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
 import org.amshove.kluent.shouldBeEqualTo
-import org.junit.After
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
 

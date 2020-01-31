@@ -16,7 +16,7 @@ import kotlinx.coroutines.FlowPreview
 @ExperimentalCoroutinesApi
 @FlowPreview
 @Module
-abstract class GetUserDetailsModule {
+abstract class UserDetailsModule {
 
     @DashboardActivityScope
     @Provides

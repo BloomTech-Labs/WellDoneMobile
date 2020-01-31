@@ -6,13 +6,13 @@ import com.versilistyson.welldone.data.repository.LogRepositoryImpl
 import com.versilistyson.welldone.domain.framework.datasource.log.LogLocalDataSource
 import com.versilistyson.welldone.domain.framework.datasource.log.LogRemoteDataSource
 import com.versilistyson.welldone.domain.framework.repository.LogRepository
-import com.versilistyson.welldone.domain.framework.usecases.GetLogsUseCase
+import com.versilistyson.welldone.domain.framework.usecases.log.GetLogsUseCase
 import com.versilistyson.welldone.presentation.di.dashboard.DashboardActivityScope
 import dagger.Module
 import dagger.Provides
 
 @Module
-abstract class GetLogsModule {
+abstract class LogsModule {
 
     @DashboardActivityScope
     @Provides
@@ -29,5 +29,7 @@ abstract class GetLogsModule {
     @DashboardActivityScope
     @Provides
     fun provideLogUseCase(logRepository: LogRepository) =
-        GetLogsUseCase(logRepository)
+        GetLogsUseCase(
+            logRepository
+        )
 }

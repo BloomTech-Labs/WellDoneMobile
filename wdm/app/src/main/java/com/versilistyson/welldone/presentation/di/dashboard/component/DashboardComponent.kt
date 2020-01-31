@@ -16,7 +16,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
 @InternalCoroutinesApi
 @DashboardActivityScope
 @Subcomponent(modules = [DashboardViewModelModule::class, DashboardModule::class,
-    GetSensorsModule::class, GetUserDetailsModule::class, GetLogsModule::class, SignInModule::class])
+    SensorModule::class, UserDetailsModule::class, LogsModule::class, SignInModule::class])
 interface DashboardComponent {
     fun inject(activity: DashboardActivity)
     fun inject(fragment: MainDashboardFragment)

@@ -1,8 +1,8 @@
-package com.versilistyson.welldone.data.api
+package com.versilistyson.welldone.data.api.log
 
 import com.squareup.moshi.Json
 import com.versilistyson.welldone.data.db.log.LogData
-import com.versilistyson.welldone.data.db.log.ImageData
+import com.versilistyson.welldone.data.db.log.LogImageData
 import com.versilistyson.welldone.data.util.Mappable
 import retrofit2.Response
 import retrofit2.http.*
@@ -10,7 +10,7 @@ import java.io.File
 
 interface LogApi {
 
-    @GET("api/log/{sensorId}")
+    @GET("/api/logs/images/{sensorId}")
     suspend fun getLogs(@Path("sensorId") sensorId: Long): Response<List<Dto.Log>>
 
     @POST("api/logs")
@@ -30,7 +30,7 @@ interface LogApi {
             @Json(name = "last_modified") val lastModified: String,
             @Json(name = "status") val status: Int,
             @Json(name = "comment") val comment: String,
-            @Json(name = "picture_details") val images: List<LogImage>,
+            @Json(name = "picture_details") val images: List<LogImageApi.LogImage>,
             @Json(name = "operator_id") val operatorId: Long
         ): Mappable<LogData>, Dto() {
             override fun map(): LogData =
@@ -43,28 +43,11 @@ interface LogApi {
                     comment = comment,
                     operatorId = operatorId
                 )
-            fun mapToPictureData(picPosition: Int) =  object : Mappable<ImageData> {
-                override fun map() =
-                    ImageData(
-                        imageLink = images[picPosition].imageUri,
-                        caption = images[picPosition].caption,
-                        logId = logId
-                    )
             }
-        }
-        data class LogImage(
-            @Json(name = "image_uri") val imageUri: String,
-            @Json(name = "caption") val caption: String
-        )
-        data class LogPictureToPost(
-            @Json(name = "file") val file: File,
-            @Json(name = "caption") val caption: String,
-            @Json(name = "log_id") val logId: Long
-        )
-        data class LogToPost(
-            @Json(name = "sensor_id") val sensorId: Long,
-            @Json(name = "comment") val comment: String
-        ) : Dto()
+            data class LogToPost(
+                @Json(name = "sensor_id") val sensorId: Long,
+                @Json(name = "comment") val comment: String
+            ) : Dto()
     }
 
 }

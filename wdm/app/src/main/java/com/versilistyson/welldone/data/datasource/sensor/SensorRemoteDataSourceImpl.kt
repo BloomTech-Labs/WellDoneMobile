@@ -1,6 +1,6 @@
 package com.versilistyson.welldone.data.datasource.sensor
 
-import com.versilistyson.welldone.data.api.SensorApi
+import com.versilistyson.welldone.data.api.sensor.SensorApi
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorRemoteDataSource
 import retrofit2.Response
 import javax.inject.Inject

@@ -1,7 +1,7 @@
 package com.versilistyson.welldone.presentation.di.dashboard.module
 
-import com.versilistyson.welldone.data.api.LogApi
-import com.versilistyson.welldone.data.api.SensorApi
+import com.versilistyson.welldone.data.api.log.LogApi
+import com.versilistyson.welldone.data.api.sensor.SensorApi
 import com.versilistyson.welldone.data.api.user.UserAuthenticationApi
 import com.versilistyson.welldone.data.api.user.UserDetailsApi
 import com.versilistyson.welldone.data.db.WellDoneDatabase

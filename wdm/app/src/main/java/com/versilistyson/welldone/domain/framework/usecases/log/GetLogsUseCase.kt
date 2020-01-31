@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.domain.framework.usecases
+package com.versilistyson.welldone.domain.framework.usecases.log
 
 import com.versilistyson.welldone.domain.common.Either
 import com.versilistyson.welldone.domain.common.Failure

@@ -13,7 +13,6 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-
 @InternalCoroutinesApi
 class GetCacheSensorStreamUseCase(
     private val sensorRepository: SensorRepository
@@ -24,8 +23,8 @@ class GetCacheSensorStreamUseCase(
             when (storeResponse) {
                 is StoreResponse.Data -> {
                     val sensorList = mutableListOf<Entity.Sensor>()
-                    var latitude: Double = 0.0
-                    var longitude: Double = 0.0
+                    var latitude = 0.0
+                    var longitude= 0.0
                     storeResponse.value.forEach { sensor ->
                         sensorList.add(sensor)
                         latitude += sensor.location.latitude
@@ -35,7 +34,7 @@ class GetCacheSensorStreamUseCase(
                         sensorList,
                         LatLng(latitude / (sensorList.size + 1), longitude / (sensorList.size + 1))
                     )
-                    return@map Either.Right(
+                    Either.Right(
                         ResponseResult.Data(
                             newSensorEntity,
                             storeResponse.origin
@@ -43,18 +42,18 @@ class GetCacheSensorStreamUseCase(
                     )
                 }
                 is StoreResponse.Loading -> {
-                    return@map Either.Right(ResponseResult.Loading<Entity.Sensors>(storeResponse.origin))
+                    Either.Right(ResponseResult.Loading<Entity.Sensors>(storeResponse.origin))
                 }
                 is StoreResponse.Error -> {
                     when (storeResponse.origin) {
                         ResponseOrigin.Cache -> {
-                            return@map Either.Left(Failure.CacheFailure(storeResponse.error as Exception))
+                            Either.Left(Failure.CacheFailure(storeResponse.error as Exception))
                         }
                         ResponseOrigin.Fetcher -> {
-                            return@map Either.Left(Failure.ServerFailure(storeResponse.error as Exception))
+                            Either.Left(Failure.ServerFailure(storeResponse.error as Exception))
                         }
                         ResponseOrigin.Persister -> {
-                            return@map Either.Left(Failure.PersisterFailure(storeResponse.error as Exception))
+                            Either.Left(Failure.PersisterFailure(storeResponse.error as Exception))
                         }
                     }
                 }
@@ -64,15 +63,3 @@ class GetCacheSensorStreamUseCase(
 
     class GetCacheSensorStreamFailure(featureException: Exception = Exception("Cache Sensor Stream Failure")) : Failure.FeatureFailure(featureException)
 }
-
-
-//return try {
-//            val sensorResponse = sensorRepository.fetchFreshSensors()
-//            if(sensorResponse.body() != null) {
-//                Either.Right(sensorResponse.body()!!)
-//            } else
-//                Either.Left(Failure.None)
-//
-//        } catch(exp: Exception){
-//            Either.Left(GetSensorsFailure(exp))
-//        }

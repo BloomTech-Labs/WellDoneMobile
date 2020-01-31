@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.data.api
+package com.versilistyson.welldone.data.api.sensor
 
 import com.squareup.moshi.Json
 import com.versilistyson.welldone.data.db.sensor.SensorData

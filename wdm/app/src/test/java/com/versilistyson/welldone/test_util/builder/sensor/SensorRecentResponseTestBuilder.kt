@@ -1,6 +1,6 @@
 package com.versilistyson.welldone.test_util.builder.sensor
 
-import com.versilistyson.welldone.data.api.SensorApi
+import com.versilistyson.welldone.data.api.sensor.SensorApi
 
 data class SensorRecentResponseTestBuilder(
     private val sensorId: Int = DEFAULT_SENSOR_ID,

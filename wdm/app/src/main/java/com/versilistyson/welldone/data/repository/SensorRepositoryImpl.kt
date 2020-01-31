@@ -48,20 +48,20 @@ class SensorRepositoryImpl @Inject constructor(
         return store.stream(storeRequest).map { storeResponse ->
             when (storeResponse) {
                 is StoreResponse.Loading -> {
-                    return@map StoreResponse.Loading<List<Entity.Sensor>>(storeResponse.origin)
+                    StoreResponse.Loading(storeResponse.origin)
                 }
                 is StoreResponse.Data -> {
                     val mappedSensorList = mutableListOf<Entity.Sensor>()
                     storeResponse.value.forEach { sensorData ->
                         mappedSensorList.add(sensorData.map())
                     }
-                    return@map StoreResponse.Data<List<Entity.Sensor>>(
+                    StoreResponse.Data<List<Entity.Sensor>>(
                         mappedSensorList,
                         storeResponse.origin
                     )
                 }
                 is StoreResponse.Error -> {
-                    return@map StoreResponse.Error<List<Entity.Sensor>>(
+                    StoreResponse.Error<List<Entity.Sensor>>(
                         storeResponse.error,
                         storeResponse.origin
                     )

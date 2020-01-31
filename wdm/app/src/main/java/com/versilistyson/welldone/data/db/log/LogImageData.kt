@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
         onDelete = ForeignKey.CASCADE)],
     indices = [Index("log_id", unique = true)]
 )
-data class ImageData (
+data class LogImageData (
     @ColumnInfo(name = "link") val imageLink: String,
     @ColumnInfo(name = "pictureSubtitle") val caption: String?,
     @ColumnInfo(name = "log_id") val logId: Long,
