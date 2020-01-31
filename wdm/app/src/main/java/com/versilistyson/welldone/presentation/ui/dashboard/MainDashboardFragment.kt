@@ -153,6 +153,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
         mapView.onSaveInstanceState(mapViewBundle)
     }
 
+    @Suppress("PLUGIN_WARNING")
     private fun initRecyclerView() {
         if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             rv_pump_status.apply {

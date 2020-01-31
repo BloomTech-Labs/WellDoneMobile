@@ -5,10 +5,13 @@ import com.versilistyson.welldone.presentation.di.auth.component.AuthenticationC
 import com.versilistyson.welldone.presentation.di.dashboard.component.DashboardComponent
 import dagger.BindsInstance
 import dagger.Component
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
 import javax.inject.Singleton
 
-
+@ExperimentalCoroutinesApi
+@FlowPreview
 @InternalCoroutinesApi
 @Singleton
 @Component(modules = [AppComponent::class])
