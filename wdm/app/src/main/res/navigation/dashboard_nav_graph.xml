@@ -9,7 +9,7 @@
         android:id="@+id/dashboardFragment"
         android:name="com.versilistyson.welldone.presentation.ui.dashboard.MainDashboardFragment"
         android:label="fragment_dashboard"
-        tools:layout="@layout/fragment_dashboard">
+        tools:layout="@layout/fragment_main_dashboard">
         <action
             android:id="@+id/action_dashboardFragment_to_fullScreenMapFragment"
             app:destination="@id/fullScreenMapFragment" />

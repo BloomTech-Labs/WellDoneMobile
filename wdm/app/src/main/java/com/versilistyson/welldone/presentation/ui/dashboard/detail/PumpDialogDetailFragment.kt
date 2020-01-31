@@ -11,7 +11,7 @@ import com.versilistyson.welldone.R
 import com.versilistyson.welldone.presentation.adapter.OperatorLogAdapter
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.presentation.viewmodel.SensorDialogViewModel
-import kotlinx.android.synthetic.main.fragment_dialog_pump_detail.*
+import kotlinx.android.synthetic.main.fragment_dialog_sensor_detail.*
 
 class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickReceived {
 
@@ -21,7 +21,7 @@ class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickRe
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dialog_pump_detail, container, false)
+        return inflater.inflate(R.layout.fragment_dialog_sensor_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

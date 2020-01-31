@@ -1,5 +1,6 @@
 package com.versilistyson.welldone.presentation.ui.dashboard
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +27,9 @@ import com.versilistyson.welldone.presentation.ui.dashboard.detail.PumpDialogDet
 import com.versilistyson.welldone.presentation.util.MAPVIEW_BUNDLE_KEY
 import com.versilistyson.welldone.presentation.viewmodel.MainDashboardViewModel
 import com.versilistyson.welldone.presentation.viewmodel.MapSharedViewModel
-import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.android.synthetic.main.fragment_main_dashboard.*
+import kotlinx.android.synthetic.main.fragment_main_dashboard.mapExpandButton
+import kotlinx.android.synthetic.main.fragment_main_dashboard.map_view
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -45,17 +48,14 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        val view = inflater.inflate(R.layout.fragment_main_dashboard, container, false)
         initViewModel()
         mapView = view.findViewById(R.id.map_view)
         initGoogleMap(savedInstanceState)
         return view
     }
 
-    private fun initViewModel(){
-        mapSharedViewmodel = viewModelFactory.create(MapSharedViewModel::class.java)
-        mainDashboardViewModel = viewModelFactory.create(MainDashboardViewModel::class.java)
-    }
+
 
     private fun initGoogleMap(savedInstanceState: Bundle?) {
         if(savedInstanceState != null){
@@ -154,9 +154,15 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
     private fun initRecyclerView() {
-        rv_pump_status.apply{
-            adapter = sensorStatusListAdapter
-            layoutManager = LinearLayoutManager(activity!!.applicationContext, LinearLayoutManager.VERTICAL, false)
+        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            rv_pump_status.apply {
+                adapter = sensorStatusListAdapter
+                layoutManager = LinearLayoutManager(
+                    activity!!.applicationContext,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            }
         }
     }
 
@@ -192,6 +198,11 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
             putSerializable("sensor", sensor)
         }
         pumpDialogDetailFragment.show(fragmentTransaction, "dialog")
+    }
+
+    private fun initViewModel(){
+        mapSharedViewmodel = viewModelFactory.create(MapSharedViewModel::class.java)
+        mainDashboardViewModel = viewModelFactory.create(MainDashboardViewModel::class.java)
     }
 
     override fun onStart() {
