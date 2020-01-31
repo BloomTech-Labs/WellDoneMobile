@@ -48,11 +48,6 @@ class DashboardModule {
 
     @DashboardActivityScope
     @Provides
-    fun provideUserAuthenticationApi(retrofit: Retrofit): UserAuthenticationApi =
-        retrofit.create(UserAuthenticationApi::class.java)
-
-    @DashboardActivityScope
-    @Provides
     fun provideUserDetailsApi(retrofit: Retrofit): UserDetailsApi =
         retrofit.create(UserDetailsApi::class.java)
 

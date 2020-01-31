@@ -1,5 +1,6 @@
 package com.versilistyson.welldone.presentation.di.dashboard.component
 
+import com.versilistyson.welldone.presentation.di.auth.module.SignInModule
 import com.versilistyson.welldone.presentation.di.dashboard.DashboardActivityScope
 import com.versilistyson.welldone.presentation.di.dashboard.module.*
 import com.versilistyson.welldone.presentation.ui.dashboard.DashboardActivity

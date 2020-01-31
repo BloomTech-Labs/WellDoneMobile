@@ -27,7 +27,6 @@ interface AppComponent {
 
         @BindsInstance
         fun application(application: Application): Builder
-        fun roomModule(roomModule: RoomModule): Builder
         fun build(): AppComponent
     }
 }

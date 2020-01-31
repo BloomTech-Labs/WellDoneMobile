@@ -1,4 +1,4 @@
-package com.versilistyson.welldone.presentation.di.dashboard.module
+package com.versilistyson.welldone.presentation.di.auth.module
 
 import com.versilistyson.welldone.data.datasource.user.AuthenticationLocalDataSourceImpl
 import com.versilistyson.welldone.data.datasource.user.AuthenticationRemoteDataSourceImpl
@@ -6,24 +6,22 @@ import com.versilistyson.welldone.data.repository.AuthenticationRepositoryImpl
 import com.versilistyson.welldone.domain.framework.datasource.user.AuthenticationLocalDataSource
 import com.versilistyson.welldone.domain.framework.datasource.user.AuthenticationRemoteDataSource
 import com.versilistyson.welldone.domain.framework.repository.AuthenticationRepository
-import com.versilistyson.welldone.domain.framework.usecases.user.SignInUseCase
-import com.versilistyson.welldone.presentation.di.dashboard.DashboardActivityScope
+import com.versilistyson.welldone.presentation.di.auth.AuthActivityScope
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 @Module
 abstract class SignInModule {
 
-    @DashboardActivityScope
+    @AuthActivityScope
     @Binds
     abstract fun bindAuthenticationLocalDataSource(datasource: AuthenticationLocalDataSourceImpl): AuthenticationLocalDataSource
 
-    @DashboardActivityScope
+    @AuthActivityScope
     @Binds
     abstract fun bindAuthenticationRemoteDataSource(datasource: AuthenticationRemoteDataSourceImpl): AuthenticationRemoteDataSource
 
-    @DashboardActivityScope
+    @AuthActivityScope
     @Binds
-    abstract fun bindAuthenticationRepository(repository: AuthenticationRepositoryImpl): AuthenticationRepository
+    abstract fun bindAuthenticationRepository(authRepo: AuthenticationRepositoryImpl): AuthenticationRepository
 }

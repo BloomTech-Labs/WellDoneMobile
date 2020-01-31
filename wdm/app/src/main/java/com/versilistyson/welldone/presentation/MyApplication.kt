@@ -6,8 +6,6 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Build
 import com.versilistyson.welldone.domain.util.Variables
-import com.versilistyson.welldone.presentation.di.app.component.AppComponent
-import com.versilistyson.welldone.presentation.util.SharedPreference
 import kotlinx.coroutines.InternalCoroutinesApi
 
 @InternalCoroutinesApi
@@ -17,11 +15,8 @@ class MyApplication: Application() {
 
     }
 
-    private lateinit var sharedPreferences: SharedPreference
-
     override fun onCreate() {
         super.onCreate()
-        sharedPreferences = SharedPreference(this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             try {
@@ -43,13 +38,5 @@ class MyApplication: Application() {
                 Variables.isNetworkConnected = false
             }
         }
-    }
-
-    fun saveToken(token: String){
-        sharedPreferences.save(SharedPreference.Keys.USER_TOKEN, token)
-    }
-
-    fun retrieveToken(): String? {
-        return sharedPreferences.retrieveString(SharedPreference.Keys.USER_TOKEN)
     }
 }

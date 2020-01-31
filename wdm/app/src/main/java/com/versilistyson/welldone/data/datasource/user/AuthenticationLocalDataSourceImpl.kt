@@ -1,14 +1,14 @@
 package com.versilistyson.welldone.data.datasource.user
 
+import android.app.Application
 import android.content.Context
 import com.versilistyson.welldone.data.util.SharedPreferenceKeys.Authentication
-
 import com.versilistyson.welldone.domain.framework.datasource.user.AuthenticationLocalDataSource
 import javax.inject.Inject
 
-class AuthenticationLocalDataSourceImpl @Inject constructor(context: Context): AuthenticationLocalDataSource {
+class AuthenticationLocalDataSourceImpl @Inject constructor(application: Application): AuthenticationLocalDataSource {
 
-    private val sharedPref = context.getSharedPreferences(Authentication.KEY, Context.MODE_PRIVATE)
+    private val sharedPref = application.getSharedPreferences(Authentication.KEY, Context.MODE_PRIVATE)
     private val editor = sharedPref.edit()
 
     override suspend fun saveToken(token: String): Boolean {

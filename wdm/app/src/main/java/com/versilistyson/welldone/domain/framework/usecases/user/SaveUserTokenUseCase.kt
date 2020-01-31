@@ -9,8 +9,6 @@ import javax.inject.Inject
 class SaveUserTokenUseCase @Inject constructor(private val authenticationRepository: AuthenticationRepository):
     UseCase<Boolean, SaveUserTokenUseCase.Params>() {
 
-
-
     override suspend fun run(params: Params): Either<Failure, Boolean> {
         return try {
             Either.Right(authenticationRepository.storeToken(params.tokenToStore))

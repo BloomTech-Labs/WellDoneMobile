@@ -1,8 +1,10 @@
 package com.versilistyson.welldone.presentation.di.app.module
 
+import android.app.Application
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.versilistyson.welldone.presentation.util.BASE_URL
+import com.versilistyson.welldone.presentation.util.SharedPreference
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -12,10 +14,14 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-object AppModule {
+class AppModule {
 
     @Singleton
-    @JvmStatic
+    @Provides
+    fun getSharedPreferences(application: Application): SharedPreference =
+        SharedPreference(application)
+
+    @Singleton
     @Provides
     fun moshi(): Moshi =
         Moshi.Builder()
@@ -23,7 +29,6 @@ object AppModule {
             .build()
 
     @Singleton
-    @JvmStatic
     @Provides
     fun provideOkHttpClientBuilder(): OkHttpClient.Builder =
         OkHttpClient.Builder()
@@ -32,7 +37,6 @@ object AppModule {
             .connectTimeout(10, TimeUnit.SECONDS)
 
     @Singleton
-    @JvmStatic
     @Provides
     fun provideRetrofit(okHttpClientBuilder: OkHttpClient.Builder, moshi: Moshi): Retrofit =
         Retrofit.Builder()
@@ -40,5 +44,4 @@ object AppModule {
             .client(okHttpClientBuilder.build())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
-
 }
