@@ -7,14 +7,25 @@ import com.versilistyson.welldone.data.api.user.UserDetailsApi
 import com.versilistyson.welldone.data.db.WellDoneDatabase
 import com.versilistyson.welldone.data.db.log.LogDao
 import com.versilistyson.welldone.data.db.user.UserDetailsDao
+import com.versilistyson.welldone.domain.framework.repository.AuthenticationRepository
+import com.versilistyson.welldone.domain.framework.repository.LogRepository
+import com.versilistyson.welldone.domain.framework.repository.SensorRepository
+import com.versilistyson.welldone.domain.framework.repository.UserDetailRepository
+import com.versilistyson.welldone.domain.framework.usecases.log.GetLogsUseCase
+import com.versilistyson.welldone.domain.framework.usecases.sensor.GetCacheSensorStreamUseCase
+import com.versilistyson.welldone.domain.framework.usecases.sensor.GetFreshSensorStreamUseCase
+import com.versilistyson.welldone.domain.framework.usecases.user.GetUserDetailsUseCase
+import com.versilistyson.welldone.domain.framework.usecases.user.SignInUseCase
 import com.versilistyson.welldone.presentation.di.dashboard.DashboardActivityScope
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.InternalCoroutinesApi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import retrofit2.Retrofit
 
+@InternalCoroutinesApi
 @Module
 class DashboardModule {
 
@@ -70,4 +81,30 @@ class DashboardModule {
     fun provideLogDao(wellDoneDatabase: WellDoneDatabase): LogDao =
         wellDoneDatabase.logDao()
 
+    @DashboardActivityScope
+    @Provides
+    fun provideUserDetailsUseCase(userDetailsRepository: UserDetailRepository) =
+        GetUserDetailsUseCase(userDetailsRepository)
+
+    @DashboardActivityScope
+    @Provides
+    fun provideLogUseCase(logRepository: LogRepository) =
+        GetLogsUseCase(logRepository)
+
+    @DashboardActivityScope
+    @Provides
+    fun provideSignInUseCase(repository: AuthenticationRepository): SignInUseCase =
+        SignInUseCase(repository)
+
+    @DashboardActivityScope
+    @Provides
+    fun provideFreshSensorUseCase(sensorRepository: SensorRepository): GetFreshSensorStreamUseCase {
+        return GetFreshSensorStreamUseCase(sensorRepository)
+    }
+
+    @DashboardActivityScope
+    @Provides
+    fun provideCacheSensorUseCase(sensorRepository: SensorRepository): GetCacheSensorStreamUseCase {
+        return GetCacheSensorStreamUseCase(sensorRepository)
+    }
 }

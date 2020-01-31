@@ -1,6 +1,8 @@
 package com.versilistyson.welldone.presentation.di.app.component
 
 import android.app.Application
+import com.versilistyson.welldone.presentation.di.app.module.AppModule
+import com.versilistyson.welldone.presentation.di.app.module.RoomModule
 import com.versilistyson.welldone.presentation.di.auth.component.AuthenticationComponent
 import com.versilistyson.welldone.presentation.di.dashboard.component.DashboardComponent
 import dagger.BindsInstance
@@ -14,7 +16,7 @@ import javax.inject.Singleton
 @FlowPreview
 @InternalCoroutinesApi
 @Singleton
-@Component(modules = [AppComponent::class])
+@Component(modules = [AppModule::class, RoomModule::class])
 interface AppComponent {
 
     fun authComponent(): AuthenticationComponent
@@ -25,7 +27,7 @@ interface AppComponent {
 
         @BindsInstance
         fun application(application: Application): Builder
-
+        fun roomModule(roomModule: RoomModule): Builder
         fun build(): AppComponent
     }
 }

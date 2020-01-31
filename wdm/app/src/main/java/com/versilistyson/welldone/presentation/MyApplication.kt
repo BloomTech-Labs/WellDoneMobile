@@ -5,24 +5,23 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Build
-import com.versilistyson.welldone.di.DaggerAppComponent
 import com.versilistyson.welldone.domain.util.Variables
+import com.versilistyson.welldone.presentation.di.app.component.AppComponent
 import com.versilistyson.welldone.presentation.util.SharedPreference
+import kotlinx.coroutines.InternalCoroutinesApi
 
+@InternalCoroutinesApi
 class MyApplication: Application() {
 
-//    val appComponent by lazy {
-//        DaggerAppComponent
-//            .builder()
-//            .build()
-//    }
+    private val appComponent by lazy {
+
+    }
 
     private lateinit var sharedPreferences: SharedPreference
 
     override fun onCreate() {
         super.onCreate()
-        sharedPreferences =
-            SharedPreference(this)
+        sharedPreferences = SharedPreference(this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             try {

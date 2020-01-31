@@ -8,6 +8,7 @@ import com.versilistyson.welldone.domain.framework.datasource.user.UserDetailsRe
 import com.versilistyson.welldone.domain.framework.repository.UserDetailRepository
 import com.versilistyson.welldone.domain.framework.usecases.user.GetUserDetailsUseCase
 import com.versilistyson.welldone.presentation.di.dashboard.DashboardActivityScope
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,19 +20,14 @@ import kotlinx.coroutines.FlowPreview
 abstract class UserDetailsModule {
 
     @DashboardActivityScope
-    @Provides
+    @Binds
     abstract fun bindUserDetailsLocalDataSource(datasource: UserDetailsLocalDataSourceImpl): UserDetailsLocalDataSource
 
     @DashboardActivityScope
-    @Provides
+    @Binds
     abstract fun bindUserDetailsRemoteDataSource(dataSource: UserDetailsRemoteDataSourceImpl): UserDetailsRemoteDataSource
 
     @DashboardActivityScope
-    @Provides
+    @Binds
     abstract fun bindUserDetailsRepository(userDetailsRepository: UserDetailRepositoryImpl): UserDetailRepository
-
-    @DashboardActivityScope
-    @Provides
-    fun provideGetUserDetailsUseCase(userDetailsRepository: UserDetailRepository) =
-        GetUserDetailsUseCase(userDetailsRepository)
 }

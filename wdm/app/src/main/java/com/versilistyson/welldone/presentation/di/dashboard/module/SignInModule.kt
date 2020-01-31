@@ -8,6 +8,7 @@ import com.versilistyson.welldone.domain.framework.datasource.user.Authenticatio
 import com.versilistyson.welldone.domain.framework.repository.AuthenticationRepository
 import com.versilistyson.welldone.domain.framework.usecases.user.SignInUseCase
 import com.versilistyson.welldone.presentation.di.dashboard.DashboardActivityScope
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
@@ -15,19 +16,14 @@ import dagger.Provides
 abstract class SignInModule {
 
     @DashboardActivityScope
-    @Provides
+    @Binds
     abstract fun bindAuthenticationLocalDataSource(datasource: AuthenticationLocalDataSourceImpl): AuthenticationLocalDataSource
 
     @DashboardActivityScope
-    @Provides
+    @Binds
     abstract fun bindAuthenticationRemoteDataSource(datasource: AuthenticationRemoteDataSourceImpl): AuthenticationRemoteDataSource
 
     @DashboardActivityScope
-    @Provides
+    @Binds
     abstract fun bindAuthenticationRepository(repository: AuthenticationRepositoryImpl): AuthenticationRepository
-
-    @DashboardActivityScope
-    @Provides
-    fun provideSignInUseCase(repository: AuthenticationRepository): SignInUseCase =
-        SignInUseCase(repository)
 }

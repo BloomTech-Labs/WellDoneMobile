@@ -8,6 +8,7 @@ import com.versilistyson.welldone.domain.framework.datasource.log.LogRemoteDataS
 import com.versilistyson.welldone.domain.framework.repository.LogRepository
 import com.versilistyson.welldone.domain.framework.usecases.log.GetLogsUseCase
 import com.versilistyson.welldone.presentation.di.dashboard.DashboardActivityScope
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
@@ -15,21 +16,14 @@ import dagger.Provides
 abstract class LogsModule {
 
     @DashboardActivityScope
-    @Provides
+    @Binds
     abstract fun bindLogLocalDataSource(dataSource: LogLocalDataSourceImpl): LogLocalDataSource
 
     @DashboardActivityScope
-    @Provides
+    @Binds
     abstract fun bindLogRemoteDataSource(dataSource: LogRemoteDataSourceImpl): LogRemoteDataSource
 
     @DashboardActivityScope
-    @Provides
+    @Binds
     abstract fun bindLogRepository(logRepository: LogRepositoryImpl): LogRepository
-
-    @DashboardActivityScope
-    @Provides
-    fun provideLogUseCase(logRepository: LogRepository) =
-        GetLogsUseCase(
-            logRepository
-        )
 }

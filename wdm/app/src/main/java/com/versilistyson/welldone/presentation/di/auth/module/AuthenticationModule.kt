@@ -7,9 +7,10 @@ import dagger.Provides
 import retrofit2.Retrofit
 
 @Module
-abstract class AuthenticationModule {
+object AuthenticationModule {
 
     @AuthActivityScope
+    @JvmStatic
     @Provides
     fun provideAuthenticationApi(retrofit: Retrofit): UserAuthenticationApi =
         retrofit.create(UserAuthenticationApi::class.java)

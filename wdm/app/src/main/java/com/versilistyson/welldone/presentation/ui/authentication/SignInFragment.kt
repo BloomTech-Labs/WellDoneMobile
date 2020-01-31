@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDirections
 import com.versilistyson.welldone.R
+import com.versilistyson.welldone.presentation.di.viewmodel_util.ViewModelProviderFactory
 import com.versilistyson.welldone.presentation.viewmodel.AuthSharedViewModel
 import kotlinx.android.synthetic.main.fragment_sign_in_screen.*
 import javax.inject.Inject
@@ -18,12 +19,13 @@ import javax.inject.Inject
 class SignInFragment : Fragment() {
 
     private lateinit var action: NavDirections
-    /*@Inject*/ lateinit var authSharedViewModel: AuthSharedViewModel
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var authSharedViewModel: AuthSharedViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 //        (activity as AuthenticationActivity).authComponent.inject(this)
-        authSharedViewModel = ViewModelProvider(activity!!)[AuthSharedViewModel::class.java]
+        authSharedViewModel = viewModelFactory.create(AuthSharedViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

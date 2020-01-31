@@ -9,6 +9,7 @@ import com.versilistyson.welldone.domain.framework.repository.SensorRepository
 import com.versilistyson.welldone.domain.framework.usecases.sensor.GetCacheSensorStreamUseCase
 import com.versilistyson.welldone.domain.framework.usecases.sensor.GetFreshSensorStreamUseCase
 import com.versilistyson.welldone.presentation.di.dashboard.DashboardActivityScope
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,26 +21,14 @@ import kotlinx.coroutines.InternalCoroutinesApi
 abstract class SensorModule {
 
     @DashboardActivityScope
-    @Provides
+    @Binds
     abstract fun bindSensorLocalDataSource(dataSource: SensorLocalDataSourceImpl): SensorLocalDataSource
 
     @DashboardActivityScope
-    @Provides
+    @Binds
     abstract fun bindSensorRemoteDataSource(dataSourceImpl: SensorRemoteDataSourceImpl): SensorRemoteDataSource
 
     @DashboardActivityScope
-    @Provides
+    @Binds
     abstract fun bindSensorRepository(sensorRepositoryImpl: SensorRepositoryImpl): SensorRepository
-
-    @DashboardActivityScope
-    @Provides
-    fun provideFreshSensorUseCase(sensorRepository: SensorRepository): GetFreshSensorStreamUseCase {
-        return GetFreshSensorStreamUseCase(sensorRepository)
-    }
-
-    @DashboardActivityScope
-    @Provides
-    fun provideCacheSensorUseCase(sensorRepository: SensorRepository): GetCacheSensorStreamUseCase {
-        return GetCacheSensorStreamUseCase(sensorRepository)
-    }
 }

@@ -2,8 +2,6 @@ package com.versilistyson.welldone.presentation.di.app.module
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.versilistyson.welldone.data.api.user.UserAuthenticationApi
-import com.versilistyson.welldone.presentation.di.auth.AuthActivityScope
 import com.versilistyson.welldone.presentation.util.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -13,6 +11,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+@Module
 object AppModule {
 
     @Singleton
