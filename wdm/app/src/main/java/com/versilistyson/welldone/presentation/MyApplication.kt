@@ -6,37 +6,20 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Build
 import com.versilistyson.welldone.domain.util.Variables
+import com.versilistyson.welldone.presentation.di.app.component.DaggerAppComponent
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 class MyApplication: Application() {
 
-    private val appComponent by lazy {
-
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            try {
-                val connectivityManager =
-                    applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-                connectivityManager.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
-                    override fun onAvailable(network: Network?) {
-                        Variables.isNetworkConnected = true // Global Static Variable
-                    }
-
-                    override fun onLost(network: Network?) {
-                        Variables.isNetworkConnected = false // Global Static Variable
-                    }
-                }
-                )
-                Variables.isNetworkConnected = false
-            } catch (e: Exception) {
-                Variables.isNetworkConnected = false
-            }
-        }
+    val appComponent by lazy {
+        DaggerAppComponent
+            .builder()
+            .application(this)
+            .build()
     }
 }

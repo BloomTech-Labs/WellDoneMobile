@@ -10,8 +10,14 @@ import com.versilistyson.welldone.presentation.MyApplication
 import com.versilistyson.welldone.presentation.di.auth.component.AuthenticationComponent
 import com.versilistyson.welldone.presentation.viewmodel.AuthSharedViewModel
 import com.versilistyson.welldone.presentation.di.viewmodel_util.ViewModelProviderFactory
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.InternalCoroutinesApi
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
+@FlowPreview
+@InternalCoroutinesApi
 class AuthenticationActivity : AppCompatActivity() {
 
     private val host by lazy {
@@ -24,8 +30,8 @@ class AuthenticationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication)
 
-//        authenticationComponent = (applicationContext as MyApplication).appComponent.authComponent()
-//        authenticationComponent.inject(this)
+        authenticationComponent = (applicationContext as MyApplication).appComponent.authComponent()
+        authenticationComponent.inject(this)
 
         supportFragmentManager
             .beginTransaction()

@@ -14,8 +14,14 @@ import com.versilistyson.welldone.R
 import com.versilistyson.welldone.presentation.di.viewmodel_util.ViewModelProviderFactory
 import com.versilistyson.welldone.presentation.viewmodel.AuthSharedViewModel
 import kotlinx.android.synthetic.main.fragment_sign_in_screen.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.InternalCoroutinesApi
 import javax.inject.Inject
 
+@FlowPreview
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 class SignInFragment : Fragment() {
 
     private lateinit var action: NavDirections
@@ -24,7 +30,7 @@ class SignInFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-//        (activity as AuthenticationActivity).authComponent.inject(this)
+        (activity as AuthenticationActivity).authenticationComponent.inject(this)
         authSharedViewModel = viewModelFactory.create(AuthSharedViewModel::class.java)
     }
 
