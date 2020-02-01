@@ -113,7 +113,6 @@ dependencies {
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
-    implementation 'androidx.room:room-coroutines:2.1.0-alpha04'
     implementation "androidx.room:room-common:$roomVersion"
     //store
     implementation "com.dropbox.mobile.store:store4:$store_version"
