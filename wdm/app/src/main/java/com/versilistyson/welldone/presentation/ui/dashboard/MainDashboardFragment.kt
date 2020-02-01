@@ -23,6 +23,7 @@ import com.versilistyson.welldone.domain.common.Failure
 import com.versilistyson.welldone.domain.common.ResponseResult
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.presentation.adapter.SensorStatusListAdapter
+import com.versilistyson.welldone.presentation.ui.authentication.AuthenticationActivity
 import com.versilistyson.welldone.presentation.ui.dashboard.detail.PumpDialogDetailFragment
 import com.versilistyson.welldone.presentation.util.MAPVIEW_BUNDLE_KEY
 import com.versilistyson.welldone.presentation.viewmodel.MainDashboardViewModel
@@ -33,6 +34,8 @@ import kotlinx.android.synthetic.main.fragment_main_dashboard.map_view
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SensorStatusListAdapter.DashboardToDetailsDialog {
 
@@ -202,6 +205,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
     private fun initViewModel(){
+        (activity as DashboardActivity).dashboardComponent.inject(this)
         mapSharedViewmodel = viewModelFactory.create(MapSharedViewModel::class.java)
         mainDashboardViewModel = viewModelFactory.create(MainDashboardViewModel::class.java)
     }
