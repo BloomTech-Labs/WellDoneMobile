@@ -28,5 +28,13 @@ abstract class UseCase<out Type, in Params> where Type: Any {
         }
     }
 
+    open suspend operator fun invoke(
+        scope: CoroutineScope,
+        params: Params
+    ) : Either<Failure, Type> {
+        val backgroundJob = scope.async { run(params) }
+        return backgroundJob.await()
+    }
+
     class None
 }

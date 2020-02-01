@@ -4,7 +4,7 @@ import com.versilistyson.welldone.domain.common.Either
 import com.versilistyson.welldone.domain.common.Failure
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.UserDetailRepository
-import com.versilistyson.welldone.domain.framework.usecases.UseCase
+import com.versilistyson.welldone.domain.framework.usecases.common.UseCase
 import kotlinx.coroutines.CoroutineScope
 
 class GetUserDetailsUseCase(userDetailsRepository: UserDetailRepository): UseCase<Failure, Entity.UserDetails>() {
