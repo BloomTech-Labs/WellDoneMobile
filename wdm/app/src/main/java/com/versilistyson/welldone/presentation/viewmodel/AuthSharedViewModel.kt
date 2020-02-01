@@ -9,17 +9,15 @@ import com.versilistyson.welldone.domain.common.Failure
 import com.versilistyson.welldone.domain.common.ResponseResult
 import com.versilistyson.welldone.domain.common.Result
 import com.versilistyson.welldone.domain.framework.entity.Entity
-import com.versilistyson.welldone.domain.framework.usecases.user.SaveUserIdUseCase
 import com.versilistyson.welldone.domain.framework.usecases.user.SaveUserTokenUseCase
 import com.versilistyson.welldone.domain.framework.usecases.user.SignInUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 //with a matching scope in the component, this will determine that the component does not exist outside the lifetime of the component
-
+//private val saveUserIdUseCase: SaveUserIdUseCase,
 class AuthSharedViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
-    private val saveUserIdUseCase: SaveUserIdUseCase,
     private val saveUserTokenUseCase: SaveUserTokenUseCase
 ) :
     ViewModel() {
@@ -30,9 +28,9 @@ class AuthSharedViewModel @Inject constructor(
     val signInResult: LiveData<Result>
         get() = _signInResult
 
-    fun storeUserId(userId: Long) = saveUserIdUseCase.invoke(viewModelScope, SaveUserIdUseCase.Params(userId)) { result ->
-        result.either(::onSaveAuthSharedPrefFailure, ::onSaveAuthSharedPrefSuccess)
-    }
+//    fun storeUserId(userId: Long) = saveUserIdUseCase.invoke(viewModelScope, SaveUserIdUseCase.Params(userId)) { result ->
+//        result.either(::onSaveAuthSharedPrefFailure, ::onSaveAuthSharedPrefSuccess)
+//    }
 
     fun storeUserToken(token: String) =
         saveUserTokenUseCase.invoke(viewModelScope, SaveUserTokenUseCase.Params(token)) { result ->

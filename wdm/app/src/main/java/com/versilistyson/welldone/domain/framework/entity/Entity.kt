@@ -5,7 +5,6 @@ import java.io.Serializable
 
 sealed class Entity {
     data class AuthenticationDetails(
-        val userId: Long,
         val token: String
     )
     data class UserDetails(

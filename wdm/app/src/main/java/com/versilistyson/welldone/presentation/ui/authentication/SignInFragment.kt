@@ -61,7 +61,7 @@ class SignInFragment : Fragment() {
                         signIn_progressBar.animate().start()
                     } else if(result is ResponseResult.Data<*>){
                         val resultData = result as ResponseResult.Data<Entity.AuthenticationDetails>
-                        authSharedViewModel.storeUserId(resultData.value.userId)
+//                        authSharedViewModel.storeUserId(resultData.value.userId)
                         authSharedViewModel.storeUserToken(resultData.value.token)
                         action = SignInFragmentDirections.actionSignInScreenToDashboardActivity()
                         findNavController().navigate(action)

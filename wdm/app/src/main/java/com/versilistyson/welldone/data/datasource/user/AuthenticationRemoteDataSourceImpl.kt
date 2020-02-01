@@ -8,6 +8,6 @@ import javax.inject.Inject
 class AuthenticationRemoteDataSourceImpl @Inject constructor(private val api: UserAuthenticationApi): AuthenticationRemoteDataSource {
 
     override suspend fun signIn(email: String, password: String): Response<UserAuthenticationApi.Dto.AuthenticationResponse> {
-        return api.login(email, password)
+        return api.login(UserAuthenticationApi.Dto.AuthenticationInfo(email, password))
     }
 }

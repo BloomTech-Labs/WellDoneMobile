@@ -8,7 +8,7 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
 interface AuthenticationRepository {
     suspend fun signIn(email: String, password: String) : RetrofitResult<Entity.AuthenticationDetails>
     suspend fun storeToken(token: String): Boolean
-    suspend fun storeUserId(userId: Long): Boolean
-    fun getUserId(): Long
+//    suspend fun storeUserId(userId: Long): Boolean
+//    fun getUserId(): Long
     fun getUserToken(): String?
 }

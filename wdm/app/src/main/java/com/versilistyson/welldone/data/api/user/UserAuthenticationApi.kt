@@ -12,21 +12,23 @@ interface UserAuthenticationApi {
     @POST("/api/operators/login")
     suspend fun login(
         @Body
-        @Json(name = "email_address") email: String,
-        @Json(name = "password") password: String
+        authenticationInfo: Dto.AuthenticationInfo
     ): Response<Dto.AuthenticationResponse>
 
     sealed class Dto {
         data class AuthenticationResponse(
-            @Json(name = "token") val authToken: String,
-            @Json(name = "user_id") val userId: Long
+            @Json(name = "token") val authToken: String
         ) : Dto(), Mappable<Entity.AuthenticationDetails> {
             override fun map(): Entity.AuthenticationDetails {
                 return Entity.AuthenticationDetails(
-                    userId = userId,
                     token = authToken
                 )
             }
         }
+
+        data class AuthenticationInfo(
+            @Json(name = "email_address") val email: String,
+            @Json(name = "password") val password: String
+        ): Dto()
     }
 }

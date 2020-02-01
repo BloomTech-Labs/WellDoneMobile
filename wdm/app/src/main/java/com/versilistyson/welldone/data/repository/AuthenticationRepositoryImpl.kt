@@ -25,13 +25,13 @@ class AuthenticationRepositoryImpl @Inject constructor(
         return localDataSource.saveToken(token)
     }
 
-    override suspend fun storeUserId(userId: Long): Boolean {
-        return localDataSource.saveId(userId)
-    }
-
-    override fun getUserId(): Long {
-        return localDataSource.getUserId()
-    }
+//    override suspend fun storeUserId(userId: Long): Boolean {
+//        return localDataSource.saveId(userId)
+//    }
+//
+//    override fun getUserId(): Long {
+//        return localDataSource.getUserId()
+//    }
 
     override fun getUserToken(): String? {
         return localDataSource.getToken()
