@@ -1,18 +1,19 @@
 package com.versilistyson.welldone.domain.framework.entity
 
-import android.graphics.drawable.Drawable
 import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
 
 sealed class Entity {
-
+    data class AuthenticationDetails(
+        val token: String
+    )
     data class UserDetails(
-        val userId: Int,
+        val userId: Long,
         val firstName: String,
         val lastName: String,
-        val email: String = "",
-        val phone: String = ""
-    ) : Entity()
+        val emailAddress: String?,
+        val phoneNumber: String?
+    ): Entity()
 
     data class Sensor(
         val sensorId: Int,
@@ -43,14 +44,15 @@ sealed class Entity {
         )
     }
 
-    data class Log(
+    data class LogDetails(
         val logId: Long,
         val sensorId: Long,
         val dateFiled: String,
         val lastModified: String,
-        val status: Drawable,
+        val status: Int?,
         val comment: String,
-        val operatorId: Long
+        val operatorId: Long,
+        val logImages: List<String>?
     ) : Entity(), Serializable
 
     data class Sensors(

@@ -9,7 +9,7 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
 @androidx.room.Entity(
     tableName = "sensor_table"
 )
-class SensorData(
+data class SensorData(
     @ColumnInfo(name = "sensor_id") @PrimaryKey(autoGenerate = false) val sensorId: Int,
     @ColumnInfo(name = "status") val sensorStatus: Int?,
     @ColumnInfo(name = "last_upload_date") val lastUploadDate: String,

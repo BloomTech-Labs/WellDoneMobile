@@ -1,26 +1,81 @@
 package com.versilistyson.welldone.data.repository
 
-import com.versilistyson.welldone.data.api.SensorApi
-import com.versilistyson.welldone.data.db.sensor.SensorDao
+import android.content.EntityIterator
+import android.hardware.Sensor
+import com.dropbox.android.external.store4.*
+import com.versilistyson.welldone.data.db.WellDoneDatabase
+import com.versilistyson.welldone.data.util.StoreKey
 import com.versilistyson.welldone.data.db.sensor.SensorData
-import com.versilistyson.welldone.domain.common.Result
+import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorLocalDataSource
+import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorRemoteDataSource
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.repository.SensorRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class SensorRepositoryImpl(private val sensorApi: SensorApi,
-                           private val sensorDao: SensorDao): SensorRepository, BaseRepository<SensorApi.Dto.SensorRecentResponse,
-                                                              SensorData, Entity.Sensor>() {
+@ExperimentalCoroutinesApi
+@FlowPreview
+class SensorRepositoryImpl @Inject constructor(
+    private val localDataSource: SensorLocalDataSource,
+    private val remoteDataSource: SensorRemoteDataSource
+) : SensorRepository {
 
-    //need to map all the DTO objects to entity objects and then return results
-    override suspend fun fetchAllSensorsRemotely(): Result<List<SensorData>> =
-        fetchNetworkObjects(sensorApi::getSensors)
+    val store =
+        StoreBuilder
+            .fromNonFlow<StoreKey.SensorsKey, List<SensorData>> {
+                val sensors = mutableListOf<SensorData>()
+                remoteDataSource.getSensors().body()?.forEach {
+                    sensors.add(it.map())
+                }
+                sensors
+            }
+            .persister(
+                reader = localDataSource::getSensors,
+                writer = localDataSource::saveSensors
+            ).cachePolicy(
+                MemoryPolicy.builder()
+                    .setMemorySize(100)
+                    .setExpireAfterAccess(8)
+                    .setExpireAfterTimeUnit(TimeUnit.DAYS)
+                    .build()
+            ).build()
 
-    override suspend fun saveAllSensorsLocally(sensors: List<SensorData>): Result<List<Entity.Sensor>> =
-        saveLocalObjects(sensors, sensorDao::saveAll)
+    private fun createSensorStream(storeRequest: StoreRequest<StoreKey.SensorsKey>): Flow<StoreResponse<List<Entity.Sensor>>> {
+        return store.stream(storeRequest).map { storeResponse ->
+            when (storeResponse) {
+                is StoreResponse.Loading -> {
+                    StoreResponse.Loading(storeResponse.origin)
+                }
+                is StoreResponse.Data -> {
+                    val mappedSensorList = mutableListOf<Entity.Sensor>()
+                    storeResponse.value.forEach { sensorData ->
+                        mappedSensorList.add(sensorData.map())
+                    }
+                    StoreResponse.Data<List<Entity.Sensor>>(
+                        mappedSensorList,
+                        storeResponse.origin
+                    )
+                }
+                is StoreResponse.Error -> {
+                    StoreResponse.Error<List<Entity.Sensor>>(
+                        storeResponse.error,
+                        storeResponse.origin
+                    )
+                }
+            }
+        }
+    }
 
-    override suspend fun fetchAllSensorsLocally(): Result<List<Entity.Sensor>> =
-        fetchLocalObjects(sensorDao::getAll)
+    //fetches fresh sensors, returns an error if it fails to load the data from the network
+    override fun freshSensorStream(): Flow<StoreResponse<List<Entity.Sensor>>> =
+        createSensorStream(StoreRequest.fresh(StoreKey.SensorsKey()))
 
-    override suspend fun fetchSensorLocally(sensorId: Long): Result<Entity.Sensor> =
-        fetchLocalObject(sensorId, sensorDao::getSensorBySensorId)
+    override fun cacheSensorStream(): Flow<StoreResponse<List<Entity.Sensor>>> =
+        createSensorStream(StoreRequest.cached(StoreKey.SensorsKey(), true))
+
+    suspend fun singleFreshFetch(): List<SensorData> = store.fresh(StoreKey.SensorsKey())
 }

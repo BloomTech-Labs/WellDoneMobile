@@ -4,25 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.presentation.adapter.OperatorLogAdapter
 import com.versilistyson.welldone.domain.framework.entity.Entity
-import com.versilistyson.welldone.presentation.viewmodel.PumpDialogViewModel
-import kotlinx.android.synthetic.main.fragment_dialog_pump_detail.*
+import com.versilistyson.welldone.presentation.viewmodel.SensorDialogViewModel
+import kotlinx.android.synthetic.main.fragment_dialog_sensor_detail.*
 
 class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickReceived {
 
-    private lateinit var viewModel: PumpDialogViewModel
+    private lateinit var viewModel: SensorDialogViewModel
     private lateinit var sensor: Entity.Sensor
     private lateinit var logAdapter: OperatorLogAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dialog_pump_detail, container, false)
+        return inflater.inflate(R.layout.fragment_dialog_sensor_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,24 +32,24 @@ class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickRe
             dismiss()
         }
         bindSensor()
-        viewModel.listOfLogs.add(
-            Entity.Log(
-                "13/05/2018", "13/06/2019",
-                ContextCompat.getDrawable(context!!, R.drawable.pump_non_functioning)!!, "HIMAN"
-            )
-        )
-        viewModel.listOfLogs.add(
-            Entity.Log(
-                "14/05/2020",
-                "15/06/2020",
-                ContextCompat.getDrawable(context!!, R.drawable.pump_no_data)!!,
-                "The pump was not working and it needed repairs"
-            )
-        )
+//        viewModel.listOfLogs.add(
+//            Entity.Log(
+//                "13/05/2018", "13/06/2019",
+//                ContextCompat.getDrawable(context!!, R.drawable.pump_non_functioning)!!, "HIMAN"
+//            )
+//        )
+//        viewModel.listOfLogs.add(
+//            Entity.Log(
+//                "14/05/2020",
+//                "15/06/2020",
+//                ContextCompat.getDrawable(context!!, R.drawable.pump_no_data)!!,
+//                "The pump was not working and it needed repairs"
+//            )
+//        )
         initRecyclerView()
     }
 
-    override fun onLogClicked(log: Entity.Log) {
+    override fun onLogClicked(log: Entity.LogDetails) {
         //start alert dialog for log that shows when a log on the list is clicked
         val logDialogFragment =
             LogDialogFragment()
@@ -67,7 +66,7 @@ class PumpDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickRe
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProviders.of(this).get(PumpDialogViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(SensorDialogViewModel::class.java)
     }
 
     private fun initRecyclerView() {

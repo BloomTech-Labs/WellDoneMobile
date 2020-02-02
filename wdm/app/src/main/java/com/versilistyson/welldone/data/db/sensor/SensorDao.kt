@@ -1,22 +1,23 @@
 package com.versilistyson.welldone.data.db.sensor
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.versilistyson.welldone.domain.framework.entity.Entity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SensorDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveAll(sensors: List<SensorData>): List<SensorData>
+    suspend fun saveAll(sensors: List<SensorData>)
+
+//    @Delete
+//    fun deleteAll(key: StoreKey.SensorsKey)
 
     @Query("SELECT * FROM sensor_table")
-    suspend fun getAll() : List<SensorData>
+    fun getAll() : Flow<List<SensorData>>
 
-    @Query("SELECT * FROM sensor_table WHERE sensor_id = :sensorId")
-    suspend fun getSensorBySensorId(sensorId: Long) : SensorData
-
+//    @Query("SELECT * FROM sensor_table WHERE sensor_id = :sensorId")
+//    fun getSensorBySensorId(key: StoreKey.SensorsKey, sensorId: Long) : Flow<SensorData>
 }

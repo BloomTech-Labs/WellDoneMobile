@@ -1,12 +1,13 @@
 package com.versilistyson.welldone.domain.framework.repository
 
+import com.dropbox.android.external.store4.Store
+import com.dropbox.android.external.store4.StoreResponse
 import com.versilistyson.welldone.data.db.sensor.SensorData
-import com.versilistyson.welldone.domain.common.Result
 import com.versilistyson.welldone.domain.framework.entity.Entity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 
 interface SensorRepository {
-    suspend fun fetchAllSensorsRemotely(): Result<List<SensorData>>
-    suspend fun saveAllSensorsLocally(sensors: List<SensorData>): Result<List<Entity.Sensor>>
-    suspend fun fetchAllSensorsLocally(): Result<List<Entity.Sensor>>
-    suspend fun fetchSensorLocally(sensorId: Long): Result<Entity.Sensor>
+    fun freshSensorStream(): Flow<StoreResponse<List<Entity.Sensor>>>
+    fun cacheSensorStream(): Flow<StoreResponse<List<Entity.Sensor>>>
 }
