@@ -42,5 +42,6 @@
     <string name="comment">Comment</string>
     <string name="pictures">Pictures</string>
     <string name="pump_id_dialog">Pump #%1$d</string>
-    <string name="well_depth_dialog">%1$d feet</string>
+    <string name="well_depth_dialog"> feet</string>
+    <string name="add_log">Add Log</string>
 </resources>

@@ -14,12 +14,12 @@
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/pump_detail_toolbar"
-            android:background="@color/color_dashboard_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="72dp">
+            android:layout_height="72dp"
+            android:background="@color/color_dashboard_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
@@ -27,9 +27,9 @@
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar_pump_details"
-                    app:logo="@drawable/well_done_logo_small"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:logo="@drawable/well_done_logo_small"
                     app:navigationIcon="@drawable/ic_arrow_back_white_24dp" />
 
             </com.google.android.material.appbar.AppBarLayout>
@@ -165,6 +165,19 @@
             android:text="@string/logs"
             app:layout_constraintStart_toStartOf="@id/tv_commune_value"
             app:layout_constraintTop_toBottomOf="@+id/pump_detail_toolbar" />
+
+        <Button
+            android:id="@+id/btn_add_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="46dp"
+            android:text="@string/add_log"
+            app:layout_constraintBottom_toTopOf="@+id/logs_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.861"
+            app:layout_constraintStart_toEndOf="@id/tv_logs_title"
+            app:layout_constraintTop_toBottomOf="@+id/pump_detail_toolbar"
+            app:layout_constraintVertical_bias="1.0" />
 
         <LinearLayout
             android:id="@+id/logs_header"

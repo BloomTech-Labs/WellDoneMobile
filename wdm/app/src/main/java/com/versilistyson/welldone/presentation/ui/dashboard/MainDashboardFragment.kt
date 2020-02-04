@@ -24,7 +24,7 @@ import com.versilistyson.welldone.domain.common.Failure
 import com.versilistyson.welldone.domain.common.ResponseResult
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.presentation.adapter.SensorStatusListAdapter
-import com.versilistyson.welldone.presentation.ui.dashboard.detail.PumpDialogDetailFragment
+import com.versilistyson.welldone.presentation.ui.dashboard.detail.SensorDialogDetailFragment
 import com.versilistyson.welldone.presentation.util.MAPVIEW_BUNDLE_KEY
 import com.versilistyson.welldone.presentation.viewmodel.MainDashboardViewModel
 import com.versilistyson.welldone.presentation.viewmodel.MapSharedViewModel
@@ -71,7 +71,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
                     //returns loading or an actual data value
                     when(value.right){
                         is ResponseResult.Loading -> {
-
+                            
                         }
                         is ResponseResult.Data -> {
                             if(value.right.value.allSensors.isNotEmpty()) {
@@ -164,18 +164,18 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
     override fun moveToDialog(sensor: Entity.Sensor) {
-        val pumpDialogDetailFragment =
-            PumpDialogDetailFragment()
+        val sensorDialogDetailFragment =
+            SensorDialogDetailFragment()
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         val prev = activity!!.supportFragmentManager.findFragmentByTag("dialog")
         if(prev != null){
             fragmentTransaction.remove(prev)
         }
         fragmentTransaction.addToBackStack(null)
-        pumpDialogDetailFragment.arguments  = Bundle().apply {
+        sensorDialogDetailFragment.arguments  = Bundle().apply {
             putSerializable("sensor", sensor)
         }
-        pumpDialogDetailFragment.show(fragmentTransaction, "dialog")
+        sensorDialogDetailFragment.show(fragmentTransaction, "dialog")
     }
 
     private fun initViewModel(){
