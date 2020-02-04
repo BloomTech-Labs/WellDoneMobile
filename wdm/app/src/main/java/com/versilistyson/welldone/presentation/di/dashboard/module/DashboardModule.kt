@@ -1,14 +1,11 @@
 package com.versilistyson.welldone.presentation.di.dashboard.module
 
-import android.app.Application
-import android.content.Context
 import com.versilistyson.welldone.data.api.log.LogApi
 import com.versilistyson.welldone.data.api.sensor.SensorApi
 import com.versilistyson.welldone.data.api.user.UserDetailsApi
 import com.versilistyson.welldone.data.db.WellDoneDatabase
 import com.versilistyson.welldone.data.db.log.LogDao
 import com.versilistyson.welldone.data.db.user.UserDetailsDao
-import com.versilistyson.welldone.data.util.SharedPreferenceKeys
 import com.versilistyson.welldone.domain.framework.repository.AuthenticationRepository
 import com.versilistyson.welldone.domain.framework.repository.LogRepository
 import com.versilistyson.welldone.domain.framework.repository.SensorRepository
@@ -22,33 +19,11 @@ import com.versilistyson.welldone.presentation.di.dashboard.DashboardActivitySco
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.InternalCoroutinesApi
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Response
 import retrofit2.Retrofit
 
 @InternalCoroutinesApi
 @Module
 class DashboardModule {
-
-    @DashboardActivityScope
-    @Provides
-    fun provideInterceptor(application: Application): Interceptor =
-        object: Interceptor{
-            override fun intercept(chain: Interceptor.Chain): Response {
-                val request = chain.request().newBuilder()
-                    .addHeader("Authorization", application.getSharedPreferences(
-                        SharedPreferenceKeys.Authentication.KEY, Context.MODE_PRIVATE).getString(
-                        SharedPreferenceKeys.Authentication.USER_TOKEN, null)!!)
-                    .build()
-                return chain.proceed(request)
-            }
-        }
-
-    @DashboardActivityScope
-    @Provides
-    fun provideOkHttpClient(okHttpClientBuilder: OkHttpClient.Builder, interceptor: Interceptor): OkHttpClient.Builder =
-        okHttpClientBuilder.addInterceptor(interceptor)
 
     @DashboardActivityScope
     @Provides

@@ -22,7 +22,6 @@ sealed class Entity {
         val districtName: String,
         val commune: String,
         val province: String,
-        val village: String,
         val wellDepth: Double,
         val location: LatLng,
         val padCounts: PadCounts,
