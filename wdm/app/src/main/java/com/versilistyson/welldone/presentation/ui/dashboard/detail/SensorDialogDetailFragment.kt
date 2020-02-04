@@ -14,6 +14,7 @@ import com.versilistyson.welldone.presentation.adapter.OperatorLogAdapter
 import com.versilistyson.welldone.presentation.ui.dashboard.DashboardActivity
 import com.versilistyson.welldone.presentation.viewmodel.SensorDialogViewModel
 import kotlinx.android.synthetic.main.fragment_dialog_sensor_detail.*
+import kotlinx.android.synthetic.main.fragment_main_dashboard.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -46,7 +47,8 @@ class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClick
 
         viewModel.listOfLogs.observe(viewLifecycleOwner, Observer {
             logAdapter = OperatorLogAdapter(it, this)
-            logAdapter.notifyDataSetChanged()
+            rv_logs.adapter = logAdapter
+            rv_logs.adapter?.notifyDataSetChanged()
         })
 
 
