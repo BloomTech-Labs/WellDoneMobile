@@ -20,10 +20,11 @@ import kotlinx.coroutines.InternalCoroutinesApi
 class LogDialogFragment: DialogFragment() {
 
     private lateinit var currentLog: Entity.LogDetails
+    private var currentLogPosition: Int? = null
     var listener: LogReceiver? = null
 
     interface LogReceiver {
-        fun receiveLog(log: Entity.LogDetails)
+        fun receiveLog(log: Entity.LogDetails, isAnUpdate: Boolean, position: Int = 0)
     }
 
     override fun getTheme(): Int {
@@ -39,6 +40,7 @@ class LogDialogFragment: DialogFragment() {
 
         arguments?.let{
             currentLog = it.getParcelable<Entity.LogDetails>("log")!!
+            currentLogPosition = it.getInt("position")
             bindView()
         }
 
@@ -57,7 +59,7 @@ class LogDialogFragment: DialogFragment() {
                 val log = Entity.LogDetails(0, "05/02/2020", "05/02/2020",
                     (it as SensorDialogDetailFragment).sensor.sensorStatus, et_comment.text.toString(), null)
 
-                it.receiveLog(log)
+                it.receiveLog(log, ::currentLog.isInitialized)
             }
             dismiss()
         }

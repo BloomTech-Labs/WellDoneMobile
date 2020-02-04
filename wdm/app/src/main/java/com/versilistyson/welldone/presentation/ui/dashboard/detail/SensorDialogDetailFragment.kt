@@ -48,7 +48,7 @@ class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClick
                 logAdapter = OperatorLogAdapter(viewModel.listOfLogs.value!!, this)
                 initRecyclerView()
             } else{
-                logAdapter.notifyItemInserted(0)
+                logAdapter.notifyDataSetChanged()
             }
         })
 
@@ -58,16 +58,20 @@ class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClick
         }
     }
 
-    override fun receiveLog(log: Entity.LogDetails) {
-        viewModel.addLog(log)
+    override fun receiveLog(log: Entity.LogDetails, isAnUpdate: Boolean, position: Int) {
+        if(isAnUpdate){
+            viewModel.updateLog(log, position)
+        } else {
+            viewModel.addLog(log)
+        }
     }
 
-    override fun onLogClicked(log: Entity.LogDetails) {
+    override fun onLogClicked(log: Entity.LogDetails, position: Int) {
         //start alert dialog for log that shows when a log on the list is clicked
-        moveToLogDialog(log)
+        moveToLogDialog(log, position)
     }
 
-    private fun moveToLogDialog(log: Entity.LogDetails? = null){
+    private fun moveToLogDialog(log: Entity.LogDetails? = null, position: Int? = null){
         val logDialogFragment = LogDialogFragment()
         logDialogFragment.listener = this
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
@@ -79,6 +83,9 @@ class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClick
         log?.let {
             val bundle = Bundle()
             bundle.putParcelable("log", it)
+            position?.let {
+                bundle.putInt("position", position)
+            }
             logDialogFragment.arguments = bundle
         }
         logDialogFragment.show(fragmentTransaction, "dialog2")
