@@ -53,9 +53,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/last_upload"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.298"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="35dp"
+            app:layout_constraintEnd_toEndOf="@id/tv_last_upload_date"
+            app:layout_constraintHorizontal_bias="0.112"
+            app:layout_constraintStart_toEndOf="@+id/tv_pump_id"
             app:layout_constraintTop_toBottomOf="@id/pump_detail_toolbar" />
 
         <TextView
@@ -63,10 +64,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="424dp"
             android:text="@string/october_13_2019"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/logs_header"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tv_last_upload"
             app:layout_constraintTop_toBottomOf="@id/tv_last_upload" />
 
         <TextView
@@ -160,10 +162,9 @@
             style="@style/HeaderTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="328dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:text="@string/logs"
-            app:layout_constraintStart_toStartOf="@id/tv_commune_value"
+            app:layout_constraintStart_toStartOf="@+id/logs_header"
             app:layout_constraintTop_toBottomOf="@+id/pump_detail_toolbar" />
 
         <Button
@@ -173,8 +174,8 @@
             android:layout_marginTop="46dp"
             android:text="@string/add_log"
             app:layout_constraintBottom_toTopOf="@+id/logs_header"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.861"
+            app:layout_constraintEnd_toEndOf="@+id/logs_header"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@id/tv_logs_title"
             app:layout_constraintTop_toBottomOf="@+id/pump_detail_toolbar"
             app:layout_constraintVertical_bias="1.0" />
@@ -188,7 +189,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.915"
+            app:layout_constraintHorizontal_bias="0.958"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_logs_title">
 
