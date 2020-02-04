@@ -164,8 +164,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
     override fun moveToDialog(sensor: Entity.Sensor) {
-        val sensorDialogDetailFragment =
-            SensorDialogDetailFragment()
+        val sensorDialogDetailFragment = SensorDialogDetailFragment()
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         val prev = activity!!.supportFragmentManager.findFragmentByTag("dialog")
         if(prev != null){
