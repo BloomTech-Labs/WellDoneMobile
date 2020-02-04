@@ -14,7 +14,7 @@ class LogDialogFragment: DialogFragment() {
     private lateinit var currentLog: Entity.LogDetails
 
     override fun getTheme(): Int {
-        return R.style.AlertScreenDialog
+        return R.style.FullScreenDialog
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
