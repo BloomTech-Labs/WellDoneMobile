@@ -25,26 +25,9 @@ sealed class Entity {
         val districtName: String,
         val commune: String,
         val province: String,
+        val village: String,
         val wellDepth: Double,
-        val location: LatLng,
-        val padCounts: @RawValue PadCounts,
-        val padSeconds: @RawValue PadSeconds
-    ): Entity(), Parcelable {
-
-        data class PadCounts (
-            val padCount0: Double?,
-            val padCount1: Double?,
-            val padCount2: Double?,
-            val padCount3: Double?
-        )
-
-        data class PadSeconds (
-            val padSeconds0: Double?,
-            val padSeconds1: Double?,
-            val padSeconds2: Double?,
-            val padSeconds3: Double?
-        )
-    }
+        val location: LatLng): Entity(), Parcelable
 
     @Parcelize
     data class LogDetails(
