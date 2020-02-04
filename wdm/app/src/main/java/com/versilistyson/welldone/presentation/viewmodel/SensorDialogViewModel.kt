@@ -35,9 +35,10 @@ class SensorDialogViewModel @Inject constructor() : ViewModel() {
         )
     }
 
+    //adds it to top of recycler view
     fun addLog(log: Entity.LogDetails){
         _listOfLogs.value?.let {
-            _listOfLogs.value = it.apply{ add(log) }
+            _listOfLogs.value = it.apply{ add(0, log) }
         }
     }
 }
