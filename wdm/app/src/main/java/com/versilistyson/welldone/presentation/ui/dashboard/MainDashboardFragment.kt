@@ -101,7 +101,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 6.0f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 8.0f))
 
         for(s in sensorStatusListAdapter.sensors){
             //add a marker to the map in the sensor
@@ -160,6 +160,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
             1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_no_data))
             2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning))
         }
+
         return marker
     }
 
