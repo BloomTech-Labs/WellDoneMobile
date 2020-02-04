@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/last_upload"
-            android:layout_marginStart="35dp"
+            android:layout_marginStart="28dp"
             app:layout_constraintEnd_toEndOf="@id/tv_last_upload_date"
             app:layout_constraintHorizontal_bias="0.112"
             app:layout_constraintStart_toEndOf="@+id/tv_pump_id"
