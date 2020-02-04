@@ -23,10 +23,10 @@ class SensorRepositoryImpl @Inject constructor(
 
     val store =
         StoreBuilder
-            .fromNonFlow<StoreKey.SensorsKey, List<SensorData>> {
+            .fromNonFlow<StoreKey.SensorsKey, List<SensorData>> {storekey ->
                 val sensors = mutableListOf<SensorData>()
                 val sensorSet = mutableSetOf<Int>()
-                remoteDataSource.getSensors().body()?.forEach {
+                remoteDataSource.getSensors(storekey).body()?.forEach {
                     if(!sensorSet.contains(it.sensorId)) { //issue in backend where it duplicates assigned sensors
                         sensors.add(it.map())
                     }
