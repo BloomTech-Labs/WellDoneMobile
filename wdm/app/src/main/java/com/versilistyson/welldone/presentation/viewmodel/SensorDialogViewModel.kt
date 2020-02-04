@@ -35,6 +35,8 @@ class SensorDialogViewModel @Inject constructor() : ViewModel() {
         get() = _listOfLogs
 
     fun addLog(log: Entity.LogDetails){
-        _listOfLogs.value?.add(log)
+        _listOfLogs.value?.let {
+            _listOfLogs.value = it.apply{ add(log) }
+        }
     }
 }
