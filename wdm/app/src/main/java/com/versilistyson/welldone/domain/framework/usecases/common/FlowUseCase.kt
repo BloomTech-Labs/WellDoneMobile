@@ -4,13 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.versilistyson.welldone.domain.common.Either
 import com.versilistyson.welldone.domain.common.Failure
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.withContext
 
 @InternalCoroutinesApi
 abstract class FlowUseCase<Type, in Params> where Type : Any {
-    abstract suspend fun run(params: Params): Flow<Either<Failure, Type>>
+    abstract suspend fun run(params: Params)
 
     /*
         Invoke basically launches run inside a coroutine. Usually we'd want this
@@ -20,11 +21,10 @@ abstract class FlowUseCase<Type, in Params> where Type : Any {
     open suspend operator fun invoke(
         coroutineScope: CoroutineScope,
         params: Params
-    ) : LiveData<Either<Failure, Type>> {
-       val liveDataEither = coroutineScope.async {
-           run(params).asLiveData(coroutineContext)
+    ) {
+        withContext(coroutineScope.coroutineContext) {
+            run(params)
         }
-        return liveDataEither.await()
     }
     class None
 }

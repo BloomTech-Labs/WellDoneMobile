@@ -13,13 +13,12 @@ interface SensorApi {
 
     sealed class Dto {
         data class SensorRecentResponse(
-            @Json(name = "pump_index") val sensorId: Int,
+            @Json(name = "sensor_id") val sensorId: Int,
             @Json(name = "status") val sensorStatus: Int?,
             @Json(name = "data_finished") val lastUploadDate: String,
             @Json(name = "district_name") val districtName: String,
             @Json(name = "commune_name") val commune: String,
             @Json(name = "province_name") val province: String,
-            @Json(name = "village_name") val village: String,
             @Json(name = "latitude") val latitude: Double,
             @Json(name = "longitude") val longitude: Double,
             @Json(name = "depth") val wellDepth: Double,
@@ -42,7 +41,6 @@ interface SensorApi {
                     districtName = districtName,
                     commune = commune,
                     province = province,
-                    village = village,
                     wellDepth = wellDepth,
                     latitude = latitude,
                     longitude = longitude,

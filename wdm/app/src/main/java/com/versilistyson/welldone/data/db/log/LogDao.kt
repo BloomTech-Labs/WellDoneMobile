@@ -1,18 +1,18 @@
 package com.versilistyson.welldone.data.db.log
 
-import androidx.room.Dao
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LogDao {
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveAll(logs: List<LogData>): Int
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveAll(logs: List<LogData>)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(log: LogData): Int
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun save(log: LogData)
+
+    @Query("SELECT * FROM log_table")
+    fun getLogs(): Flow<List<LogData>>
 
     @Query("SELECT * FROM log_table WHERE sensor_id = :sensorId")
     fun getAllLogsBySensorId(sensorId: Int) : Flow<List<LogData>>

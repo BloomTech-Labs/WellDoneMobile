@@ -1,13 +1,17 @@
 package com.versilistyson.welldone.presentation.di.app.module
 
 import android.app.Application
+import android.content.Context
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.versilistyson.welldone.data.util.SharedPreferenceKeys
 import com.versilistyson.welldone.presentation.util.BASE_URL
 import com.versilistyson.welldone.presentation.util.SharedPreference
 import dagger.Module
 import dagger.Provides
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
@@ -28,15 +32,32 @@ class AppModule {
             .add(KotlinJsonAdapterFactory())
             .build()
 
-    @Singleton
     @Provides
-    fun provideOkHttpClientBuilder(): OkHttpClient.Builder =
-        OkHttpClient.Builder()
+    fun provideOkHttpClientBuilder(application: Application): OkHttpClient.Builder {
+        val builder = OkHttpClient.Builder()
             .retryOnConnectionFailure(false)
             .readTimeout(10, TimeUnit.SECONDS)
             .connectTimeout(10, TimeUnit.SECONDS)
 
-    @Singleton
+        val token = application.getSharedPreferences(SharedPreferenceKeys.Authentication.KEY, Context.MODE_PRIVATE).getString(
+                SharedPreferenceKeys.Authentication.USER_TOKEN, null
+            )
+        if(token != null){
+            val interceptor = object: Interceptor {
+            override fun intercept(chain: Interceptor.Chain): Response {
+                val request = chain.request().newBuilder()
+                    .addHeader("Authorization", application.getSharedPreferences(
+                        SharedPreferenceKeys.Authentication.KEY, Context.MODE_PRIVATE).getString(
+                        SharedPreferenceKeys.Authentication.USER_TOKEN, null)!!)
+                    .build()
+                return chain.proceed(request)
+                }
+            }
+            builder.addInterceptor(interceptor)
+        }
+        return builder
+    }
+
     @Provides
     fun provideRetrofit(okHttpClientBuilder: OkHttpClient.Builder, moshi: Moshi): Retrofit =
         Retrofit.Builder()

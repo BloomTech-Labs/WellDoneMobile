@@ -1,13 +1,14 @@
 package com.versilistyson.welldone.data.datasource.log
 
 import com.versilistyson.welldone.data.api.log.LogApi
+import com.versilistyson.welldone.data.util.StoreKey
 import com.versilistyson.welldone.domain.framework.datasource.log.LogRemoteDataSource
 import retrofit2.Response
 import javax.inject.Inject
 
 class LogRemoteDataSourceImpl @Inject constructor(private val logApi: LogApi): LogRemoteDataSource {
 
-    override suspend fun fetchAllLogs() =
+    override suspend fun fetchAllLogs(storeKey: StoreKey.LogKey) =
         logApi.getAllLogs()
 
     override suspend fun postNewLog(newLog: LogApi.Dto.LogToPost): Response<Any> =
