@@ -4,7 +4,6 @@ import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
-import java.io.Serializable
 
 sealed class Entity {
     data class AuthenticationDetails(
@@ -47,6 +46,7 @@ sealed class Entity {
         )
     }
 
+    @Parcelize
     data class LogDetails(
         val logId: Long,
         val dateFiled: String,
@@ -54,7 +54,7 @@ sealed class Entity {
         val status: Int?,
         val comment: String,
         val logImages: List<String>?
-    ) : Entity(), Serializable
+    ) : Entity(), Parcelable
 
     data class Sensors(
         val allSensors: List<Sensor>,

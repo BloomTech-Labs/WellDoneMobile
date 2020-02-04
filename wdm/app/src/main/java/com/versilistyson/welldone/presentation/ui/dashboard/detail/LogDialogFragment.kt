@@ -24,7 +24,7 @@ class LogDialogFragment: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        currentLog = arguments!!.getSerializable("log") as Entity.LogDetails
+        currentLog = arguments!!.getParcelable<Entity.LogDetails>("log")!!
         bindView()
 
         img_pic_adder.setOnClickListener {
