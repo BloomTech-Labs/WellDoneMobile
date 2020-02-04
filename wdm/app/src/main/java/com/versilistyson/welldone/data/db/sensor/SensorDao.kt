@@ -1,15 +1,12 @@
 package com.versilistyson.welldone.data.db.sensor
 
-import androidx.room.Dao
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SensorDao {
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveAll(sensors: List<SensorData>)
 
 //    @Delete
