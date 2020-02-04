@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 
 @InternalCoroutinesApi
 abstract class FlowUseCase<Type, in Params> where Type : Any {
-    abstract suspend fun run(params: Params): Flow<Either<Failure, Type>>
+    abstract suspend fun run(params: Params)
 
     /*
         Invoke basically launches run inside a coroutine. Usually we'd want this
@@ -21,9 +21,9 @@ abstract class FlowUseCase<Type, in Params> where Type : Any {
     open suspend operator fun invoke(
         coroutineScope: CoroutineScope,
         params: Params
-    ) : LiveData<Either<Failure, Type>> {
-        return withContext(coroutineScope.coroutineContext) {
-            run(params).asLiveData(coroutineContext)
+    ) {
+        withContext(coroutineScope.coroutineContext) {
+            run(params)
         }
     }
     class None

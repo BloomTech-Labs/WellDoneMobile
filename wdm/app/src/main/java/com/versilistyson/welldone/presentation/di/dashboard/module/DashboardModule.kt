@@ -1,12 +1,14 @@
 package com.versilistyson.welldone.presentation.di.dashboard.module
 
+import android.app.Application
+import android.content.Context
 import com.versilistyson.welldone.data.api.log.LogApi
 import com.versilistyson.welldone.data.api.sensor.SensorApi
-import com.versilistyson.welldone.data.api.user.UserAuthenticationApi
 import com.versilistyson.welldone.data.api.user.UserDetailsApi
 import com.versilistyson.welldone.data.db.WellDoneDatabase
 import com.versilistyson.welldone.data.db.log.LogDao
 import com.versilistyson.welldone.data.db.user.UserDetailsDao
+import com.versilistyson.welldone.data.util.SharedPreferenceKeys
 import com.versilistyson.welldone.domain.framework.repository.AuthenticationRepository
 import com.versilistyson.welldone.domain.framework.repository.LogRepository
 import com.versilistyson.welldone.domain.framework.repository.SensorRepository
@@ -31,11 +33,13 @@ class DashboardModule {
 
     @DashboardActivityScope
     @Provides
-    fun provideInterceptor(token: String): Interceptor =
+    fun provideInterceptor(application: Application): Interceptor =
         object: Interceptor{
             override fun intercept(chain: Interceptor.Chain): Response {
                 val request = chain.request().newBuilder()
-                    .addHeader("Authorization", token)
+                    .addHeader("Authorization", application.getSharedPreferences(
+                        SharedPreferenceKeys.Authentication.KEY, Context.MODE_PRIVATE).getString(
+                        SharedPreferenceKeys.Authentication.USER_TOKEN, null)!!)
                     .build()
                 return chain.proceed(request)
             }

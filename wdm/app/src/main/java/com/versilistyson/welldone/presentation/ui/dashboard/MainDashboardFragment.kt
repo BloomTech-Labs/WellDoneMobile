@@ -74,7 +74,9 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
                         }
                         is ResponseResult.Data -> {
-                            mainDashboardViewModel.updateSensorLiveDataValue(value.right.value)
+                            if(value.right.value.allSensors.isNotEmpty()) {
+                                mainDashboardViewModel.updateSensorLiveDataValue(value.right.value)
+                            }
                         }
                     }
                 }
