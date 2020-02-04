@@ -132,16 +132,17 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
     @Suppress("PLUGIN_WARNING")
     private fun initRecyclerView() {
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+        //if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             rv_pump_status.apply {
                 adapter = sensorStatusListAdapter
-                layoutManager = LinearLayoutManager(
+                val mLayoutManager = LinearLayoutManager(
                     activity!!.applicationContext,
                     LinearLayoutManager.VERTICAL,
                     false
                 )
+                layoutManager = mLayoutManager
             }
-        }
+        //}
     }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
