@@ -1,6 +1,5 @@
 package com.versilistyson.welldone.presentation.ui.dashboard
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -71,7 +70,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
                     //returns loading or an actual data value
                     when(value.right){
                         is ResponseResult.Loading -> {
-                            
+
                         }
                         is ResponseResult.Data -> {
                             if(value.right.value.allSensors.isNotEmpty()) {
@@ -101,7 +100,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 8.0f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 6.0f))
 
         for(s in sensorStatusListAdapter.sensors){
             //add a marker to the map in the sensor
@@ -132,16 +131,17 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
     @Suppress("PLUGIN_WARNING")
     private fun initRecyclerView() {
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            rv_sensor_status.apply {
+        //if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            rv_pump_status.apply {
                 adapter = sensorStatusListAdapter
-                layoutManager = LinearLayoutManager(
+                val mLayoutManager = LinearLayoutManager(
                     activity!!.applicationContext,
                     LinearLayoutManager.VERTICAL,
                     false
                 )
+                layoutManager = mLayoutManager
             }
-        }
+        //}
     }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
@@ -160,12 +160,12 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
             1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_no_data))
             2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning))
         }
-
         return marker
     }
 
     override fun moveToDialog(sensor: Entity.Sensor) {
-        val sensorDialogDetailFragment = SensorDialogDetailFragment()
+        val sensorDialogDetailFragment =
+            SensorDialogDetailFragment()
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         val prev = activity!!.supportFragmentManager.findFragmentByTag("dialog")
         if(prev != null){

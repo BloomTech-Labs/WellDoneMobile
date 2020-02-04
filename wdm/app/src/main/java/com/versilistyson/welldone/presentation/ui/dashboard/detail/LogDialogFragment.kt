@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.presentation.util.showCancelOrNotDialog
@@ -44,9 +43,8 @@ class LogDialogFragment: DialogFragment() {
             bindView()
         }
 
-
         img_pic_adder.setOnClickListener {
-            //launches intent to start camera
+            //launches intent to open camera gallery
         }
 
         img_close_dialog.setOnClickListener {
