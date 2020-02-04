@@ -12,14 +12,14 @@ import kotlinx.android.synthetic.main.log_entry_layout.view.*
 class OperatorLogAdapter(private val logs: MutableList<Entity.LogDetails>, val listener: LogClickReceived? = null): RecyclerView.Adapter<OperatorLogAdapter.LogViewHolder>() {
 
     interface LogClickReceived {
-        fun onLogClicked(log: Entity.LogDetails)
+        fun onLogClicked(log: Entity.LogDetails, position: Int)
     }
 
     inner class LogViewHolder(val view: View): RecyclerView.ViewHolder(view){
 
-        fun viewClickListener(log: Entity.LogDetails){
+        fun viewClickListener(log: Entity.LogDetails, position: Int){
             view.setOnClickListener {
-                listener?.onLogClicked(log)
+                listener?.onLogClicked(log, position)
             }
         }
 
@@ -37,7 +37,7 @@ class OperatorLogAdapter(private val logs: MutableList<Entity.LogDetails>, val l
 
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
         val log = logs[position]
-        holder.viewClickListener(log)
+        holder.viewClickListener(log, position)
         holder.tvDateCreated.text = log.dateFiled
         holder.tvLastEdited.text = log.lastModified
         holder.imgStatus.setImageDrawable(

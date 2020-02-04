@@ -62,7 +62,7 @@ class SensorStatusListAdapter(val sensors: List<Entity.Sensor>, val listener: Da
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val sensor = sensors[position]
         holder.sensorId.text = "${sensor.sensorId}"
-//        holder.villageTitle.text = sensor.village
+        holder.villageTitle.text = sensor.village
         holder.communeTitle.text = sensor.commune
 
         when(sensor.sensorStatus){
