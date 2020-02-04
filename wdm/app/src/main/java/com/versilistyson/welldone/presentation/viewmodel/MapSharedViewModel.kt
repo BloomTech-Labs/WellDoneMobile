@@ -1,6 +1,10 @@
 package com.versilistyson.welldone.presentation.viewmodel
 
 import androidx.lifecycle.*
+import com.versilistyson.welldone.domain.common.Either
+import com.versilistyson.welldone.domain.common.Failure
+import com.versilistyson.welldone.domain.common.ResponseResult
+import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.domain.framework.usecases.common.FlowUseCase
 import com.versilistyson.welldone.domain.framework.usecases.sensor.GetCacheSensorStreamUseCase
 import com.versilistyson.welldone.domain.framework.usecases.sensor.GetFreshSensorStreamUseCase

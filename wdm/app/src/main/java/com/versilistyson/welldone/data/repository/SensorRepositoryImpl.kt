@@ -1,11 +1,8 @@
 package com.versilistyson.welldone.data.repository
 
-import android.content.EntityIterator
-import android.hardware.Sensor
 import com.dropbox.android.external.store4.*
-import com.versilistyson.welldone.data.db.WellDoneDatabase
-import com.versilistyson.welldone.data.util.StoreKey
 import com.versilistyson.welldone.data.db.sensor.SensorData
+import com.versilistyson.welldone.data.util.StoreKey
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorLocalDataSource
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorRemoteDataSource
 import com.versilistyson.welldone.domain.framework.entity.Entity
@@ -28,8 +25,12 @@ class SensorRepositoryImpl @Inject constructor(
         StoreBuilder
             .fromNonFlow<StoreKey.SensorsKey, List<SensorData>> {
                 val sensors = mutableListOf<SensorData>()
+                val sensorSet = mutableSetOf<Int>()
                 remoteDataSource.getSensors().body()?.forEach {
-                    sensors.add(it.map())
+                    if(!sensorSet.contains(it.sensorId)) { //issue in backend where it duplicates assigned sensors
+                        sensors.add(it.map())
+                    }
+                    sensorSet.add(it.sensorId)
                 }
                 sensors
             }
@@ -76,6 +77,4 @@ class SensorRepositoryImpl @Inject constructor(
 
     override fun cacheSensorStream(): Flow<StoreResponse<List<Entity.Sensor>>> =
         createSensorStream(StoreRequest.cached(StoreKey.SensorsKey(), true))
-
-    suspend fun singleFreshFetch(): List<SensorData> = store.fresh(StoreKey.SensorsKey())
 }

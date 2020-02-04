@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -23,15 +24,14 @@ import com.versilistyson.welldone.domain.common.Failure
 import com.versilistyson.welldone.domain.common.ResponseResult
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.presentation.adapter.SensorStatusListAdapter
-import com.versilistyson.welldone.presentation.ui.authentication.AuthenticationActivity
 import com.versilistyson.welldone.presentation.ui.dashboard.detail.PumpDialogDetailFragment
 import com.versilistyson.welldone.presentation.util.MAPVIEW_BUNDLE_KEY
 import com.versilistyson.welldone.presentation.viewmodel.MainDashboardViewModel
 import com.versilistyson.welldone.presentation.viewmodel.MapSharedViewModel
 import kotlinx.android.synthetic.main.fragment_main_dashboard.*
-import kotlinx.android.synthetic.main.fragment_main_dashboard.mapExpandButton
-import kotlinx.android.synthetic.main.fragment_main_dashboard.map_view
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.InternalCoroutinesApi
 import javax.inject.Inject
 
 @FlowPreview
@@ -57,8 +57,6 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
         initGoogleMap(savedInstanceState)
         return view
     }
-
-
 
     private fun initGoogleMap(savedInstanceState: Bundle?) {
         if(savedInstanceState != null){
@@ -117,32 +115,6 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
                 MainDashboardFragmentDirections.actionDashboardFragmentToFullScreenMapFragment()
             findNavController().navigate(action)
         }
-    }
-
-    private fun refreshMap(){
-        mapSharedViewmodel.fetchFreshSensors().observe(activity!!, Observer { value->
-            when(value){
-                is Either.Right -> {
-                    //returns loading or an actual data value
-                    when(value.right){
-                        is ResponseResult.Loading -> {
-
-                        }
-                        is ResponseResult.Data -> {
-                            mainDashboardViewModel.updateSensorLiveDataValue(value.right.value)
-                        }
-                    }
-                }
-                is Either.Left -> {
-                    when(value.left){
-                        is Failure.PersisterFailure -> {}
-                        is Failure.CacheFailure -> {}
-                        is Failure.ServerFailure -> {}
-                        is Failure.NetworkConnection -> {}
-                    }
-                }
-            }
-        })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

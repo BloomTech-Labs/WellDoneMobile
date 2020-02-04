@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.versilistyson.welldone.domain.common.Either
 import com.versilistyson.welldone.domain.common.Failure
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.withContext
 
 @InternalCoroutinesApi
 abstract class FlowUseCase<Type, in Params> where Type : Any {
@@ -21,10 +22,9 @@ abstract class FlowUseCase<Type, in Params> where Type : Any {
         coroutineScope: CoroutineScope,
         params: Params
     ) : LiveData<Either<Failure, Type>> {
-       val liveDataEither = coroutineScope.async {
-           run(params).asLiveData(coroutineContext)
+        return withContext(coroutineScope.coroutineContext) {
+            run(params).asLiveData(coroutineContext)
         }
-        return liveDataEither.await()
     }
     class None
 }
