@@ -28,7 +28,8 @@ class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClick
     @Inject lateinit var vmFactory: ViewModelProvider.Factory
     private lateinit var viewModel: SensorDialogViewModel
     private lateinit var sensor: Entity.Sensor
-    private var logAdapter = OperatorLogAdapter(mutableListOf(), this)
+    private var logList = mutableListOf<Entity.LogDetails>()
+    private var logAdapter = OperatorLogAdapter(logList, this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -37,7 +38,7 @@ class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClick
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sensor = arguments!!.getSerializable("sensor") as Entity.Sensor
+        sensor = arguments!!.getParcelable<Entity.Sensor>("sensor") as Entity.Sensor
         initViewModel()
         toolbar_pump_details.setNavigationOnClickListener{
             dismiss()
@@ -45,7 +46,7 @@ class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClick
         bindSensor()
 
         viewModel.listOfLogs.observe(viewLifecycleOwner, Observer {
-            logAdapter = OperatorLogAdapter(it, this)
+            logList = it
             logAdapter.notifyDataSetChanged()
         })
 

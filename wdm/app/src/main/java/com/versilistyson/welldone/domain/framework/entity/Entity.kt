@@ -1,6 +1,9 @@
 package com.versilistyson.welldone.domain.framework.entity
 
+import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 import java.io.Serializable
 
 sealed class Entity {
@@ -15,6 +18,7 @@ sealed class Entity {
         val phoneNumber: String?
     ): Entity()
 
+    @Parcelize
     data class Sensor(
         val sensorId: Int,
         val sensorStatus: Int?,
@@ -24,9 +28,9 @@ sealed class Entity {
         val province: String,
         val wellDepth: Double,
         val location: LatLng,
-        val padCounts: PadCounts,
-        val padSeconds: PadSeconds
-    ): Entity(), Serializable {
+        val padCounts: @RawValue PadCounts,
+        val padSeconds: @RawValue PadSeconds
+    ): Entity(), Parcelable {
 
         data class PadCounts (
             val padCount0: Double?,

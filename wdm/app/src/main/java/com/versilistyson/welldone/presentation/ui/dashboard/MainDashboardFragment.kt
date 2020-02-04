@@ -173,7 +173,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
         }
         fragmentTransaction.addToBackStack(null)
         sensorDialogDetailFragment.arguments  = Bundle().apply {
-            putSerializable("sensor", sensor)
+            putParcelable("sensor", sensor)
         }
         sensorDialogDetailFragment.show(fragmentTransaction, "dialog")
     }
