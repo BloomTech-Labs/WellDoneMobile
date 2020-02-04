@@ -14,7 +14,6 @@ import com.versilistyson.welldone.presentation.adapter.OperatorLogAdapter
 import com.versilistyson.welldone.presentation.ui.dashboard.DashboardActivity
 import com.versilistyson.welldone.presentation.viewmodel.SensorDialogViewModel
 import kotlinx.android.synthetic.main.fragment_dialog_sensor_detail.*
-import kotlinx.android.synthetic.main.fragment_main_dashboard.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -97,7 +96,7 @@ class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClick
     }
 
     private fun bindSensor() {
-        tv_pump_id.text = resources.getString(R.string.pump_id_dialog, sensor.sensorId)
+        tv_pump_id.text = resources.getString(R.string.sensor_id_dialog, sensor.sensorId)
         tv_last_upload_date.text = sensor.lastUploadDate
         tv_well_depth.text = String.format("%.1f", sensor.wellDepth) + " feet"
         tv_province.text = sensor.province
