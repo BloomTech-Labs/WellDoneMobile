@@ -3,7 +3,6 @@ package com.versilistyson.welldone.domain.framework.entity
 import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.RawValue
 
 sealed class Entity {
     data class AuthenticationDetails(

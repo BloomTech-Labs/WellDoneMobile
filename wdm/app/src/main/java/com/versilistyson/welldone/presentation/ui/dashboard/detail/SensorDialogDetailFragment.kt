@@ -22,11 +22,11 @@ import javax.inject.Inject
 @FlowPreview
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
-class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickReceived {
+class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClickReceived, LogDialogFragment.LogReceiver {
 
     @Inject lateinit var vmFactory: ViewModelProvider.Factory
     private lateinit var viewModel: SensorDialogViewModel
-    private lateinit var sensor: Entity.Sensor
+    lateinit var sensor: Entity.Sensor
     private lateinit var logAdapter: OperatorLogAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -54,31 +54,33 @@ class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClick
 
 
         btn_add_log.setOnClickListener {
-            viewModel.addLog(
-                Entity.LogDetails(
-                    7,
-                    "13/04/2019",
-                    "12/06/2019",
-                    null,
-                    "sensor had a loose valve.",
-                    listOf()
-                )
-            )
+            moveToLogDialog()
         }
+    }
+
+    override fun receiveLog(log: Entity.LogDetails) {
+        viewModel.addLog(log)
     }
 
     override fun onLogClicked(log: Entity.LogDetails) {
         //start alert dialog for log that shows when a log on the list is clicked
+        moveToLogDialog(log)
+    }
+
+    private fun moveToLogDialog(log: Entity.LogDetails? = null){
         val logDialogFragment = LogDialogFragment()
+        logDialogFragment.listener = this
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         val prev = activity!!.supportFragmentManager.findFragmentByTag("dialog2")
         if(prev != null){
             fragmentTransaction.remove(prev)
         }
         fragmentTransaction.addToBackStack(null)
-        val bundle = Bundle()
-        bundle.putParcelable("log", log)
-        logDialogFragment.arguments = bundle
+        log?.let {
+            val bundle = Bundle()
+            bundle.putParcelable("log", it)
+            logDialogFragment.arguments = bundle
+        }
         logDialogFragment.show(fragmentTransaction, "dialog2")
     }
 

@@ -44,4 +44,5 @@
     <string name="sensor_id_dialog">Sensor #%1$d</string>
     <string name="well_depth_dialog"> feet</string>
     <string name="add_log">Add Log</string>
+    <string name="save">Save</string>
 </resources>
