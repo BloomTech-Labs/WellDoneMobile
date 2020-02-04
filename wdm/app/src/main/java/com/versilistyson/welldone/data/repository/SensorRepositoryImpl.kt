@@ -26,7 +26,7 @@ class SensorRepositoryImpl @Inject constructor(
 
     private val store =
         StoreBuilder
-            .fromNonFlow<StoreKey.SensorsKey, List<SensorData>> {
+            .fromNonFlow<StoreKey.SensorsKey, List<SensorData>> { key ->
                 val sensors = mutableListOf<SensorData>()
                 remoteDataSource.getSensors().body()?.forEach {
                     sensors.add(it.map())
