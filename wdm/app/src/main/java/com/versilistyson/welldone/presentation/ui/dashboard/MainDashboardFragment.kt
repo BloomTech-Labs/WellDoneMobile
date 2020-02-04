@@ -91,7 +91,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
             }
         })
 
-        mainDashboardViewModel.sensorsLiveData.observe(this, Observer{
+        mainDashboardViewModel.sensorsLiveData.observe(viewLifecycleOwner, Observer{
             sensorStatusListAdapter = SensorStatusListAdapter(it.allSensors, this)
             initRecyclerView()
             averageLatLng = it.avgLatLng
