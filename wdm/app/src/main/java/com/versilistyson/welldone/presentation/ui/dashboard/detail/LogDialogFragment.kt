@@ -67,13 +67,18 @@ class LogDialogFragment: DialogFragment() {
             //saves or updates log
             listener?.let{
                 var uriImage: Uri? = null
+                var logImage: Entity.LogImage? = null
                 if(img_chosen.visibility == View.VISIBLE){
                     uriImage = imageUri
+                    logImage = Entity.LogImage(
+                        0,
+                        et_caption_text.text.toString(),
+                        uriImage
+                    )
                 }
                 //posting this image to this specific log id
                 val log = Entity.LogDetails(0, "05/02/2020", "05/02/2020",
-                    (it as SensorDialogDetailFragment).sensor.sensorStatus, et_comment.text.toString(), Entity.LogImage(
-                        0, et_caption_text.text.toString(), uriImage))
+                    (it as SensorDialogDetailFragment).sensor.sensorStatus, et_comment.text.toString(), logImage)
 
                 it.receiveLog(log, ::currentLog.isInitialized)
             }

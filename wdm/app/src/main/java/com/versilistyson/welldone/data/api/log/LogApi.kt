@@ -30,7 +30,6 @@ interface LogApi {
             @Json(name = "last_modified") val lastModified: String,
             @Json(name = "status") val status: Int,
             @Json(name = "comment") val comment: String,
-            @Json(name = "picture_details") val images: List<LogImageApi.LogImage>,
             @Json(name = "operator_id") val operatorId: Long
         ): Mappable<LogData>, Dto() {
             override fun map(): LogData =
