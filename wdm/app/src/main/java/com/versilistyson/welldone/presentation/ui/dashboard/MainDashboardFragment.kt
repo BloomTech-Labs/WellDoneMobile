@@ -1,6 +1,5 @@
 package com.versilistyson.welldone.presentation.ui.dashboard
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -24,7 +25,7 @@ import com.versilistyson.welldone.domain.common.Failure
 import com.versilistyson.welldone.domain.common.ResponseResult
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.presentation.adapter.SensorStatusListAdapter
-import com.versilistyson.welldone.presentation.ui.dashboard.detail.PumpDialogDetailFragment
+import com.versilistyson.welldone.presentation.ui.dashboard.detail.SensorDialogDetailFragment
 import com.versilistyson.welldone.presentation.util.MAPVIEW_BUNDLE_KEY
 import com.versilistyson.welldone.presentation.viewmodel.MainDashboardViewModel
 import com.versilistyson.welldone.presentation.viewmodel.MapSharedViewModel
@@ -101,12 +102,13 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 6.0f))
-
-        for(s in sensorStatusListAdapter.sensors){
-            //add a marker to the map in the sensor
-            mMap.addMarker(generateMarker(s))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 8.0f))
+        sensorStatusListAdapter.sensors.forEach { sensor ->
+            val marker = mMap.addMarker(generateMarker(sensor))
+            marker.tag = sensor.sensorId
+            marker
         }
+        mMap.setOnMarkerClickListener(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -132,21 +134,31 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
     @Suppress("PLUGIN_WARNING")
     private fun initRecyclerView() {
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+        //if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             rv_pump_status.apply {
                 adapter = sensorStatusListAdapter
-                layoutManager = LinearLayoutManager(
+                val mLayoutManager = LinearLayoutManager(
                     activity!!.applicationContext,
                     LinearLayoutManager.VERTICAL,
                     false
                 )
+                layoutManager = mLayoutManager
             }
-        }
+        //}
     }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
         marker?.let{
-            return true
+            val sensorTag = it.tag as Int
+            val sensors = sensorStatusListAdapter.sensors
+            sensors.forEach { sensor ->
+                if(sensor.sensorId == sensorTag ) {
+                    val sensorPosition = sensors.indexOf(sensor)
+                    val smoothScroller = LinearSmoothScroller(context)
+                    smoothScroller.targetPosition = sensorPosition
+                    rv_pump_status.layoutManager?.startSmoothScroll(smoothScroller)
+                }
+            }
         }
         return false
     }
@@ -156,26 +168,26 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
             .position(sensor.location)
 
         when(sensor.sensorStatus){
-            null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_functioning))
+            null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning))
             1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_no_data))
-            2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning))
+            2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_functioning))
         }
         return marker
     }
 
     override fun moveToDialog(sensor: Entity.Sensor) {
-        val pumpDialogDetailFragment =
-            PumpDialogDetailFragment()
+        val sensorDialogDetailFragment =
+            SensorDialogDetailFragment()
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         val prev = activity!!.supportFragmentManager.findFragmentByTag("dialog")
         if(prev != null){
             fragmentTransaction.remove(prev)
         }
         fragmentTransaction.addToBackStack(null)
-        pumpDialogDetailFragment.arguments  = Bundle().apply {
-            putSerializable("sensor", sensor)
+        sensorDialogDetailFragment.arguments  = Bundle().apply {
+            putParcelable("sensor", sensor)
         }
-        pumpDialogDetailFragment.show(fragmentTransaction, "dialog")
+        sensorDialogDetailFragment.show(fragmentTransaction, "dialog")
     }
 
     private fun initViewModel(){

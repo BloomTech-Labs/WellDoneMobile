@@ -44,8 +44,8 @@ class GetCacheSensorStreamUseCase(
                         val newSensorEntity = Entity.Sensors(
                             sensorList,
                             LatLng(
-                                latitude / (sensorList.size + 1),
-                                longitude / (sensorList.size + 1)
+                                latitude / sensorList.size,
+                                longitude / sensorList.size
                             )
                         )
                         _sensorLiveData.value = Either.Right(

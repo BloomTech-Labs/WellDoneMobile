@@ -32,12 +32,10 @@ data class LogData(
     override fun map() =
         Entity.LogDetails(
             logId = logId,
-            sensorId = sensorId,
             dateFiled = dateFiled,
             lastModified = lastModified,
             status = status,
             comment = comment,
-            operatorId = operatorId,
             logImages = null //this will be added after we retrieve the images from store
         )
 }

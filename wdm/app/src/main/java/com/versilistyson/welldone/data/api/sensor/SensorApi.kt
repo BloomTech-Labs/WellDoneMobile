@@ -17,19 +17,12 @@ interface SensorApi {
             @Json(name = "status") val sensorStatus: Int?,
             @Json(name = "data_finished") val lastUploadDate: String,
             @Json(name = "district_name") val districtName: String,
+            @Json(name = "country_name") val villageName: String,
             @Json(name = "commune_name") val commune: String,
             @Json(name = "province_name") val province: String,
             @Json(name = "latitude") val latitude: Double,
             @Json(name = "longitude") val longitude: Double,
-            @Json(name = "depth") val wellDepth: Double,
-            @Json(name = "pad_count_0") val padCount0: Double?,
-            @Json(name = "pad_count_1") val padCount1: Double?,
-            @Json(name = "pad_count_2") val padCount2: Double?,
-            @Json(name = "pad_count_3") val padCount3: Double?,
-            @Json(name = "pad_seconds_0") val padSeconds0: Double?,
-            @Json(name = "pad_seconds_1") val padSeconds1: Double?,
-            @Json(name = "pad_seconds_2") val padSeconds2: Double?,
-            @Json(name = "pad_seconds_3") val padSeconds3: Double?
+            @Json(name = "depth") val wellDepth: Double
 
         ) : Dto(), Mappable<SensorData> {
 
@@ -39,19 +32,12 @@ interface SensorApi {
                     sensorStatus = sensorStatus,
                     lastUploadDate = lastUploadDate,
                     districtName = districtName,
-                    commune = commune,
+                    villageName = villageName,
                     province = province,
+                    commune = commune,
                     wellDepth = wellDepth,
                     latitude = latitude,
-                    longitude = longitude,
-                    padCount0 = padCount0,
-                    padCount1 = padCount1,
-                    padCount2 = padCount2,
-                    padCount3 = padCount3,
-                    padSeconds0 = padSeconds0,
-                    padSeconds1 = padSeconds1,
-                    padSeconds2 = padSeconds2,
-                    padSeconds3 = padSeconds3
+                    longitude = longitude
                 )
         }
     }

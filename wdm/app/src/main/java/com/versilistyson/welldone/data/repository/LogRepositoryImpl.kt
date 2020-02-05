@@ -1,7 +1,6 @@
 package com.versilistyson.welldone.data.repository
 
-import com.dropbox.android.external.store4.MemoryPolicy
-import com.dropbox.android.external.store4.StoreBuilder
+import com.dropbox.android.external.store4.*
 import com.versilistyson.welldone.data.db.log.LogData
 import com.versilistyson.welldone.data.util.StoreKey
 import com.versilistyson.welldone.domain.framework.datasource.log.LogRemoteDataSource
@@ -37,14 +36,9 @@ class LogRepositoryImpl @Inject constructor(
             .cachePolicy(MemoryPolicy.builder().build())
             .build()
 
+    override suspend fun refresh(storeKey: StoreKey.LogKey) =
+        store.fresh(storeKey)
 
-    fun refreshLogs() {}
-
-    override fun fetchLogs(): Flow<List<Entity.LogDetails>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun fetchFreshLogs(): Flow<List<Entity.LogDetails>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun fetchLogs(storeKey: StoreKey.LogKey): Flow<StoreResponse<List<LogData>>> =
+        store.stream(StoreRequest.cached(storeKey, true))
 }

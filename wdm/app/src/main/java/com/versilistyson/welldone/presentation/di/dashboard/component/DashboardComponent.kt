@@ -6,7 +6,7 @@ import com.versilistyson.welldone.presentation.di.dashboard.module.*
 import com.versilistyson.welldone.presentation.ui.dashboard.DashboardActivity
 import com.versilistyson.welldone.presentation.ui.dashboard.MainDashboardFragment
 import com.versilistyson.welldone.presentation.ui.dashboard.detail.LogDialogFragment
-import com.versilistyson.welldone.presentation.ui.dashboard.detail.PumpDialogDetailFragment
+import com.versilistyson.welldone.presentation.ui.dashboard.detail.SensorDialogDetailFragment
 import dagger.Subcomponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -22,5 +22,5 @@ interface DashboardComponent {
     fun inject(activity: DashboardActivity)
     fun inject(fragment: MainDashboardFragment)
     fun inject(fragment: LogDialogFragment)
-    fun inject(fragment: PumpDialogDetailFragment)
+    fun inject(fragment: SensorDialogDetailFragment)
 }

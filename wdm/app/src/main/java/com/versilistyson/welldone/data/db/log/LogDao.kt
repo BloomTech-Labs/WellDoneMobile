@@ -6,10 +6,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface LogDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveAll(logs: List<LogData>)
+    suspend fun save(logs: List<LogData>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(log: LogData)
+    suspend fun saveAll(log: LogData)
 
     @Query("SELECT * FROM log_table")
     fun getLogs(): Flow<List<LogData>>
