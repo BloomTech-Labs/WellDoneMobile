@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -101,11 +103,12 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 8.0f))
-
-        for(s in sensorStatusListAdapter.sensors){
-            //add a marker to the map in the sensor
-            mMap.addMarker(generateMarker(s))
+        sensorStatusListAdapter.sensors.forEach { sensor ->
+            val marker = mMap.addMarker(generateMarker(sensor))
+            marker.tag = sensor.sensorId
+            marker
         }
+        mMap.setOnMarkerClickListener(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -146,7 +149,16 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onMarkerClick(marker: Marker?): Boolean {
         marker?.let{
-            return true
+            val sensorTag = it.tag as Int
+            val sensors = sensorStatusListAdapter.sensors
+            sensors.forEach { sensor ->
+                if(sensor.sensorId == sensorTag ) {
+                    val sensorPosition = sensors.indexOf(sensor)
+                    val smoothScroller = LinearSmoothScroller(context)
+                    smoothScroller.targetPosition = sensorPosition
+                    rv_pump_status.layoutManager?.startSmoothScroll(smoothScroller)
+                }
+            }
         }
         return false
     }
@@ -156,9 +168,9 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
             .position(sensor.location)
 
         when(sensor.sensorStatus){
-            null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_functioning))
+            null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning))
             1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_no_data))
-            2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning))
+            2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_functioning))
         }
         return marker
     }
