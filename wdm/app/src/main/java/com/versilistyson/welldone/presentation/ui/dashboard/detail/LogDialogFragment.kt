@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.domain.framework.entity.Entity
+import com.versilistyson.welldone.presentation.util.beGone
 import com.versilistyson.welldone.presentation.util.makeInvisible
 import com.versilistyson.welldone.presentation.util.makeVisible
 import com.versilistyson.welldone.presentation.util.showCancelOrNotDialog
@@ -70,6 +71,12 @@ class LogDialogFragment: DialogFragment() {
             }
             dismiss()
         }
+
+        img_delete_img.setOnClickListener {
+            img_chosen.beGone()
+            img_delete_img.beGone()
+            img_pic_adder.makeVisible()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -80,9 +87,10 @@ class LogDialogFragment: DialogFragment() {
                     data?.let {
                         val selectedImage = it.data
                         if (selectedImage != null) {
-                            img_pic_adder.makeInvisible()
+                            img_pic_adder.beGone()
                             img_chosen.setImageURI(selectedImage)
                             img_chosen.makeVisible()
+                            img_delete_img.makeVisible()
                         }
                     }
                 }
