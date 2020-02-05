@@ -125,6 +125,9 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.2"
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.5.2"
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

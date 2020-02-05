@@ -35,7 +35,7 @@ interface LogImageApi {
         data class LogImage (
             @Json(name = "id") val imageId: Long,
             @Json(name = "log_id") val logId: Long,
-            @Json(name = "secure_url") val imageUrl: String,
+            @Json(name = "image_url") val imageUrl: String,
             @Json(name = "caption") val caption: String
         ): Dto(), Mappable<LogImageData>{
             override fun map(): LogImageData =

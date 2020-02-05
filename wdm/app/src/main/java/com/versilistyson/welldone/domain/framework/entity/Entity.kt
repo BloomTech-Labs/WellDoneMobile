@@ -36,12 +36,13 @@ sealed class Entity {
         val lastModified: String?,
         val status: Int?,
         val comment: String,
-        val imageDetails: LogImage? = null) : Entity(), Parcelable
+        var imageDetails: LogImage? = null) : Entity(), Parcelable
 
     @Parcelize
     data class LogImage(
         val logId: Long,
         val caption: String,
+        val imageLink: String,
         val imageUrl: Uri?
     ): Entity(), Parcelable
 
