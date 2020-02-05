@@ -172,9 +172,9 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
             .position(sensor.location)
 
         when(sensor.sensorStatus){
-            null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_functioning))
+            null -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning))
             1 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_no_data))
-            2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_non_functioning))
+            2 -> marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pump_functioning))
         }
         return marker
     }
