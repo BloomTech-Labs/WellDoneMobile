@@ -51,9 +51,13 @@ class SensorDialogViewModel @Inject constructor(private val getLogsUseCase: GetL
     }
 
     //adds it to top of recycler view
-    fun addLog(log: Entity.LogDetails){
-        _listOfLogs.value?.let {
-            _listOfLogs.value = it.apply{ add(0, log) }
+    fun addLog(sensorId: Long, comment: String){
+        viewModelScope.launch {
+            val log = addLogUseCase.invoke(viewModelScope, AddLogUseCase.Params(sensorId, comment))
+
+            _listOfLogs.value?.let {
+                _listOfLogs.value = it.apply{ add(0, (log as Either.Right).right!!) }
+            }
         }
     }
 

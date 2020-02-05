@@ -39,7 +39,7 @@ class OperatorLogAdapter(private val logs: MutableList<Entity.LogDetails>, val l
         val log = logs[position]
         holder.viewClickListener(log, position)
         holder.tvDateCreated.text = log.dateFiled.substring(0, 10)
-        holder.tvLastEdited.text = "          "
+        holder.tvLastEdited.text = "                    "
         log.lastModified?.let {
             holder.tvLastEdited.text = it.substring(0, 10)
         }
