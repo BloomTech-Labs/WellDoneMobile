@@ -23,8 +23,8 @@ data class LogData(
     @ColumnInfo(name = "log_id") @PrimaryKey(autoGenerate = false) val logId: Long,
     @ColumnInfo(name = "sensor_id") val sensorId: Long,
     @ColumnInfo(name = "date_filed") val dateFiled: String,
-    @ColumnInfo(name = "last_modified") val lastModified: String,
-    @ColumnInfo(name = "status") val status: Int,
+    @ColumnInfo(name = "last_modified") val lastModified: String?,
+    @ColumnInfo(name = "status") val status: Int?,
     @ColumnInfo(name = "comment") val comment: String,
     @ColumnInfo(name = "operator_id") val operatorId: Long
 ): Mappable<Entity.LogDetails> {

@@ -71,8 +71,8 @@ class DashboardModule {
 
     @DashboardActivityScope
     @Provides
-    fun provideLogUseCase(logRepository: LogRepository, logImageRepository: LogImageRepository) =
-        GetLogsUseCase(logRepository, logImageRepository)
+    fun provideLogUseCase(logRepository: LogRepository) =
+        GetLogsUseCase(logRepository)
 
     @DashboardActivityScope
     @Provides

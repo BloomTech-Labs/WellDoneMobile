@@ -27,8 +27,8 @@ interface LogApi {
             @Json(name = "id") val logId: Long,
             @Json(name = "sensor_id") val sensorId: Long,
             @Json(name = "date_filed") val dateFiled: String,
-            @Json(name = "last_modified") val lastModified: String,
-            @Json(name = "status") val status: Int,
+            @Json(name = "last_modified") val lastModified: String?,
+            @Json(name = "status") val status: Int?,
             @Json(name = "comment") val comment: String,
             @Json(name = "operator_id") val operatorId: Long
         ): Mappable<LogData>, Dto() {

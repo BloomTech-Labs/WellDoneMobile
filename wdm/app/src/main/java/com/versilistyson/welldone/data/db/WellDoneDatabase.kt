@@ -13,7 +13,7 @@ import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.data.db.user.UserDetailsDao
 import com.versilistyson.welldone.data.db.user.UserDetailsData
 
-@Database(entities = [SensorData::class, LogData::class, UserDetailsData::class, LogImageData::class], version = 3, exportSchema = false)
+@Database(entities = [SensorData::class, LogData::class, UserDetailsData::class, LogImageData::class], version = 6, exportSchema = false)
 abstract class WellDoneDatabase : RoomDatabase() {
 
     abstract fun sensorDao(): SensorDao

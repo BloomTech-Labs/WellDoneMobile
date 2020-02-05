@@ -12,7 +12,7 @@ class GetLogsUseCase @Inject constructor(private val logRepository: LogRepositor
 
     override suspend fun run(params: Params): Either<Failure, List<Entity.LogDetails>> {
         return try {
-            val logs = logRepository.fetchLogsBySensorId(params.sensorId)
+            val logs = logRepository.refresh(params.sensorId)
             Either.Right(logs)
         } catch(e: Exception){
             Either.Left(GetLogsFailure(e))

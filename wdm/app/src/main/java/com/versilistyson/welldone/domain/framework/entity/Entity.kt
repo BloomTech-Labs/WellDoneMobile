@@ -19,7 +19,7 @@ sealed class Entity {
 
     @Parcelize
     data class Sensor(
-        val sensorId: Int,
+        val sensorId: Long,
         val sensorStatus: Int?,
         val lastUploadDate: String,
         val districtName: String,
@@ -33,7 +33,7 @@ sealed class Entity {
     data class LogDetails(
         val logId: Long,
         val dateFiled: String,
-        val lastModified: String,
+        val lastModified: String?,
         val status: Int?,
         val comment: String,
         val imageDetails: LogImage? = null) : Entity(), Parcelable

@@ -13,7 +13,7 @@ interface SensorApi {
 
     sealed class Dto {
         data class SensorRecentResponse(
-            @Json(name = "sensor_id") val sensorId: Int,
+            @Json(name = "sensor_id") val sensorId: Long,
             @Json(name = "status") val sensorStatus: Int?,
             @Json(name = "data_finished") val lastUploadDate: String,
             @Json(name = "district_name") val districtName: String,

@@ -149,7 +149,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onMarkerClick(marker: Marker?): Boolean {
         marker?.let{
-            val sensorTag = it.tag as Int
+            val sensorTag = it.tag as Long
             val sensors = sensorStatusListAdapter.sensors
             sensors.forEach { sensor ->
                 if(sensor.sensorId == sensorTag ) {

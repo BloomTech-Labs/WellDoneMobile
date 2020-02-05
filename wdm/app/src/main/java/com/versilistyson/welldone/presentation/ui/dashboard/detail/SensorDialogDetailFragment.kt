@@ -36,8 +36,14 @@ class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClick
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sensor = arguments!!.getParcelable<Entity.Sensor>("sensor")!!
+
         initViewModel()
+
+        arguments?.let{
+            sensor = it.getParcelable("sensor")!!
+            viewModel.retrieveLogs(sensor.sensorId)
+        }
+
         toolbar_pump_details.setNavigationOnClickListener{
             dismiss()
         }
