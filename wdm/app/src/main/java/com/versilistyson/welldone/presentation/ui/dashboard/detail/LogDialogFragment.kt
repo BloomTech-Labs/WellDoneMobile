@@ -3,21 +3,26 @@ package com.versilistyson.welldone.presentation.ui.dashboard.detail
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.domain.framework.entity.Entity
+import com.versilistyson.welldone.presentation.ui.dashboard.DashboardActivity
 import com.versilistyson.welldone.presentation.util.beGone
 import com.versilistyson.welldone.presentation.util.makeVisible
 import com.versilistyson.welldone.presentation.util.showCancelOrNotDialog
+import com.versilistyson.welldone.presentation.viewmodel.LogDialogViewModel
 import kotlinx.android.synthetic.main.full_log_layout.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @FlowPreview
@@ -26,6 +31,8 @@ class LogDialogFragment: DialogFragment() {
 
     private lateinit var currentLog: Entity.LogDetails
     private var currentLogPosition: Int? = null
+    @Inject lateinit var vmFactory: ViewModelProvider.Factory
+    private lateinit var viewModel: LogDialogViewModel
     private var imageUri: Uri? = null
     var listener: LogReceiver? = null
 
@@ -46,9 +53,12 @@ class LogDialogFragment: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initViewModel()
+
         arguments?.let{
-            currentLog = it.getParcelable<Entity.LogDetails>("log")!!
+            currentLog = it.getParcelable("log")!!
             currentLogPosition = it.getInt("position")
+            viewModel.getLogImagesForLogId(currentLog.logId)
             bindView()
         }
 
@@ -58,6 +68,15 @@ class LogDialogFragment: DialogFragment() {
             pickPhoto.type = "image/*"
             startActivityForResult(pickPhoto, PICK_PHOTO_REQUEST)
         }
+
+        viewModel.imageLink.observe(viewLifecycleOwner, Observer {
+            Glide.with(this).load(it.imageLink).into(img_chosen)
+            img_chosen.makeVisible()
+            img_pic_adder.beGone()
+            img_delete_img.makeVisible()
+            input_layout.makeVisible()
+            et_caption_text.setText(it.caption)
+        })
 
         img_close_dialog.setOnClickListener {
             showCancelOrNotDialog()
@@ -73,6 +92,7 @@ class LogDialogFragment: DialogFragment() {
                     logImage = Entity.LogImage(
                         0,
                         et_caption_text.text.toString(),
+                        "",
                         uriImage
                     )
                 }
@@ -91,6 +111,11 @@ class LogDialogFragment: DialogFragment() {
             input_layout.beGone()
             img_pic_adder.makeVisible()
         }
+    }
+
+    private fun initViewModel() {
+        (activity as DashboardActivity).dashboardComponent.inject(this)
+        viewModel = vmFactory.create(LogDialogViewModel::class.java)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -117,13 +142,10 @@ class LogDialogFragment: DialogFragment() {
     private fun bindView() {
         tv_last_modified.text = "Last modified ${currentLog.lastModified}"
         et_comment.setText(currentLog.comment)
-        if(currentLog.imageDetails != null){
-            img_chosen.setImageURI(currentLog.imageDetails!!.imageUrl)
-            img_pic_adder.beGone()
+        if(currentLog.imageDetails?.imageUrl != null){
+            img_chosen.setImageURI(currentLog.imageDetails?.imageUrl)
             img_chosen.makeVisible()
-            img_delete_img.makeVisible()
-            input_layout.makeVisible()
-            et_caption_text.setText(currentLog.imageDetails!!.caption)
+            img_pic_adder.beGone()
         }
     }
 }

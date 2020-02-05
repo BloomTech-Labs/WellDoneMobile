@@ -9,6 +9,8 @@ import com.versilistyson.welldone.data.db.log.LogDao
 import com.versilistyson.welldone.data.db.log.LogImageDao
 import com.versilistyson.welldone.data.db.user.UserDetailsDao
 import com.versilistyson.welldone.domain.framework.repository.*
+import com.versilistyson.welldone.domain.framework.usecases.log.AddImageToLogUseCase
+import com.versilistyson.welldone.domain.framework.usecases.log.GetLogImagesUseCase
 import com.versilistyson.welldone.domain.framework.usecases.log.GetLogsUseCase
 import com.versilistyson.welldone.domain.framework.usecases.sensor.GetCacheSensorStreamUseCase
 import com.versilistyson.welldone.domain.framework.usecases.sensor.GetFreshSensorStreamUseCase
@@ -73,6 +75,16 @@ class DashboardModule {
     @Provides
     fun provideLogUseCase(logRepository: LogRepository) =
         GetLogsUseCase(logRepository)
+
+    @DashboardActivityScope
+    @Provides
+    fun provideLogImageUseCase(logImageRepository: LogImageRepository) =
+        GetLogImagesUseCase(logImageRepository)
+
+    @DashboardActivityScope
+    @Provides
+    fun provideAddImageToLogUseCase(logImageRepository: LogImageRepository) =
+        AddImageToLogUseCase(logImageRepository)
 
     @DashboardActivityScope
     @Provides

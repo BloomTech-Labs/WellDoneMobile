@@ -39,6 +39,11 @@ abstract class DashboardViewModelModule {
     @ViewModelKey(SensorDialogViewModel::class)
     abstract fun bindSensorDialogViewModel(sensorDialogViewModel: SensorDialogViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(LogDialogViewModel::class)
+    abstract fun bindLogDialogViewModel(logDialogViewModel: LogDialogViewModel): ViewModel
+
     @DashboardActivityScope
     @Binds
     abstract fun bindViewModelProviderFactory(viewModelProviderFactory: ViewModelProviderFactory): ViewModelProvider.Factory

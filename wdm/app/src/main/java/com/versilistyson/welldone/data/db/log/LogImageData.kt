@@ -28,6 +28,7 @@ data class LogImageData(
         Entity.LogImage(
             logId = logId,
             caption = caption,
+            imageLink = imageLink,
             imageUrl = Uri.parse(imageLink)
         )
 }

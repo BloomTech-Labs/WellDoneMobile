@@ -69,7 +69,8 @@ class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClick
         if(isAnUpdate){
             viewModel.updateLog(log, position)
         } else {
-            viewModel.addLog(sensor.sensorId, log.comment)
+            //adding log to the recyclerview, does not contain any uri currently
+            viewModel.addLog(sensor.sensorId, log.comment, log.imageDetails)
         }
     }
 
