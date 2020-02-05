@@ -14,6 +14,7 @@ import com.versilistyson.welldone.presentation.adapter.OperatorLogAdapter
 import com.versilistyson.welldone.presentation.ui.dashboard.DashboardActivity
 import com.versilistyson.welldone.presentation.viewmodel.SensorDialogViewModel
 import kotlinx.android.synthetic.main.fragment_dialog_sensor_detail.*
+import kotlinx.android.synthetic.main.full_log_layout.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -68,7 +69,7 @@ class SensorDialogDetailFragment : DialogFragment(), OperatorLogAdapter.LogClick
         if(isAnUpdate){
             viewModel.updateLog(log, position)
         } else {
-            viewModel.addLog(log)
+            viewModel.addLog(sensor.sensorId, log.comment)
         }
     }
 
