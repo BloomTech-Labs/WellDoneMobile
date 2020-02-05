@@ -100,7 +100,7 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 6.0f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 8.0f))
 
         for(s in sensorStatusListAdapter.sensors){
             //add a marker to the map in the sensor
