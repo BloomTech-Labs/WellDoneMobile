@@ -102,17 +102,13 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 6.0f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 8.0f))
         sensorStatusListAdapter.sensors.forEach { sensor ->
             val marker = mMap.addMarker(generateMarker(sensor))
             marker.tag = sensor.sensorId
             marker
         }
         mMap.setOnMarkerClickListener(this)
-        /*for(s in sensorStatusListAdapter.sensors){
-            //add a marker to the map in the sensor
-            mMap.addMarker(generateMarker(s))
-        }*/
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

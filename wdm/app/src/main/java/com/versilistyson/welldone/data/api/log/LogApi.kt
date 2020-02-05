@@ -10,7 +10,7 @@ import java.io.File
 
 interface LogApi {
 
-    @GET("/api/logs/images/{sensorId}")
+    @GET("/api/logs/sensor/{sensorId}")
     suspend fun getLogs(@Path("sensorId") sensorId: Long): Response<List<Dto.Log>>
 
     @POST("api/logs")
