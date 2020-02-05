@@ -14,7 +14,7 @@ interface LogApi {
     suspend fun getLogs(@Path("sensorId") sensorId: Long): Response<List<Dto.Log>>
 
     @POST("api/logs")
-    suspend fun addLog(@Body log: Dto.Log): Response<Any>
+    suspend fun addLog(@Body log: Dto.LogToPost): Response<Dto.Log>
 
     @PUT("api/logs/{logId}")
     suspend fun updateLog(@Path("logId") logId: Long): Response<Dto.Log>

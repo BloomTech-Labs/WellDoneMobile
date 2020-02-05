@@ -6,6 +6,7 @@ import com.versilistyson.welldone.domain.framework.datasource.BaseDataSource
 import kotlinx.coroutines.flow.Flow
 
 interface LogImageLocalDataSource: BaseDataSource {
-    fun getLogImages(key: StoreKey.LogImageKey, logImageId: Long): Flow<List<LogImageData>>
+    fun getLogImagesById(key: StoreKey.LogImageKey): Flow<List<LogImageData>>
     suspend fun saveLogImages(key: StoreKey.LogImageKey, logImages: List<LogImageData>)
+    suspend fun saveLogImage(key: StoreKey.LogImageKey, logImage: LogImageData)
 }

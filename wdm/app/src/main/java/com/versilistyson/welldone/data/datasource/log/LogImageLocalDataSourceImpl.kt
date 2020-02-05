@@ -9,10 +9,13 @@ import javax.inject.Inject
 
 class LogImageLocalDataSourceImpl @Inject constructor(private val logImageDao: LogImageDao): LogImageLocalDataSource {
 
-    override fun getLogImages(key: StoreKey.LogImageKey, logImageId: Long): Flow<List<LogImageData>> =
-        logImageDao.getAllLogImagesByLogId(logImageId)
+    override fun getLogImagesById(key: StoreKey.LogImageKey): Flow<List<LogImageData>> =
+        logImageDao.getAllLogImagesByLogId(key.id)
 
     override suspend fun saveLogImages(key: StoreKey.LogImageKey, logImages: List<LogImageData>) {
-        logImageDao.saveAll(logImages)
+        logImageDao.save(logImages)
     }
+
+    override suspend fun saveLogImage(key: StoreKey.LogImageKey, logImage: LogImageData) =
+        logImageDao.save(logImage)
 }
