@@ -140,7 +140,9 @@ class LogDialogFragment: DialogFragment() {
     }
 
     private fun bindView() {
-        tv_last_modified.text = "Last modified ${currentLog.lastModified}"
+        if(currentLog.lastModified != null) {
+            tv_last_modified.text = "Last modified ${currentLog.lastModified!!.substring(0, 10)}"
+        }
         et_comment.setText(currentLog.comment)
         if(currentLog.imageDetails?.imageUrl != null){
             img_chosen.setImageURI(currentLog.imageDetails?.imageUrl)
