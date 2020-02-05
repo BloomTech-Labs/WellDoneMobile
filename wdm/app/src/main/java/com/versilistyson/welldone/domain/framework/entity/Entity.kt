@@ -1,5 +1,6 @@
 package com.versilistyson.welldone.domain.framework.entity
 
+import android.net.Uri
 import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.parcel.Parcelize
@@ -35,8 +36,14 @@ sealed class Entity {
         val lastModified: String,
         val status: Int?,
         val comment: String,
-        val logImages: List<String>?
-    ) : Entity(), Parcelable
+        val imageDetails: LogImage? = null) : Entity(), Parcelable
+
+    @Parcelize
+    data class LogImage(
+        val logId: Long,
+        val caption: String,
+        val imageUrl: Uri?
+    ): Entity(), Parcelable
 
     data class Sensors(
         val allSensors: List<Sensor>,

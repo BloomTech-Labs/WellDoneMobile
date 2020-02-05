@@ -21,16 +21,14 @@ class SensorDialogViewModel @Inject constructor() : ViewModel() {
                 "13/05/2019",
                 "06/06/2019",
                 null,
-                "This sensor had a loose valve.",
-                listOf()
+                "This sensor had a loose valve."
             ),
             Entity.LogDetails(
                 2,
                 "14/03/2019",
                 "14/05/2019",
                 2,
-                "This sensor had network connectivity issues.",
-                listOf()
+                "This sensor had network connectivity issues."
             )
         )
     }

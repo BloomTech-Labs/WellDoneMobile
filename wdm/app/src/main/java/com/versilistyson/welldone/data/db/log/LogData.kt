@@ -34,7 +34,6 @@ data class LogData(
             dateFiled = dateFiled,
             lastModified = lastModified,
             status = status,
-            comment = comment,
-            logImages = null //this will be added after we retrieve the images from store
+            comment = comment //this will be added after we retrieve the images from store
         )
 }
