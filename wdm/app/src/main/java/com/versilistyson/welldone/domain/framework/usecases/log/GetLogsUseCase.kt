@@ -7,10 +7,16 @@ import com.versilistyson.welldone.domain.framework.repository.LogRepository
 import com.versilistyson.welldone.domain.framework.usecases.common.UseCase
 import javax.inject.Inject
 
-class GetLogsUseCase @Inject constructor(private val logRepository: LogRepository): UseCase<List<Entity.LogDetails>, GetLogsUseCase.Params>() {
+class GetLogsUseCase @Inject constructor(private val logRepository: LogRepository): UseCase<List<Entity.LogDetails>, GetLogsUseCase.Params>()
+{
 
     override suspend fun run(params: Params): Either<Failure, List<Entity.LogDetails>> {
-        TODO()
+        return try {
+            val logs = logRepository.refresh(params.sensorId)
+            Either.Right(logs)
+        } catch(e: Exception){
+            Either.Left(GetLogsFailure(e))
+        }
     }
 
     data class Params(val sensorId: Long)

@@ -6,17 +6,20 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.versilistyson.welldone.data.db.log.LogDao
 import com.versilistyson.welldone.data.db.log.LogData
+import com.versilistyson.welldone.data.db.log.LogImageDao
+import com.versilistyson.welldone.data.db.log.LogImageData
 import com.versilistyson.welldone.data.db.sensor.SensorDao
 import com.versilistyson.welldone.data.db.sensor.SensorData
 import com.versilistyson.welldone.data.db.user.UserDetailsDao
 import com.versilistyson.welldone.data.db.user.UserDetailsData
 
-@Database(entities = [SensorData::class, LogData::class, UserDetailsData::class], version = 3, exportSchema = false)
+@Database(entities = [SensorData::class, LogData::class, UserDetailsData::class, LogImageData::class], version = 6, exportSchema = false)
 abstract class WellDoneDatabase : RoomDatabase() {
 
     abstract fun sensorDao(): SensorDao
     abstract fun logDao(): LogDao
     abstract fun userDao(): UserDetailsDao
+    abstract fun logImageDao(): LogImageDao
 
     companion object {
         @Volatile

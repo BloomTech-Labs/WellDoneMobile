@@ -2,6 +2,8 @@ package com.versilistyson.welldone.presentation.ui.dashboard.detail
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +12,6 @@ import androidx.fragment.app.DialogFragment
 import com.versilistyson.welldone.R
 import com.versilistyson.welldone.domain.framework.entity.Entity
 import com.versilistyson.welldone.presentation.util.beGone
-import com.versilistyson.welldone.presentation.util.makeInvisible
 import com.versilistyson.welldone.presentation.util.makeVisible
 import com.versilistyson.welldone.presentation.util.showCancelOrNotDialog
 import kotlinx.android.synthetic.main.full_log_layout.*
@@ -25,6 +26,7 @@ class LogDialogFragment: DialogFragment() {
 
     private lateinit var currentLog: Entity.LogDetails
     private var currentLogPosition: Int? = null
+    private var imageUri: Uri? = null
     var listener: LogReceiver? = null
 
     private val PICK_PHOTO_REQUEST = 1
@@ -64,8 +66,19 @@ class LogDialogFragment: DialogFragment() {
         btn_save.setOnClickListener {
             //saves or updates log
             listener?.let{
+                var uriImage: Uri? = null
+                var logImage: Entity.LogImage? = null
+                if(img_chosen.visibility == View.VISIBLE){
+                    uriImage = imageUri
+                    logImage = Entity.LogImage(
+                        0,
+                        et_caption_text.text.toString(),
+                        uriImage
+                    )
+                }
+                //posting this image to this specific log id
                 val log = Entity.LogDetails(0, "05/02/2020", "05/02/2020",
-                    (it as SensorDialogDetailFragment).sensor.sensorStatus, et_comment.text.toString(), null)
+                    (it as SensorDialogDetailFragment).sensor.sensorStatus, et_comment.text.toString(), logImage)
 
                 it.receiveLog(log, ::currentLog.isInitialized)
             }
@@ -75,6 +88,7 @@ class LogDialogFragment: DialogFragment() {
         img_delete_img.setOnClickListener {
             img_chosen.beGone()
             img_delete_img.beGone()
+            input_layout.beGone()
             img_pic_adder.makeVisible()
         }
     }
@@ -87,10 +101,12 @@ class LogDialogFragment: DialogFragment() {
                     data?.let {
                         val selectedImage = it.data
                         if (selectedImage != null) {
+                            imageUri = selectedImage
                             img_pic_adder.beGone()
                             img_chosen.setImageURI(selectedImage)
                             img_chosen.makeVisible()
                             img_delete_img.makeVisible()
+                            input_layout.makeVisible()
                         }
                     }
                 }
@@ -101,5 +117,13 @@ class LogDialogFragment: DialogFragment() {
     private fun bindView() {
         tv_last_modified.text = "Last modified ${currentLog.lastModified}"
         et_comment.setText(currentLog.comment)
+        if(currentLog.imageDetails != null){
+            img_chosen.setImageURI(currentLog.imageDetails!!.imageUrl)
+            img_pic_adder.beGone()
+            img_chosen.makeVisible()
+            img_delete_img.makeVisible()
+            input_layout.makeVisible()
+            et_caption_text.setText(currentLog.imageDetails!!.caption)
+        }
     }
 }

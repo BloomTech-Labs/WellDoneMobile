@@ -10,7 +10,7 @@ import com.versilistyson.welldone.domain.framework.entity.Entity
     tableName = "sensor_table"
 )
 data class SensorData(
-    @ColumnInfo(name = "sensor_id") @PrimaryKey(autoGenerate = false) val sensorId: Int,
+    @ColumnInfo(name = "sensor_id") @PrimaryKey(autoGenerate = false) val sensorId: Long,
     @ColumnInfo(name = "status") val sensorStatus: Int?,
     @ColumnInfo(name = "last_upload_date") val lastUploadDate: String,
     @ColumnInfo(name = "district_name") val districtName: String,

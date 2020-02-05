@@ -1,8 +1,8 @@
 package com.versilistyson.welldone.data.datasource.sensor
 
-import com.versilistyson.welldone.data.util.StoreKey
 import com.versilistyson.welldone.data.db.sensor.SensorDao
 import com.versilistyson.welldone.data.db.sensor.SensorData
+import com.versilistyson.welldone.data.util.StoreKey
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

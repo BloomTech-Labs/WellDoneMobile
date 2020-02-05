@@ -2,6 +2,7 @@ package com.versilistyson.welldone.data.repository
 
 import com.dropbox.android.external.store4.*
 import com.versilistyson.welldone.data.db.sensor.SensorData
+import com.versilistyson.welldone.data.util.MEMORY_CACHE_TIME
 import com.versilistyson.welldone.data.util.StoreKey
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorLocalDataSource
 import com.versilistyson.welldone.domain.framework.datasource.sensor.SensorRemoteDataSource
@@ -23,9 +24,9 @@ class SensorRepositoryImpl @Inject constructor(
 
     val store =
         StoreBuilder
-            .fromNonFlow<StoreKey.SensorsKey, List<SensorData>> {storekey ->
+            .fromNonFlow<StoreKey.SensorsKey, List<SensorData>> { storekey ->
                 val sensors = mutableListOf<SensorData>()
-                val sensorSet = mutableSetOf<Int>()
+                val sensorSet = mutableSetOf<Long>()
                 remoteDataSource.getSensors(storekey).body()?.forEach {
                     if(!sensorSet.contains(it.sensorId)) { //issue in backend where it duplicates assigned sensors
                         sensors.add(it.map())
@@ -40,7 +41,7 @@ class SensorRepositoryImpl @Inject constructor(
             ).cachePolicy(
                 MemoryPolicy.builder()
                     .setMemorySize(100)
-                    .setExpireAfterAccess(8)
+                    .setExpireAfterAccess(MEMORY_CACHE_TIME)
                     .setExpireAfterTimeUnit(TimeUnit.DAYS)
                     .build()
             ).build()

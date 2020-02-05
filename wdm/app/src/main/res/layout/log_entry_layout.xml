@@ -39,7 +39,7 @@
             android:id="@+id/img_status"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="35dp"
             android:src="@drawable/pump_no_data"
             android:layout_marginTop="15dp"/>
 
@@ -52,7 +52,7 @@
             android:ellipsize="end"
             android:textColor="@android:color/black"
             android:textSize="12sp"
-            android:layout_marginStart="44dp"
+            android:layout_marginStart="49dp"
             android:layout_marginTop="15dp"
             android:paddingBottom="15dp"
             android:layout_marginEnd="8dp"/>

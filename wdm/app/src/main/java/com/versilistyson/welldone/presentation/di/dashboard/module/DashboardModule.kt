@@ -1,15 +1,14 @@
 package com.versilistyson.welldone.presentation.di.dashboard.module
 
 import com.versilistyson.welldone.data.api.log.LogApi
+import com.versilistyson.welldone.data.api.log.LogImageApi
 import com.versilistyson.welldone.data.api.sensor.SensorApi
 import com.versilistyson.welldone.data.api.user.UserDetailsApi
 import com.versilistyson.welldone.data.db.WellDoneDatabase
 import com.versilistyson.welldone.data.db.log.LogDao
+import com.versilistyson.welldone.data.db.log.LogImageDao
 import com.versilistyson.welldone.data.db.user.UserDetailsDao
-import com.versilistyson.welldone.domain.framework.repository.AuthenticationRepository
-import com.versilistyson.welldone.domain.framework.repository.LogRepository
-import com.versilistyson.welldone.domain.framework.repository.SensorRepository
-import com.versilistyson.welldone.domain.framework.repository.UserDetailRepository
+import com.versilistyson.welldone.domain.framework.repository.*
 import com.versilistyson.welldone.domain.framework.usecases.log.GetLogsUseCase
 import com.versilistyson.welldone.domain.framework.usecases.sensor.GetCacheSensorStreamUseCase
 import com.versilistyson.welldone.domain.framework.usecases.sensor.GetFreshSensorStreamUseCase
@@ -52,8 +51,18 @@ class DashboardModule {
 
     @DashboardActivityScope
     @Provides
+    fun provideLogImageApi(retrofit: Retrofit): LogImageApi =
+        retrofit.create(LogImageApi::class.java)
+
+    @DashboardActivityScope
+    @Provides
     fun provideLogDao(wellDoneDatabase: WellDoneDatabase): LogDao =
         wellDoneDatabase.logDao()
+
+    @DashboardActivityScope
+    @Provides
+    fun provideLogImageDao(wellDoneDatabase: WellDoneDatabase): LogImageDao =
+        wellDoneDatabase.logImageDao()
 
     @DashboardActivityScope
     @Provides

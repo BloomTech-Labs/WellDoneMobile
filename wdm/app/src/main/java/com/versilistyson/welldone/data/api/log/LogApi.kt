@@ -14,7 +14,7 @@ interface LogApi {
     suspend fun getLogs(@Path("sensorId") sensorId: Long): Response<List<Dto.Log>>
 
     @POST("api/logs")
-    suspend fun addLog(@Body log: Dto.Log): Response<Any>
+    suspend fun addLog(@Body log: Dto.LogToPost): Response<Dto.Log>
 
     @PUT("api/logs/{logId}")
     suspend fun updateLog(@Path("logId") logId: Long): Response<Dto.Log>
@@ -27,10 +27,9 @@ interface LogApi {
             @Json(name = "id") val logId: Long,
             @Json(name = "sensor_id") val sensorId: Long,
             @Json(name = "date_filed") val dateFiled: String,
-            @Json(name = "last_modified") val lastModified: String,
-            @Json(name = "status") val status: Int,
+            @Json(name = "last_modified") val lastModified: String?,
+            @Json(name = "status") val status: Int?,
             @Json(name = "comment") val comment: String,
-            @Json(name = "picture_details") val images: List<LogImageApi.LogImage>,
             @Json(name = "operator_id") val operatorId: Long
         ): Mappable<LogData>, Dto() {
             override fun map(): LogData =

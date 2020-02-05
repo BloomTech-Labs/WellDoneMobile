@@ -38,8 +38,11 @@ class OperatorLogAdapter(private val logs: MutableList<Entity.LogDetails>, val l
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
         val log = logs[position]
         holder.viewClickListener(log, position)
-        holder.tvDateCreated.text = log.dateFiled
-        holder.tvLastEdited.text = log.lastModified
+        holder.tvDateCreated.text = log.dateFiled.substring(0, 10)
+        holder.tvLastEdited.text = "          "
+        log.lastModified?.let {
+            holder.tvLastEdited.text = it.substring(0, 10)
+        }
         holder.imgStatus.setImageDrawable(
             when(log.status){
                 null -> ContextCompat.getDrawable(holder.view.context, R.drawable.pump_functioning)
