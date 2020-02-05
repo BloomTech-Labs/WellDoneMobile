@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -157,7 +158,9 @@ class MainDashboardFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarker
             sensors.forEach { sensor ->
                 if(sensor.sensorId == sensorTag ) {
                     val sensorPosition = sensors.indexOf(sensor)
-                    rv_pump_status.layoutManager?.scrollToPosition(sensorPosition)
+                    val smoothScroller = LinearSmoothScroller(context)
+                    smoothScroller.targetPosition = sensorPosition
+                    rv_pump_status.layoutManager?.startSmoothScroll(smoothScroller)
                 }
             }
         }
