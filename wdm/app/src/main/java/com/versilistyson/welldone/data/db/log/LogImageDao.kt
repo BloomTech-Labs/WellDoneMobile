@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
 interface LogImageDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveAll(logs: List<LogData>): Int
+    suspend fun saveAll(logs: List<LogImageData>): Int
 
     @Query("SELECT * FROM image_table WHERE log_id = :logId")
-    fun getAllLogImagesByLogId(logId: Long) : Flow<List<LogData>>
+    fun getAllLogImagesByLogId(logId: Long) : Flow<List<LogImageData>>
 }
