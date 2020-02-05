@@ -39,8 +39,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDiMGIgxIFh7qpugOn8Y-2BYqgGusR6CFc" />
 
-        <activity android:name="com.versilistyson.welldone.presentation.ui.dashboard.DashboardActivity" />
-        <activity android:name="com.versilistyson.welldone.presentation.ui.authentication.AuthenticationActivity">
+        <activity android:name="com.versilistyson.welldone.presentation.ui.dashboard.DashboardActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name="com.versilistyson.welldone.presentation.ui.authentication.AuthenticationActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
